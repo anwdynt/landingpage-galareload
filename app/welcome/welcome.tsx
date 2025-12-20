@@ -18,10 +18,10 @@ export function Welcome() {
                     }}
                     className="relative flex flex-col gap-4 items-start justify-start px-4 max-w-7xl"
                 >
-                    <h1 className="text-3xl md:text-7xl font-semibold dark:text-white text-left font-metropolis">
+                    <h2 className="text-3xl md:text-7xl font-semibold dark:text-white text-left font-metropolis">
                         Satu Platform untuk Mengembangkan Bisnis Server Pulsa
                         Anda
-                    </h1>
+                    </h2>
 
                     <div>
                         <TextGenerateEffect words="" />
