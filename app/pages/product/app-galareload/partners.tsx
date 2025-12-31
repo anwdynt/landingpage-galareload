@@ -1,4 +1,5 @@
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
+import { ColourfulText } from '~/components/ui/colorfull-text';
 import Marquee from '~/components/ui/marquee';
 // Produk Pulsa & Payment
 const clients = [
@@ -49,24 +50,20 @@ const partners = [
 
 export default function Partners() {
     return (
-        <section id="partners" className="space-y-5 py-8 md:py-12 lg:py-20">
-            <div className="flex items-center justify-center">
-                <div className="ml-4 mb-8">
-                    <h2 className="font-bold font-metropolis uppercase tracking-wide text-xl lg:text-4xl text-center lg:text-center text-slate-800">
-                        Kepercayaan yang Dibangun dari Hasil Nyata
-                    </h2>
-                    <TextGenerateEffect
-                        className="text-second font-roboto text-center text-lg font-extralight"
-                        words="Cerita langsung dari mitra yang telah merasakan stabilitas, layanan, dan skalabilitas platform Galareload."
-                    />
-                </div>
-            </div>
-            <div className="mx-auto px-2 xl:px-0 2xl:container 2xl:max-w-7xl xl:max-w-280 space-y-12">
+        <div className="space-y-5 py-8 md:py-12 lg:py-20 max-w-7xl mx-auto container px-2 lg:px-0 text-center lg:text-left space-y">
+            <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-lg">
+                Produk digital terlengkap<ColourfulText text="." />
+            </h2>
+            <TextGenerateEffect
+                className="text-lg md:text-xl mt-0 font-extralight dark:text-white font-google-sans text-primary leading-normal max-w-3xl"
+                words="Akses ribuan produk digital dari provider terkemuka: Pulsa, Paket Data, E-Wallet, hingga Voucher Game dalam satu genggaman."
+            />
+            <div className="mx-auto px-2 xl:px-0 2xl:container 2xl:max-w-7xl xl:max-w-280 py-12">
                 <div>
                     <Marquee items={clients} speed={35} direction="left" />
                     <Marquee items={partners} speed={35} direction="right" />
                 </div>
             </div>
-        </section>
+        </div>
     );
 }

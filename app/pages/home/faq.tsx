@@ -81,7 +81,7 @@ export default function FAQ() {
                     className="mb-14 text-center"
                 >
                     <h2 className="text-3xl md:text-4xl font-metropolis font-semibold">
-                        <TypewriterEffect words={words} className='text-xl' />
+                        <TypewriterEffect words={words} className="text-xl" />
                     </h2>
                     <p className="mt-4 text-primary font-google-sans font-light text-lg lg:text-xl">
                         Informasi penting seputar layanan dan platform

@@ -28,4 +28,7 @@ export default defineConfig({
             deleteOriginal: false,
         }),
     ],
+    build: {
+        sourcemap: false,
+    },
 });

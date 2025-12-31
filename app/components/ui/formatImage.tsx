@@ -23,7 +23,7 @@ export default function FormatImage({
 
     // In production mode with WebP support
     return (
-        <picture>
+        <picture className={className}>
             <source srcSet={srcWebp} type="image/webp" />
             <img src={src} alt={alt} className={className} />
         </picture>

@@ -91,7 +91,7 @@ export const AnimatedTestimonials = ({
                                             '.png',
                                             '.webp'
                                         )}
-                                        className="lg:h-auto lg:w-full w-[calc(100vw-65rem)] rounded-3xl"
+                                        className="h-full w-full object-cover rounded-3xl"
                                     />
                                 </motion.div>
                             ))}

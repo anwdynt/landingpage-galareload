@@ -1,5 +1,7 @@
 import { BackgroundBeams } from '~/components/ui/background-beams';
 import { ColourfulText } from '~/components/ui/colorfull-text';
+import { PhoneCall } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function CTA() {
     return (
@@ -14,12 +16,15 @@ export default function CTA() {
                     terbaik bagi bisnis anda.
                 </p>
                 <div className="flex justify-center">
-                    <button className="p-0.75 relative cursor-pointer z-20">
-                        <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 rounded-lg pointer-events-none" />
-                        <div className="px-12 py-2 font-metropolis font-medium bg-black rounded-[6px] relative group transition duration-200 text-neutral-200 hover:bg-transparent">
-                            Hubungi Kami
-                        </div>
-                    </button>
+                    <Link to="#">
+                        <button className="p-0.75 relative cursor-pointer z-20">
+                            <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 rounded-lg pointer-events-none" />
+                            <div className="px-8 py-2 font-metropolis font-medium bg-black rounded-[6px] relative group transition duration-200 text-neutral-200 hover:bg-transparent flex items-center gap-2">
+                                <PhoneCall className="w-5 h-5" />
+                                <span>Hubungi Kami</span>
+                            </div>
+                        </button>
+                    </Link>
                 </div>
             </div>
             <BackgroundBeams />

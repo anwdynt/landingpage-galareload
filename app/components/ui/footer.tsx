@@ -1,4 +1,4 @@
-import { Phone, Smartphone } from "lucide-react";
+import { Phone, Smartphone } from 'lucide-react';
 export default function Footer() {
     return (
         <footer className="w-full bg-neutral-950 text-neutral-300">
@@ -31,8 +31,14 @@ export default function Footer() {
                     </p>
 
                     <div className="mt-4 space-y-2 text-sm">
-                        <p className="gap-2 flex"><Phone className="text-white w-4 h-auto" /> 024-3517625</p>
-                        <p className="gap-2 flex"><Smartphone className="text-white w-4 h-auto" /> +62 851-9129-5757</p>
+                        <p className="gap-2 flex">
+                            <Phone className="text-white w-4 h-auto" />{' '}
+                            024-3517625
+                        </p>
+                        <p className="gap-2 flex">
+                            <Smartphone className="text-white w-4 h-auto" /> +62
+                            851-9129-5757
+                        </p>
                     </div>
                 </div>
 
