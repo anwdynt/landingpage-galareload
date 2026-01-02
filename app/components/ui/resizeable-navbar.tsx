@@ -8,47 +8,18 @@ import {
 } from 'framer-motion';
 import FormatImage from './formatImage';
 import { Link } from 'react-router';
-import React, { useRef, useState } from 'react';
-
-/* ================= TYPES ================= */
-
-interface NavItem {
-    name: string;
-    link?: string;
-    children?: {
-        name: string;
-        link: string;
-        description?: string;
-    }[];
-}
-
-interface NavbarProps {
-    children: React.ReactNode;
-    className?: string;
-}
-
-interface NavBodyProps {
-    children: React.ReactNode;
-    visible?: boolean;
-}
-
-interface NavItemsProps {
-    items: NavItem[];
-}
-
-interface MobileNavProps {
-    children: React.ReactNode;
-    visible?: boolean;
-}
-
-interface MobileNavMenuProps {
-    isOpen: boolean;
-    children: React.ReactNode;
-}
+import React, { useRef, useState, memo } from 'react';
+import type {
+    NavbarProps,
+    NavBodyProps,
+    NavItemsProps,
+    MobileNavProps,
+    MobileNavMenuProps,
+} from '~/types/nav';
 
 /* ================= NAVBAR ================= */
 
-export const Navbar = ({ children, className }: NavbarProps) => {
+export const Navbar = memo(({ children, className }: NavbarProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const { scrollY } = useScroll({
         target: ref,
@@ -76,11 +47,11 @@ export const Navbar = ({ children, className }: NavbarProps) => {
             )}
         </motion.div>
     );
-};
+});
 
 /* ================= DESKTOP ================= */
 
-export const NavBody = ({ children, visible }: NavBodyProps) => (
+export const NavBody = memo(({ children, visible }: NavBodyProps) => (
     <motion.div
         animate={{
             backdropFilter: visible ? 'blur(10px)' : 'none',
@@ -95,9 +66,9 @@ export const NavBody = ({ children, visible }: NavBodyProps) => (
     >
         {children}
     </motion.div>
-);
+));
 
-export const NavItems = ({ items }: NavItemsProps) => {
+export const NavItems = memo(({ items }: NavItemsProps) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
@@ -154,51 +125,52 @@ export const NavItems = ({ items }: NavItemsProps) => {
             ))}
         </div>
     );
-};
+});
 
 /* ================= MOBILE ================= */
 
-export const MobileNav = ({ children, visible }: MobileNavProps) => (
+export const MobileNav = memo(({ children, visible }: MobileNavProps) => (
     <motion.div
         animate={{
             backdropFilter: visible ? 'blur(10px)' : 'none',
             y: visible ? 20 : 0,
         }}
         className={cn(
-            'mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col gap-4 rounded-2xl px-4 py-2 lg:hidden',
+            'relative mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col gap-4 rounded-2xl px-4 py-2 lg:hidden',
             visible && 'bg-white/80 dark:bg-neutral-950/80'
         )}
     >
         {children}
     </motion.div>
-);
+));
 
-export const MobileNavMenu = ({ isOpen, children }: MobileNavMenuProps) => (
+export const MobileNavMenu = memo(({ isOpen, children }: MobileNavMenuProps) => (
     <AnimatePresence>
         {isOpen && (
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-lg dark:bg-neutral-950"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-full left-0 right-0 mt-2 z-50 flex flex-col gap-4 rounded-lg bg-white p-4 shadow-xl border border-neutral-100 dark:border-neutral-800 dark:bg-neutral-950"
             >
                 {children}
             </motion.div>
         )}
     </AnimatePresence>
-);
+));
 
-export const MobileNavToggle = ({
+export const MobileNavToggle = memo(({
     isOpen,
     onClick,
 }: {
     isOpen: boolean;
     onClick: () => void;
-}) => (isOpen ? <X onClick={onClick} /> : <Menu onClick={onClick} />);
+}) => (isOpen ? <X onClick={onClick} /> : <Menu onClick={onClick} />));
 
 /* ================= UTIL ================= */
 
-export const NavbarLogo = () => (
+export const NavbarLogo = memo(() => (
     <Link to="/">
         <FormatImage
             src="/icons/logo_gala_A.png"
@@ -207,10 +179,10 @@ export const NavbarLogo = () => (
             className="h-10 w-auto"
         />
     </Link>
-);
+));
 
-export const NavbarButton = ({ children }: { children: React.ReactNode }) => (
+export const NavbarButton = memo(({ children }: { children: React.ReactNode }) => (
     <button className="rounded-md bg-black px-4 py-2 text-sm text-white">
         {children}
     </button>
-);
+));

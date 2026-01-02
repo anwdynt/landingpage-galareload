@@ -52,22 +52,24 @@ const features = [
 export default function Features() {
     return (
         <div className="py-20 lg:py-40 max-w-7xl mx-auto container px-2 lg:px-0">
-            <div className="px-8 mb-20">
+            <div className="px-2 lg:px-0 mb-20">
                 <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-lg">
                     Fitur unggulan <ColourfulText text="web report." />
                 </h2>
                 <TextGenerateEffect
                     className="text-lg md:text-xl mt-0 font-extralight dark:text-white font-google-sans text-primary leading-normal max-w-3xl"
-                    words="Dirancang khusus untuk memaksimalkan produktivitas pengelolaan server pulsa dan loket pembayaran melalui perangkat Desktop/PC."
+                    words="Dirancang khusus untuk memaksimalkan produktivitas pengelolaan laporan bisnis Anda dengan data yang terintegrasi dan mudah digunakan."
                 />
             </div>
 
-            <MacbookScroll
-                src="/images/webreportgala.png"
-                srcWebp="/images/webreportgala.png"
-                alt="Web Report Dashboard"
-                showGradient={false}
-            />
+            <div className="hidden lg:block">
+                <MacbookScroll
+                    src="/images/webreportgala.png"
+                    srcWebp="/images/webreportgala.png"
+                    alt="Web Report Dashboard"
+                    showGradient={false}
+                />
+            </div>
 
             <div className="flex flex-col space-y-24">
                 {features.map((feature, index) => (

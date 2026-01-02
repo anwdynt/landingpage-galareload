@@ -6,9 +6,8 @@ import {
     MobileNavMenu,
     MobileNavToggle,
     NavbarLogo,
-    NavbarButton,
 } from '~/components/ui/resizeable-navbar';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { Outlet } from 'react-router';
 import Footer from '~/components/ui/footer';
@@ -45,7 +44,7 @@ export default function TitleLayout() {
             ],
 
         },
-        { name: 'Pricing', link: '#pricing' },
+        { name: 'Harga', link: '/pricing' },
         { name: 'Contact', link: '#contact' },
     ];
 
@@ -91,9 +90,10 @@ export default function TitleLayout() {
                                             <a
                                                 key={child.name}
                                                 href={child.link}
-                                                className="text-sm text-neutral-600"
+                                                className="flex items-center gap-2 text-sm text-neutral-900"
                                                 onClick={() => setOpen(false)}
                                             >
+                                                <ArrowRight className="w-4" />
                                                 {child.name}
                                             </a>
                                         ))}

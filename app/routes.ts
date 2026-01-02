@@ -12,8 +12,10 @@ export default [
         ...prefix('/product', [
             route('/aplikasi-galareload', 'routes/product/app-galareload.tsx'),
             route('/webreport-galareload', 'routes/product/webreport-galareload.tsx'),
-            // route('/host-to-host-galareload', 'routes/product/host-to-host-galareload.tsx'),
-            // route('/master-dealer-galareload', 'routes/product/master-dealer-galareload.tsx'),
+            route('/whitelabel-galareload', 'routes/product/whitelabel-galareload.tsx'),
+            route('/host-to-host-galareload', 'routes/product/h2h-galareload.tsx'),
+            route('/master-dealer-galareload', 'routes/product/masterdealer-galareload.tsx'),
         ]),
+        route('/pricing', 'routes/pricing.tsx'),
     ]),
 ] satisfies RouteConfig;

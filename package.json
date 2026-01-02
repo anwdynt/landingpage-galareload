@@ -23,6 +23,7 @@
         "fs-extra": "^11.3.3",
         "isbot": "^5.1.31",
         "lucide-react": "^0.561.0",
+        "next-themes": "^0.4.6",
         "prettier": "^3.7.4",
         "qss": "^3.0.0",
         "react": "^19.2.3",
@@ -30,6 +31,7 @@
         "react-router": "7.10.1",
         "sharp": "^0.34.5",
         "simplex-noise": "^4.0.3",
+        "sonner": "^2.0.7",
         "tailwind-merge": "^3.4.0",
         "vite-plugin-image-optimizer": "^2.0.3"
     },

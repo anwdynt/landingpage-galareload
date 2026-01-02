@@ -5,6 +5,7 @@ import Product from './product';
 import Advantages from './advantages';
 import CTA from './cta';
 import Testimoni from './testimoni';
+import SocialMedia from './social-media';
 import FAQ from './faq';
 
 export function Index() {
@@ -14,6 +15,7 @@ export function Index() {
             <Welcome />
             <Product />
             <Advantages />
+            <SocialMedia />
             <CTA />
             <Testimoni />
             <FAQ />
