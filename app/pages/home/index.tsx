@@ -7,6 +7,7 @@ import CTA from './cta';
 import Testimoni from './testimoni';
 import SocialMedia from './social-media';
 import FAQ from './faq';
+import Blog from './blog';
 
 export function Index() {
     return (
@@ -17,6 +18,7 @@ export function Index() {
             <Advantages />
             <SocialMedia />
             <CTA />
+            <Blog />
             <Testimoni />
             <FAQ />
         </>
