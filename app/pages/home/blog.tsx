@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { BLOG_POSTS } from '~/data/blog-posts';
 import { cn } from '~/lib/utils';
+import { Button } from '~/components/ui/button';
 
 export default function Blog() {
     return (
@@ -94,9 +95,11 @@ export default function Blog() {
                 </div>
 
                 <div className="mt-16 text-center">
-                    <button className="px-8 py-3 rounded-full bg-black dark:bg-white text-white dark:text-black font-bold text-sm tracking-wide shadow-lg hover:translate-y-[-2px] hover:shadow-xl transition-all duration-200">
-                        Lihat Semua Artikel
-                    </button>
+                    <Link to="/blog">
+                        <Button className="px-8 py-3 cursor-pointer rounded-full bg-black dark:bg-white text-white dark:text-black font-bold text-sm tracking-wide shadow-lg hover:translate-y-[-2px] hover:shadow-xl transition-all duration-200">
+                            Lihat Semua Artikel
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

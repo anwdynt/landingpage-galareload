@@ -61,7 +61,13 @@ export function Index({ pricingData, categories, operators, activeCategory, acti
 
             const data = response.data || response;
             const base64Content = data.base64 || (typeof data === 'string' ? data : null);
-            const fileName = data.fileName || 'daftar_harga_galareload.xlsx';
+
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const fileName = `harga_produk_galareload_${year}${month}${day}.xlsx`;
+
             const mimeType = data.mimeType || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
             if (base64Content) {
