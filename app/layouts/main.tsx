@@ -44,6 +44,7 @@ export default function TitleLayout() {
             ],
 
         },
+        { name: 'Blog', link: '/blog' },
         { name: 'Harga', link: '/pricing' },
         { name: 'Contact', link: '#contact' },
     ];

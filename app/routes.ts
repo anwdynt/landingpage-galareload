@@ -16,6 +16,8 @@ export default [
             route('/host-to-host-galareload', 'routes/product/h2h-galareload.tsx'),
             route('/master-dealer-galareload', 'routes/product/masterdealer-galareload.tsx'),
         ]),
+        route('/blog', 'routes/blog/index.tsx'),
+        route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
     ]),
 ] satisfies RouteConfig;
