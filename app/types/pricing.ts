@@ -32,3 +32,11 @@ export interface Category {
     id: string;
     name: string;
 }
+
+export interface IndexProps {
+    pricingData: ProductItem[];
+    categories: Category[];
+    operators: string[];
+    activeCategory: string;
+    activeOperator: string;
+}

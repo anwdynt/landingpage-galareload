@@ -9,7 +9,7 @@ import SocialMedia from './social-media';
 import FAQ from './faq';
 import Blog from './blog';
 
-export function Index() {
+export function Index({ posts }: { posts: any[] }) {
     return (
         <>
             <Hero />
@@ -18,7 +18,7 @@ export function Index() {
             <Advantages />
             <SocialMedia />
             <CTA />
-            <Blog />
+            <Blog posts={posts} />
             <Testimoni />
             <FAQ />
         </>

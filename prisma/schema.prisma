@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String
+  role      String   @default("USER") // ADMIN, EDITOR, USER
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  // RBAC Relationships
+  userRoles       UserRole[]
+  userPermissions UserPermission[]
+  
+  // Blog
+  posts           Post[]
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  slug        String           @unique
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relationships
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+}
+
+model Permission {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  slug        String           @unique
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relationships
+  rolePermissions RolePermission[]
+  userPermissions UserPermission[]
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model UserRole {
+  userId Int
+  roleId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model UserPermission {
+  userId       Int
+  permissionId Int
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permissionId])
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  PENDING
+  PRIVATE
+  TRASH
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  excerpt     String?  @db.Text
+  content     String?  @db.Text // Content can be null in draft
+  content_raw Json?    // EditorJS JSON output
+  image       String?
+  status      PostStatus @default(DRAFT)
+  
+  // Relationships
+  authorId    Int?
+  author      User?    @relation(fields: [authorId], references: [id])
+  
+  categories  PostCategory[]
+  tags        PostTag[]
+  meta        PostMeta[]
+  
+  // SEO Metadata (Keep flat for easy access, or move to meta)
+  meta_title       String?
+  meta_description String?
+  
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PostMeta {
+  id        Int    @id @default(autoincrement())
+  postId    Int
+  post      Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  key       String
+  value     String @db.Text
+
+  @@unique([postId, key])
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  description String?
+  posts       PostCategory[]
+}
+
+model Tag {
+  id    Int       @id @default(autoincrement())
+  name  String
+  slug  String    @unique
+  posts PostTag[]
+}
+
+model PostCategory {
+  postId     Int
+  categoryId Int
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+}
+
+model PostTag {
+  postId Int
+  tagId  Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}

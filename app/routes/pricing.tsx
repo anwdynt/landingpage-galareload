@@ -1,7 +1,7 @@
 import { type ClientLoaderFunctionArgs } from "react-router";
 import { useLoaderData } from "react-router";
 import { Index } from "../pages/pricing";
-import { getCategories, getOperators, getProducts } from "~/services/pricingService";
+import { getCategories, getOperators, getProducts } from "~/client/api/pricing";
 import type { ProductItem, ApiProductGroup } from "~/types/pricing";
 
 export async function clientLoader({ request }: ClientLoaderFunctionArgs) {

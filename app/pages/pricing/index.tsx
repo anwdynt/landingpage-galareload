@@ -5,21 +5,13 @@ import { useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 import { Button } from '~/components/ui/button';
 // Components
-import { exportPriceList } from '~/services/pricingService';
+import { exportPriceList } from '~/client/api/pricing';
 import { Sidebar } from './sidebar';
 import { OperatorFilter } from './operator-filter';
 import { ProductList } from './product-list';
 import { MobileFilter } from './mobile-filter';
 
-import type { ProductItem } from '~/types/pricing';
-
-interface IndexProps {
-    pricingData: ProductItem[];
-    categories: { id: string; name: string }[];
-    operators: string[];
-    activeCategory: string;
-    activeOperator: string;
-}
+import type { ProductItem, IndexProps } from '~/types/pricing';
 
 export function Index({ pricingData, categories, operators, activeCategory, activeOperator }: IndexProps) {
     const [searchParams, setSearchParams] = useSearchParams();

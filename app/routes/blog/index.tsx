@@ -1,14 +1,14 @@
 import { type LoaderFunctionArgs } from 'react-router';
+import type { Post } from '~/types/blog';
 import { useLoaderData, Link, useSearchParams, Form } from 'react-router';
 import { Search, ChevronLeft, ChevronRight, Clock, User, ArrowRight } from 'lucide-react';
-import { BLOG_POSTS } from '~/data/blog-posts';
+import { getPublishedPosts, getCategories } from '~/server/post.server';
 import { cn } from '~/lib/utils';
 import { AuroraBackground } from '~/components/ui/aurora-background';
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';
 
-// Metadata
 // Metadata
 export function meta({ data }: { data: { url: string } | undefined }) {
     const url = data?.url || '';
@@ -20,7 +20,7 @@ export function meta({ data }: { data: { url: string } | undefined }) {
         { property: 'og:type', content: 'website' },
         { property: 'og:title', content: 'Blog & Wawasan - Gala Reload' },
         { property: 'og:description', content: 'Artikel terbaru seputar bisnis pulsa, teknologi, dan tips sukses agen.' },
-        { property: 'og:image', content: 'https://galareload.id/og-blog.jpg' }, // Placeholder or explicit asset
+        { property: 'og:image', content: 'https://galareload.id/og-blog.jpg' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Blog & Wawasan - Gala Reload' },
         { name: 'twitter:description', content: 'Artikel terbaru seputar bisnis pulsa, teknologi, dan tips sukses agen.' },
@@ -28,32 +28,21 @@ export function meta({ data }: { data: { url: string } | undefined }) {
 }
 
 // Loader for Pagination & Filtering
-export function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get('page')) || 1;
     const search = url.searchParams.get('q') || '';
     const category = url.searchParams.get('category') || '';
+    const limit = 6;
 
-    const limit = 6; // Posts per page
-
-    // Filter Logic
-    let filteredPosts = BLOG_POSTS.filter((post) => {
-        const matchSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
-            post.excerpt.toLowerCase().includes(search.toLowerCase());
-        const matchCategory = category ? post.category === category : true;
-        return matchSearch && matchCategory;
-    });
-
-    const totalPosts = filteredPosts.length;
-    const totalPages = Math.ceil(totalPosts / limit);
-    const paginatedPosts = filteredPosts.slice((page - 1) * limit, page * limit);
-
-    const categories = Array.from(new Set(BLOG_POSTS.map(p => p.category)));
+    // Fetch from DB
+    const { posts, total, totalPages } = await getPublishedPosts({ page, limit, search, category });
+    const allCategories = await getCategories();
 
     return {
-        posts: paginatedPosts,
-        pagination: { page, totalPages, totalPosts },
-        categories,
+        posts,
+        pagination: { page, totalPages, totalPosts: total },
+        categories: allCategories.map(c => c.name),
         currentCategory: category,
         searchQuery: search
     };
@@ -100,18 +89,33 @@ function BlogSidebar({ categories, currentCategory }: { categories: string[], cu
     );
 }
 
-function BlogCard({ post }: { post: typeof BLOG_POSTS[0] }) {
+function BlogCard({ post }: { post: Post }) {
+    // Determine category display
+    const categoryName = post.categories && post.categories.length > 0
+        ? post.categories[0].category.name
+        : "Umum";
+
+    // Fallback image
+    const imageSrc = post.image || '/assets/images/placeholder-blog.jpg'; // Ensure you have a placeholder or handle this
+
     return (
         <Link to={`/blog/${post.slug}`} className="group flex flex-col bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-100 dark:border-neutral-800 shadow-sm hover:shadow-xl transition-all duration-300 h-full">
-            <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+            <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+                {post.image ? (
+                    <img
+                        src={imageSrc}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                        <span className="text-xs uppercase font-bold tracking-widest">No Image</span>
+                    </div>
+                )}
+
                 <div className="absolute top-4 left-4">
-                    <span className={cn("px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-white/90 backdrop-blur-sm shadow-sm", post.color)}>
-                        {post.category}
+                    <span className={cn("px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-white/90 backdrop-blur-sm shadow-sm text-primary")}>
+                        {categoryName}
                     </span>
                 </div>
             </div>
@@ -119,11 +123,11 @@ function BlogCard({ post }: { post: typeof BLOG_POSTS[0] }) {
                 <div className="flex items-center gap-4 text-xs text-neutral-500 mb-3">
                     <div className="flex items-center gap-1.5">
                         <Clock size={14} />
-                        5 min read
+                        {new Date(post.publishedAt || post.createdAt).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}
                     </div>
                     <div className="flex items-center gap-1.5">
                         <User size={14} />
-                        {post.author}
+                        {post.author?.name || 'Admin'}
                     </div>
                 </div>
 
@@ -160,7 +164,7 @@ export default function BlogList() {
                     "url": "https://galareload.id/blog",
                     "mainEntity": {
                         "@type": "ItemList",
-                        "itemListElement": posts.map((post, index) => ({
+                        "itemListElement": posts.map((post: Post, index: number) => ({
                             "@type": "ListItem",
                             "position": index + 1,
                             "url": `https://galareload.id/blog/${post.slug}`,
@@ -221,7 +225,7 @@ export default function BlogList() {
                         {/* Article Grid */}
                         {posts.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                                {posts.map(post => (
+                                {posts.map((post: Post) => (
                                     <BlogCard key={post.id} post={post} />
                                 ))}
                             </div>
