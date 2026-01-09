@@ -7,6 +7,7 @@ import { AuroraBackground } from '~/components/ui/aurora-background';
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';
+import { JsonLd } from "~/components/seo/json-ld";
 
 // Metadata
 // Metadata
@@ -151,24 +152,22 @@ export default function BlogList() {
     return (
         <div className="min-h-screen dark:bg-black pb-24">
             {/* JSON-LD Structured Data */}
-            <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "CollectionPage",
-                    "headline": "Blog & Wawasan Gala Reload",
-                    "description": "Kumpulan artikel seputar bisnis pulsa, teknologi, dan tips sukses agen.",
-                    "url": "https://galareload.id/blog",
-                    "mainEntity": {
-                        "@type": "ItemList",
-                        "itemListElement": posts.map((post, index) => ({
-                            "@type": "ListItem",
-                            "position": index + 1,
-                            "url": `https://galareload.id/blog/${post.slug}`,
-                            "name": post.title
-                        }))
-                    }
-                })}
-            </script>
+            <JsonLd data={{
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "headline": "Blog & Wawasan Gala Reload",
+                "description": "Kumpulan artikel seputar bisnis pulsa, teknologi, dan tips sukses agen.",
+                "url": "https://galareload.id/blog",
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "itemListElement": posts.map((post, index) => ({
+                        "@type": "ListItem",
+                        "position": index + 1,
+                        "url": `https://galareload.id/blog/${post.slug}`,
+                        "name": post.title
+                    }))
+                }
+            }} />
 
             {/* Hero Section */}
             <AuroraBackground className="-mt-14 space-y-1 h-[60vh] min-h-[400px] mb-20 items-center justify-center py-24">

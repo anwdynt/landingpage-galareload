@@ -1,4 +1,5 @@
 import { type ClientLoaderFunctionArgs } from "react-router";
+import type { Route } from "./+types/pricing";
 import { useLoaderData } from "react-router";
 import { Index } from "../pages/pricing";
 import { getCategories, getOperators, getProducts } from "~/services/pricingService";
@@ -71,16 +72,39 @@ export async function clientLoader({ request }: ClientLoaderFunctionArgs) {
     };
 }
 
+import { JsonLd } from "~/components/seo/json-ld";
+
+export function meta({ }: Route.MetaArgs) {
+    return [
+        { title: 'Daftar Harga Pulsa & PPOB Termurah | Gala Reload' },
+        { name: 'description', content: 'Cek daftar harga pulsa all operator, token listrik, paket data, dan voucher game termurah di Gala Reload. Update real-time.' },
+        { name: 'keywords', content: 'harga pulsa termurah, daftar harga agen pulsa, harga token listrik, harga voucher game, harga ppob, bisnis pulsa untung' },
+        { property: 'og:title', content: 'Daftar Harga Pulsa & PPOB Termurah | Gala Reload' },
+        { property: 'og:description', content: 'Cek daftar harga pulsa all operator, token listrik, paket data, dan voucher game termurah.' },
+    ];
+}
+
 export default function Pricing() {
     const data = useLoaderData<typeof clientLoader>();
 
+    const pricingSchema = {
+        "@context": "https://schema.org",
+        "@type": "PriceListComponent",
+        "name": "Daftar Harga Gala Reload",
+        "description": "Daftar harga produk pulsa, paket data, dan PPOB Gala Reload.",
+        "url": "https://galareload.id/pricing"
+    };
+
     return (
-        <Index
-            pricingData={data.products}
-            categories={data.categories}
-            operators={data.operators}
-            activeCategory={data.activeCategory}
-            activeOperator={data.activeOperator}
-        />
+        <>
+            <JsonLd data={pricingSchema} />
+            <Index
+                pricingData={data.products}
+                categories={data.categories}
+                operators={data.operators}
+                activeCategory={data.activeCategory}
+                activeOperator={data.activeOperator}
+            />
+        </>
     );
 }

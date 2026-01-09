@@ -24,7 +24,44 @@ export const links: Route.LinksFunction = () => [
     },
 ];
 
+import { JsonLd } from "~/components/seo/json-ld";
+
+export const meta: Route.MetaFunction = () => {
+    return [
+        { title: "Gala Reload | Aplikasi Server Pulsa & PPOB Termurah" },
+        { name: "description", content: "Platform agen pulsa dan PPOB termurah dan terpercaya. Layanan 24 jam untuk pulsa, paket data, token listrik, dan pembayaran tagihan." },
+        { name: "keywords", content: "agen pulsa, server pulsa, ppob termurah, gala reload, pulsa murah, token listrik" },
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "Gala Reload" },
+        { property: "og:title", content: "Gala Reload | Aplikasi Server Pulsa & PPOB Termurah" },
+        { property: "og:description", content: "Platform agen pulsa dan PPOB termurah dan terpercaya. Layanan 24 jam." },
+        { property: "twitter:card", content: "summary_large_image" },
+        { property: "twitter:title", content: "Gala Reload | Aplikasi Server Pulsa & PPOB Termurah" },
+        { property: "twitter:description", content: "Platform agen pulsa dan PPOB termurah dan terpercaya." },
+    ];
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Gala Reload",
+        "url": "https://galareload.com",
+        "logo": "https://galareload.com/icons/logo_gala_A.png",
+        "sameAs": [
+            "https://www.instagram.com/galareload_official",
+            "https://www.facebook.com/profile.php?id=61585199416921",
+            "https://tiktok.com/@galareload.official",
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+6281329701020",
+            "contactType": "customer service",
+            "areaServed": "ID",
+            "availableLanguage": ["Indonesian", "English"]
+        }
+    };
+
     return (
         <html lang="en">
             <head>
@@ -35,6 +72,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <Meta />
                 <Links />
+                <JsonLd data={organizationSchema} />
             </head>
             <body className="overflow-x-hidden">
                 {children}

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { BLOG_POSTS, type BlogPost } from '~/data/blog-posts';
 import { cn } from '~/lib/utils';
+import { JsonLd } from "~/components/seo/json-ld";
 
 // --- Meta Function ---
 export function meta({ data }: { data: { post: BlogPost; url: string } | undefined }) {
@@ -166,30 +167,28 @@ export default function BlogDetail() {
             />
 
             {/* JSON-LD Structured Data */}
-            <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "BlogPosting",
-                    "headline": post.title,
-                    "image": [post.image],
-                    "datePublished": post.date, // ideally ISO 8601
-                    "dateModified": post.date,
-                    "author": [{
-                        "@type": "Person",
-                        "name": post.author,
-                        "url": "https://galareload.id/team"
-                    }],
-                    "publisher": {
-                        "@type": "Organization",
-                        "name": "Gala Reload",
-                        "logo": {
-                            "@type": "ImageObject",
-                            "url": "https://galareload.id/logo.png"
-                        }
-                    },
-                    "description": post.excerpt
-                })}
-            </script>
+            <JsonLd data={{
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": post.title,
+                "image": [post.image],
+                "datePublished": post.date, // ideally ISO 8601
+                "dateModified": post.date,
+                "author": [{
+                    "@type": "Person",
+                    "name": post.author,
+                    "url": "https://galareload.id/team"
+                }],
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Gala Reload",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://galareload.id/logo.png"
+                    }
+                },
+                "description": post.excerpt
+            }} />
 
             {/* Header / Hero Section */}
             <header className="pt-32 pb-16 px-4 md:px-8 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 relative overflow-hidden">
