@@ -177,18 +177,6 @@ export function Index({ pricingData, categories, operators, activeCategory, acti
                     </div>
                 </div>
             </div>
-
-            <MobileFilter
-                isOpen={isFilterOpen}
-                setIsOpen={setIsFilterOpen}
-                activeCategory={activeCategory}
-                activeCategoryName={activeCategoryName}
-                activeOperator={activeOperator}
-                categories={categories}
-                operators={operators}
-                onCategoryChange={handleCategoryChange}
-                onOperatorChange={handleOperatorChange}
-            />
         </div >
     );
 }

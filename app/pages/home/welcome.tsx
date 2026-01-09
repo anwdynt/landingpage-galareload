@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function Welcome() {
     return (
         <div className="space-y-20 py-8 md:py-12 lg:py-20 max-w-7xl container mx-auto px-4 lg:px-0">
-            <AspectRatio ratio={9 / 4}>
+            {/* <AspectRatio ratio={9 / 4}>
                 <iframe
                     src="https://www.youtube.com/embed/SVCBA-pBgt0"
                     title="YouTube video player"
@@ -15,7 +15,7 @@ export default function Welcome() {
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                 />
-            </AspectRatio>
+            </AspectRatio> */}
             <motion.div
                 initial={{ opacity: 0, x: -60 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -27,10 +27,10 @@ export default function Welcome() {
                 className="mx-auto max-w-420 container"
             >
                 <div className="space-y-2">
-                    <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-4xl">
-                        Galareload adalah satu platform yang mendampingi bisnis
-                        anda tumbuh dari tahap <ColourfulText text="awal" />{' '}
-                        hingga skala <ColourfulText text="enterprise." />
+                    <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-5xl">
+                        Galareload membantu konter dan penjual pulsa mengembangkan bisnis dari skala
+                        <ColourfulText text=" kecil" />{' '}
+                        hingga <ColourfulText text="besar." />
                     </h2>
 
                     <div className="text-lg md:text-xl font-extralight dark:text-white text-left font-google-sans text-gray-700 leading-normal max-w-5xl">

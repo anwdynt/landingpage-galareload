@@ -54,7 +54,7 @@ export const ProductList = memo(function ProductList({ groupedData }: ProductLis
                             <table className="w-full text-left font-google-sans">
                                 <thead className="bg-neutral-50 dark:bg-neutral-950 text-xs uppercase text-neutral-500 font-medium">
                                     <tr>
-                                        <th className="px-6 py-3 whitespace-nowrap">Kode</th>
+                                        <th className="px-6 py-3 whitespace-nowrap hidden md:table-cell">Kode</th>
                                         <th className="px-6 py-3 min-w-[200px]">Produk</th>
                                         <th className="px-6 py-3 whitespace-nowrap">Harga</th>
                                     </tr>
@@ -68,7 +68,7 @@ export const ProductList = memo(function ProductList({ groupedData }: ProductLis
                                                 idx % 2 === 0 ? "bg-white dark:bg-neutral-900" : "bg-neutral-50/30 dark:bg-neutral-900/50"
                                             )}
                                         >
-                                            <td className="px-6 py-4 text-sm font-mono text-neutral-600 dark:text-neutral-400 font-semibold whitespace-nowrap">
+                                            <td className="px-6 py-4 hidden md:table-cell text-sm font-mono text-neutral-600 dark:text-neutral-400 font-semibold whitespace-nowrap">
                                                 {item.code}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-neutral-900 dark:text-neutral-200 font-medium">
