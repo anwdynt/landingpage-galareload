@@ -1,4 +1,5 @@
 import { Phone, Smartphone } from 'lucide-react';
+import { Link } from 'react-router';
 export default function Footer() {
     return (
         <footer className="w-full bg-neutral-950 text-neutral-300">
@@ -31,14 +32,9 @@ export default function Footer() {
                     </p>
 
                     <div className="mt-4 space-y-2 text-sm">
-                        <p className="gap-2 flex">
-                            <Phone className="text-white w-4 h-auto" />{' '}
-                            024-3517625
-                        </p>
-                        <p className="gap-2 flex">
-                            <Smartphone className="text-white w-4 h-auto" /> +62
-                            851-9129-5757
-                        </p>
+                        <Link to="https://api.whatsapp.com/send/?phone=6281329701020&text=Saya+butuh+informasi+terkait+produk+Gala+Reload&type=phone_number&app_absent=0" className="gap-2 flex">
+                            <Smartphone className="text-white w-4 h-auto" /> +62 8132-9701-020
+                        </Link>
                     </div>
                 </div>
 

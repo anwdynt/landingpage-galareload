@@ -126,28 +126,17 @@ export function Index({ pricingData, categories, operators, activeCategory, acti
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
 
-                    {/* Sticky Mobile Filter Bar */}
-                    <div className="lg:hidden sticky top-28 z-40 -mx-4 px-4 bg-white/80 dark:bg-black/80 backdrop-blur-md border-y border-neutral-100 dark:border-neutral-800 py-3 mb-6 transition-all">
-                        <div className="flex justify-between items-center">
-                            <div className="flex flex-col">
-                                <span className="text-xs text-neutral-500 font-medium">Kategori Aktif</span>
-                                <span className="font-bold text-neutral-900 dark:text-white text-sm truncate max-w-[200px]">
-                                    {activeCategoryName}
-                                    {activeOperator !== 'all' && <span className="text-primary ml-1">• {activeOperator}</span>}
-                                </span>
-                            </div>
-                            <button
-                                onClick={() => setIsFilterOpen(true)}
-                                className="flex items-center gap-2 bg-neutral-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-full text-xs font-bold shadow-lg hover:scale-105 transition-transform"
-                            >
-                                <Filter size={14} />
-                                Filter
-                            </button>
-                        </div>
-
-                    </div>
-
-                    {/* Sidebar Navigation (Desktop) */}
+                    <MobileFilter
+                        isOpen={isFilterOpen}
+                        setIsOpen={setIsFilterOpen}
+                        activeCategory={activeCategory}
+                        activeCategoryName={activeCategoryName}
+                        activeOperator={activeOperator}
+                        categories={categories}
+                        operators={operators}
+                        onCategoryChange={handleCategoryChange}
+                        onOperatorChange={handleOperatorChange}
+                    />
                     {/* Sidebar Navigation (Desktop) */}
 
                     <Sidebar
@@ -169,18 +158,6 @@ export function Index({ pricingData, categories, operators, activeCategory, acti
                     </div>
                 </div>
             </div>
-
-            <MobileFilter
-                isOpen={isFilterOpen}
-                setIsOpen={setIsFilterOpen}
-                activeCategory={activeCategory}
-                activeCategoryName={activeCategoryName}
-                activeOperator={activeOperator}
-                categories={categories}
-                operators={operators}
-                onCategoryChange={handleCategoryChange}
-                onOperatorChange={handleOperatorChange}
-            />
         </div >
     );
 }

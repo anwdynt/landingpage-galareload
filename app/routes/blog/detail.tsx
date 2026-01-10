@@ -4,6 +4,7 @@ import { getPostBySlug } from "~/server/post.server";
 import { BlockRenderer } from "~/components/blog/block-renderer";
 import { Clock, User, ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { JsonLd } from "~/components/seo/json-ld";
 
 export async function loader({ params }: LoaderFunctionArgs) {
     const slug = params.slug;
@@ -51,21 +52,29 @@ export default function BlogDetail() {
     return (
         <div className="min-h-screen bg-white dark:bg-black font-google-sans">
 
-            {/* JSON-LD for Article */}
-            <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "BlogPosting",
-                    "headline": post.title,
-                    "image": post.image,
-                    "datePublished": post.publishedAt,
-                    "dateModified": post.updatedAt,
-                    "author": {
-                        "@type": "Person",
-                        "name": post.author?.name || "Admin"
+            {/* JSON-LD Structured Data */}
+            <JsonLd data={{
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": post.title,
+                "image": [post.image],
+                "datePublished": post.publishedAt, // ideally ISO 8601
+                "dateModified": post.updatedAt,
+                "author": [{
+                    "@type": "Person",
+                    "name": post.author,
+                    "url": "https://galareload.id/team"
+                }],
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Gala Reload",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://galareload.id/logo.png"
                     }
-                })}
-            </script>
+                },
+                "description": post.excerpt
+            }} />
 
             {/* Header / Hero */}
             <div className="relative pt-32 pb-20 px-4 md:px-8 dark:bg-neutral-900/50 border-b border-neutral-200 dark:border-neutral-800">

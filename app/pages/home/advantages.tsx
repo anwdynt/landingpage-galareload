@@ -5,46 +5,46 @@ import { motion } from 'framer-motion';
 
 const content = [
     {
-        title: 'Keamanan Data & Transaksi Terjamin',
+        title: 'Dikembangkan Khusus untuk Menjawab Kebutuhan Konter',
         description:
-            'Kami menerapkan standar keamanan yang ketat untuk melindungi data dan transaksi bisnis Anda. Setiap proses dirancang untuk menjaga integritas sistem serta memberikan rasa aman dalam menjalankan operasional harian.',
-        image: '/images/security.png',
-        imageWebp: '/images/security.webp',
+            'Setiap fitur kami rancang berdasarkan kebutuhan operasional konter sehari-hari, mulai dari transaksi, pengelolaan produk, hingga pengembangan bisnis agar berjalan lebih mudah dan efisien.',
+        image: '/images/advantages-needs.png',
+        imageWebp: '/images/advantages-needs.png',
     },
     {
-        title: 'Pendekatan Solusi yang Personal',
+        title: 'Menjamin kelancaran Transaksi untuk Mendukung Pertumbuhan Konter',
         description:
-            'Setiap bisnis memiliki kebutuhan yang berbeda. Oleh karena itu, kami menghadirkan pendekatan layanan yang disesuaikan, memberikan solusi yang relevan dan tepat guna sesuai dengan model dan tujuan bisnis Anda.',
-        image: '/images/personal.png',
-        imageWebp: '/images/personal.webp',
-    },
-    {
-        title: 'Infrastruktur Stabil & Andal',
-        description:
-            'Platform Galareload dibangun di atas infrastruktur yang stabil dan teruji, dirancang untuk menangani transaksi dalam volume tinggi dengan performa yang konsisten. Hal ini memastikan operasional bisnis Anda berjalan lancar, aman, dan dapat diandalkan setiap waktu.',
-        image: '/images/infra.png',
-        imageWebp: '/images/infra.webp',
+            'Transaksi yang cepat dan stabil, ditambah kualitas produk yang terjaga, membuat operasional konter lebih efisien, minim kendala, dan siap mendukung bisnis Anda berkembang lebih besar.',
+        image: '/images/advantages-transaction.png',
+        imageWebp: '/images/advantages-transaction.png',
     },
     {
         title: 'Struktur Harga yang Transparan',
         description:
-            'Kami menerapkan struktur harga yang jelas dan terbuka sejak awal kerja sama, tanpa biaya tersembunyi atau komponen yang tidak dijelaskan. Setiap biaya disampaikan secara rinci agar Anda memahami dengan pasti apa yang dibayarkan, layanan apa yang diterima, serta nilai yang diperoleh untuk mendukung kebutuhan dan pertumbuhan bisnis Anda.',
-        image: '/images/price.png',
-        imageWebp: '/images/price.webp',
+            'Kami menerapkan sistem harga yang jelas dan terbuka sejak awal, tanpa biaya tersembunyi. Setiap komponen biaya dijelaskan secara rinci, sehingga konter Anda tahu persis apa yang dibayar, layanan apa yang didapat, dan nilai yang diterima untuk mendukung operasional serta pertumbuhan bisnis.',
+        image: '/images/advantages-pricing.png',
+        imageWebp: '/images/advantages-pricing.png',
     },
     {
         title: 'Support Responsif & Berpengalaman',
         description:
-            'Layanan support kami hadir 24 jam tanpa henti, memberikan pendampingan profesional dengan standar tinggi. Melalui respons yang cepat, analisis yang akurat, dan komunikasi yang jelas, kami membantu menjaga kontinuitas operasional dan mendukung pertumbuhan bisnis Anda secara berkelanjutan.',
-        image: '/images/support.png',
-        imageWebp: '/images/support.webp',
+            'Tim support kami siap membantu konter Anda selama 24 jam. Dengan respons cepat dan pemahaman yang kuat terhadap operasional konter, kami membantu menyelesaikan kendala dengan tepat agar transaksi tetap lancar dan bisnis terus berjalan.',
+        image: '/images/advantages-support.png',
+        imageWebp: '/images/advantages-support.png',
     },
     {
-        title: 'Pendampingan Onboarding & Training',
+        title: 'Deposit Aman & Proses Cepat',
         description:
-            'Kami mendampingi setiap tahap implementasi melalui onboarding dan pelatihan yang terarah, memastikan pemahaman sistem yang mendalam serta kesiapan operasional yang selaras dengan kebutuhan dan skala bisnis Anda.',
-        image: '/images/onboarding.png',
-        imageWebp: '/images/onboarding.webp',
+            'Proses deposit dirancang dengan sistem yang aman dan terkontrol, memastikan saldo masuk tepat waktu dan siap digunakan. Dengan alur yang jelas dan stabil, konter Anda dapat beroperasi tanpa khawatir gangguan deposit.',
+        image: '/images/advantages-deposit.png',
+        imageWebp: '/images/advantages-deposit.png',
+    },
+    {
+        title: 'Jadilah Pemilik Aplikasi, Bangun Brand Sendiri',
+        description:
+            'Dengan solusi Whitelabel, Anda dapat mengelola jaringan Anda menggunakan aplikasi dengan brand sendiri untuk mendukung pertumbuhan bisnis yang lebih besar.',
+        image: '/images/advantages-whitelabel.png',
+        imageWebp: '/images/advantages-whitelabel.png',
     },
 ];
 
@@ -78,9 +78,8 @@ export default function Advantages() {
                         return (
                             <div
                                 key={index}
-                                className={`max-w-3xl ${
-                                    isEven ? 'mr-auto' : 'ml-auto'
-                                }`}
+                                className={`max-w-3xl ${isEven ? 'mr-auto' : 'ml-auto'
+                                    }`}
                             >
                                 <div className="flex flex-col gap-6 items-center ">
                                     {/* IMAGE */}

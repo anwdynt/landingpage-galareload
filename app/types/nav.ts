@@ -3,11 +3,9 @@ import React from 'react';
 export interface NavItem {
     name: string;
     link?: string;
-    children?: {
-        name: string;
-        link: string;
-        description?: string;
-    }[];
+    target?: string;
+    description?: string;
+    children?: NavItem[];
 }
 
 export interface NavbarProps {

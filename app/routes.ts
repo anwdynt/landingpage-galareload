@@ -21,6 +21,7 @@ export default [
         route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
     ]),
+<<<<<<< HEAD
 
     // Auth Routes
     route('/admin-panel', 'routes/login.tsx'),
@@ -39,4 +40,8 @@ export default [
         route('/admin/categories', 'routes/admin/categories.tsx'),
         // Add more admin routes here later
     ]),
+=======
+    route('/sitemap.xml', 'routes/sitemap[.]xml.tsx'),
+    route('/robots.txt', 'routes/robots[.]txt.tsx'),
+>>>>>>> 2746267a8d4f85f341c61b9bc478afff4bc5017e
 ] satisfies RouteConfig;
