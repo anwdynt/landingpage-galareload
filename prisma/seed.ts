@@ -145,7 +145,7 @@ async function main() {
 
     // 6. Migrate Blog Posts
     // 6. Seed Categories
-    const categories = ['Technology', 'Business', 'Lifestyle', 'Health', 'Education'];
+    const categories = ['Bisnis', 'Tips', 'Fitur', 'Teknis', 'Strategi'];
     for (const catName of categories) {
         await prisma.category.upsert({
             where: { slug: catName.toLowerCase() },
