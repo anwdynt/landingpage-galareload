@@ -1,13 +1,4 @@
 .react-router
-node_modules
 build
-generated
-.prisma
-.git
-.gitignore
-.env
-.env.*
-images.rar
-uploads
+node_modules
 README.md
-*.log
