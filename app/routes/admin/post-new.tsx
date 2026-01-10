@@ -1,8 +1,9 @@
 import { type ActionFunctionArgs, redirect, useActionData, useLoaderData, useSubmit, type LoaderFunctionArgs } from "react-router";
 import { createPost, getCategories } from "~/server/post.server";
+import { uploadImage } from "~/server/upload.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { toast } from "sonner";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
 import { setStatus, resetPostSettings } from '~/store/slices/postSettingsSlice'; // Accessors
@@ -31,6 +32,17 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const payload = JSON.parse(payloadString);
 
+    // Handle File Upload
+    const featuredImageFile = formData.get("featuredImageFile");
+    let imageUrl = payload.featuredImage;
+
+    if (featuredImageFile && (featuredImageFile as File).size > 0) {
+        const uploadedPath = await uploadImage(featuredImageFile as File);
+        if (uploadedPath) {
+            imageUrl = uploadedPath;
+        }
+    }
+
     try {
         const post = await createPost({
             title: payload.title,
@@ -42,7 +54,7 @@ export async function action({ request }: ActionFunctionArgs) {
             categoryIds: payload.categoryIds,
             meta: payload.meta,
             excerpt: payload.excerpt,
-            image: payload.featuredImage
+            image: imageUrl
         });
         return { success: true, postId: post.id };
     } catch (e: any) {
@@ -59,12 +71,15 @@ function EditorWrapper() {
     const { title, slug, content } = useSelector((state: RootState) => state.editor);
     const settings = useSelector((state: RootState) => state.postSettings);
 
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     // Reset state on mount for new post
     useEffect(() => {
         dispatch(setTitle(''));
         dispatch(setSlug(''));
         dispatch(setContent({}));
         dispatch(resetPostSettings());
+        setSelectedFile(null);
     }, [dispatch]);
 
     // Handle Save
@@ -74,34 +89,33 @@ function EditorWrapper() {
         const payload = {
             title,
             slug: slug || slugify(title),
-            content, // EditorJS JSON
+            content,
             status: status,
             categoryIds: settings.categoryIds,
             meta: settings.meta,
             excerpt: settings.excerpt,
-            featuredImage: settings.featuredImage
+            featuredImage: settings.featuredImage // This might be a URL string if not changed
         };
 
-        // Submit via React Router Form action
-        submit(
-            { payload: JSON.stringify(payload) },
-            { method: "post" }
-        );
+        const formData = new FormData();
+        formData.append("payload", JSON.stringify(payload));
 
-        // Optimistic UI updates handled by effect on actionData
-    }, [title, slug, content, settings, submit, dispatch]);
+        if (selectedFile) {
+            formData.append("featuredImageFile", selectedFile);
+        }
+
+        // Submit as FormData (encType multipart/form-data inferred by browser)
+        submit(formData, { method: "post", encType: "multipart/form-data" });
+
+    }, [title, slug, content, settings, selectedFile, submit, dispatch]);
 
     // Autosave Logic (Debounced)
-    // For MVP, we'll just track dirty state and maybe log it, or implement real autosave endpoint.
-    // User requested autosave logic.
     useEffect(() => {
         const timer = setTimeout(() => {
             if (title && content) {
-                // Dispatch autosave API call here if we had an endpoint
-                // For now just update UI time
                 dispatch(setLastAutosave(new Date().toLocaleTimeString()));
             }
-        }, 5000); // 5s debounce
+        }, 5000);
 
         return () => clearTimeout(timer);
     }, [title, content, dispatch]);
@@ -110,7 +124,6 @@ function EditorWrapper() {
         if (actionData?.success && actionData?.postId) {
             toast.success("Post saved successfully!");
             dispatch(setSaving(false));
-            // Redirect to edit page to prevent duplicate creation
             window.location.href = `/admin/posts/${actionData.postId}`;
         } else if (actionData?.error) {
             toast.error(actionData.error);
@@ -120,7 +133,12 @@ function EditorWrapper() {
 
     return (
         <EditorLayout
-            sidebar={<PostSettingsSidebar categories={categories} />}
+            sidebar={
+                <PostSettingsSidebar
+                    categories={categories}
+                    onFileSelect={(file) => setSelectedFile(file)}
+                />
+            }
             onSave={handleSave}
             titleInput={
                 <input

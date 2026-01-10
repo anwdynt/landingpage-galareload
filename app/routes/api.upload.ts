@@ -19,7 +19,25 @@ export async function action({ request }: ActionFunctionArgs) {
         }
 
         const fileObj = file as File;
-        const ext = path.extname(fileObj.name);
+
+        // Security Validation
+        const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+        if (fileObj.size > MAX_SIZE) {
+            return Response.json({ success: 0, error: "File too large (Max 5MB)" });
+        }
+
+        if (!ALLOWED_MIME_TYPES.includes(fileObj.type)) {
+            return Response.json({ success: 0, error: "Invalid file type. Only Images allowed." });
+        }
+
+        const ext = path.extname(fileObj.name).toLowerCase();
+        // Whitelist extension check
+        if (![".jpg", ".jpeg", ".png", ".gif", ".webp"].includes(ext)) {
+            return Response.json({ success: 0, error: "Invalid file extension." });
+        }
+
         const name = path.basename(fileObj.name, ext);
         // Sanitize filename to prevent path traversal or invalid characters
         const sanitizedName = name.replace(/[^a-zA-Z0-9-_.]/g, '');

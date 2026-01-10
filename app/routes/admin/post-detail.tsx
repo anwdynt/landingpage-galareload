@@ -1,8 +1,9 @@
 import { type LoaderFunctionArgs, type ActionFunctionArgs, redirect, useActionData, useLoaderData, useSubmit } from "react-router";
 import { getPost, updatePost, getCategories } from "~/server/post.server";
+import { uploadImage } from "~/server/upload.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { toast } from "sonner";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
 import { setStatus, setPostSettings, setMeta, setFeaturedImage } from '~/store/slices/postSettingsSlice';
@@ -38,6 +39,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
     const payload = JSON.parse(payloadString);
 
+    // Handle File Upload
+    const featuredImageFile = formData.get("featuredImageFile");
+    let imageUrl = payload.featuredImage;
+
+    if (featuredImageFile && (featuredImageFile as File).size > 0) {
+        const uploadedPath = await uploadImage(featuredImageFile as File);
+        if (uploadedPath) {
+            imageUrl = uploadedPath;
+        }
+    }
+
     try {
         await updatePost(id, {
             title: payload.title,
@@ -48,7 +60,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
             categoryIds: payload.categoryIds,
             meta: payload.meta,
             excerpt: payload.excerpt,
-            image: payload.featuredImage
+            image: imageUrl
         });
         return { success: true };
     } catch (e: any) {
@@ -65,6 +77,8 @@ function EditEditorWrapper() {
     const { title, slug, content } = useSelector((state: RootState) => state.editor);
     const settings = useSelector((state: RootState) => state.postSettings);
 
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     // Initialize Redux state with post data
     useEffect(() => {
         if (post) {
@@ -74,10 +88,14 @@ function EditEditorWrapper() {
             dispatch(setContent(post.content_raw || {}));
 
             dispatch(setStatus(post.status as any));
+
+            // Explicitly verify image is not null
+            const initialImage = post.image && post.image.trim() !== '' ? post.image : null;
+
             dispatch(setPostSettings({
                 categoryIds: post.categories.map(c => c.categoryId),
                 excerpt: post.excerpt || '',
-                featuredImage: post.image || null
+                featuredImage: initialImage
             }));
 
             // Meta
@@ -101,16 +119,22 @@ function EditEditorWrapper() {
             featuredImage: settings.featuredImage
         };
 
-        submit(
-            { payload: JSON.stringify(payload) },
-            { method: "post" }
-        );
-    }, [title, slug, content, settings, submit, dispatch]);
+        const formData = new FormData();
+        formData.append("payload", JSON.stringify(payload));
+
+        if (selectedFile) {
+            formData.append("featuredImageFile", selectedFile);
+        }
+
+        submit(formData, { method: "post", encType: "multipart/form-data" });
+    }, [title, slug, content, settings, selectedFile, submit, dispatch]);
 
     useEffect(() => {
         if (actionData?.success) {
             toast.success("Post updated successfully!");
             dispatch(setSaving(false));
+            // Clear selected file after successful save
+            setSelectedFile(null);
         } else if (actionData?.error) {
             toast.error(actionData.error);
             dispatch(setSaving(false));
@@ -119,7 +143,12 @@ function EditEditorWrapper() {
 
     return (
         <EditorLayout
-            sidebar={<PostSettingsSidebar categories={categories} />}
+            sidebar={
+                <PostSettingsSidebar
+                    categories={categories}
+                    onFileSelect={(file) => setSelectedFile(file)}
+                />
+            }
             onSave={handleSave}
             titleInput={
                 <input
@@ -129,11 +158,6 @@ function EditEditorWrapper() {
                     value={title}
                     onChange={(e) => {
                         dispatch(setTitle(e.target.value));
-                        // Only auto-update slug if user hasn't manually edited it? 
-                        // For now, mirroring create behavior: update slug on title change if desired, 
-                        // BUT for edit, usually we don't want to change slug automatically to preserve SEO.
-                        // So let's NOT dispatch setSlug here unless we want that behavior.
-                        // Actually, let's leave slug distinct.
                     }}
                 />
             }

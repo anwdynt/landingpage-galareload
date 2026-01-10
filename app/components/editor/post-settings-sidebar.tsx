@@ -8,9 +8,10 @@ import { Textarea } from '~/components/ui/textarea';
 
 interface PostSettingsSidebarProps {
     categories: { id: number; name: string }[];
+    onFileSelect?: (file: File) => void;
 }
 
-export default function PostSettingsSidebar({ categories }: PostSettingsSidebarProps) {
+export default function PostSettingsSidebar({ categories, onFileSelect }: PostSettingsSidebarProps) {
     const dispatch = useDispatch();
     const settings = useSelector((state: RootState) => state.postSettings);
     const slug = useSelector((state: RootState) => state.editor.slug);
@@ -51,12 +52,48 @@ export default function PostSettingsSidebar({ categories }: PostSettingsSidebarP
             <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 space-y-4">
                 <h3 className="font-semibold text-neutral-900 dark:text-white border-b pb-2">Post Details</h3>
                 <div className="space-y-2">
-                    <Label>Featured Image (URL)</Label>
-                    <Input
-                        value={settings.featuredImage || ''}
-                        onChange={(e) => dispatch(setFeaturedImage(e.target.value))}
-                        placeholder="https://example.com/image.jpg"
-                    />
+                    <Label>Featured Image</Label>
+                    <div className="space-y-2">
+                        {/* Preview */}
+                        {settings.featuredImage && (
+                            <div className="relative group w-full h-32 bg-neutral-100 rounded-md overflow-hidden border">
+                                <img src={settings.featuredImage} alt="Preview" className="w-full h-full object-cover" />
+                                <button
+                                    type="button"
+                                    onClick={() => dispatch(setFeaturedImage(null))}
+                                    className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                                </button>
+                            </div>
+                        )}
+
+                        <div className="flex items-center gap-2">
+                            <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        // 1. Create Preview
+                                        const url = URL.createObjectURL(file);
+                                        dispatch(setFeaturedImage(url));
+
+                                        // 2. Pass to parent
+                                        if (onFileSelect) {
+                                            onFileSelect(file);
+                                        }
+                                    }
+                                }}
+                            />
+                        </div>
+                        <p className="text-xs text-neutral-400">Or enter URL manually:</p>
+                        <Input
+                            value={settings.featuredImage || ''}
+                            onChange={(e) => dispatch(setFeaturedImage(e.target.value))}
+                            placeholder="https://example.com/image.jpg"
+                        />
+                    </div>
                 </div>
                 <div className="space-y-2">
                     <Label>Excerpt</Label>
