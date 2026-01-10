@@ -20,4 +20,6 @@ export default [
         route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
     ]),
+    route('/sitemap.xml', 'routes/sitemap[.]xml.tsx'),
+    route('/robots.txt', 'routes/robots[.]txt.tsx'),
 ] satisfies RouteConfig;

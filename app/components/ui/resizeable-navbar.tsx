@@ -84,6 +84,8 @@ export const NavItems = memo(({ items }: NavItemsProps) => {
                 >
                     <a
                         href={item.link || '#'}
+                        target={item.target}
+                        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                         className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800"
                     >
                         {item.name}

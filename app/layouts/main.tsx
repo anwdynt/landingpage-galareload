@@ -46,7 +46,7 @@ export default function TitleLayout() {
         },
         { name: 'Blog', link: '/blog' },
         { name: 'Harga', link: '/pricing' },
-        { name: 'Contact', link: '#contact' },
+        { name: 'Contact', link: 'https://api.whatsapp.com/send/?phone=6281329701020&text=Saya+butuh+informasi+terkait+produk+Gala+Reload&type=phone_number&app_absent=0', target: '_blank' },
     ];
 
     return (
