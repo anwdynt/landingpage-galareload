@@ -7,6 +7,7 @@ RUN npm ci
 FROM node:22-alpine AS production-dependencies-env
 COPY ./package.json package-lock.json /app/
 COPY ./prisma /app/prisma/
+COPY ./prisma.config.ts /app/prisma.config.ts
 WORKDIR /app
 RUN apk add --no-cache openssl
 RUN npm ci --omit=dev && npx prisma generate
@@ -22,7 +23,9 @@ COPY ./package.json package-lock.json /app/
 COPY --from=production-dependencies-env /app/node_modules /app/node_modules
 COPY --from=build-env /app/build /app/build
 # Copy prisma directory for potential migration commands at runtime
-COPY ./prisma /app/prisma/ 
+COPY ./prisma /app/prisma/
+# Copy Prisma config
+COPY ./prisma.config.ts /app/prisma.config.ts 
 WORKDIR /app
 RUN apk add --no-cache openssl
 ENV PORT=3000
