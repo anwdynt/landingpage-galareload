@@ -50,12 +50,12 @@ const content = [
 
 export default function Advantages() {
     return (
-        <div className="w-full space-y-5 pt-20 pb-32 px-2 lg:px-0">
+        <div className="w-full space-y-5 pt-20 pb-32 px-2 lg:px-0 overflow-hidden">
             {' '}
             <motion.div
                 className="max-w-7xl container mx-auto"
-                initial={{ opacity: 0, x: -60 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
             >
                 {' '}
@@ -87,7 +87,7 @@ export default function Advantages() {
                                         src={item.image}
                                         srcWebp={item.imageWebp}
                                         alt={item.title}
-                                        className="rounded-xl w-120 h-80 object-cover shadow-lg"
+                                        className="rounded-xl w-full max-w-lg h-auto object-cover shadow-lg"
                                     />
 
                                     {/* TEXT */}

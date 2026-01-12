@@ -36,11 +36,11 @@ export default function Testimoni() {
     ];
 
     return (
-        <div className="py-8 md:py-12 lg:py-20 space-y-5 px-4 lg:px-0">
+        <div className="py-8 md:py-12 lg:py-20 space-y-5 px-4 lg:px-0 overflow-hidden">
             <motion.div
                 className="max-w-7xl container mx-auto"
-                initial={{ opacity: 0, x: -60 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
             >
                 {' '}

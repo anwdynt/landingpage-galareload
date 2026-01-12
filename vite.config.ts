@@ -5,7 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import webpConverterPlugin from './plugins/webpConverter';
 
+
 export default defineConfig({
+
     plugins: [
         tailwindcss(),
         reactRouter(),
@@ -30,5 +32,13 @@ export default defineConfig({
     ],
     build: {
         sourcemap: false,
+    },
+    resolve: {
+        alias: process.env.NODE_ENV === "production"
+            ? {
+                "redux-persist/integration/react":
+                    "redux-persist/lib/integration/react.js",
+            }
+            : {},
     },
 });

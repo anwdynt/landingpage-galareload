@@ -4,7 +4,7 @@ export default function Product() {
     const cards = data.map((card, index) => <Card key={index} card={card} />);
 
     return (
-        <div className="w-full h-full max-w-7xl container mx-auto">
+        <div className="w-full h-full max-w-7xl container mx-auto overflow-hidden">
             <Carousel items={cards} cardsData={data} />
         </div>
     );

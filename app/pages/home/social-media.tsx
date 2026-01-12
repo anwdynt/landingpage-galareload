@@ -83,7 +83,7 @@ export default function SocialMedia() {
     ));
 
     return (
-        <section className="py-20 dark:bg-black/50 px-2 md:px-0">
+        <section className="py-20 dark:bg-black/50 px-2 md:px-0 overflow-hidden">
             <div className="max-w-7xl mx-auto container space-y-10">
                 <div className="justify-center items-center flex flex-col space-y-6">
                     <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-[18rem] lg:max-w-lg">
