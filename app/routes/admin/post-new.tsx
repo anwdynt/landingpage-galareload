@@ -1,5 +1,6 @@
 import { type ActionFunctionArgs, redirect, useActionData, useLoaderData, useSubmit, type LoaderFunctionArgs } from "react-router";
 import { createPost, getCategories } from "~/server/post.server";
+import { parseEditorJson } from "~/lib/editor.server";
 import { uploadImage } from "~/server/upload.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { toast } from "sonner";
@@ -44,10 +45,12 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     try {
+        const parsedContent = parseEditorJson(payload.content);
+
         const post = await createPost({
             title: payload.title,
             slug: payload.slug,
-            content: "Block content - check raw",
+            content: parsedContent,
             content_raw: payload.content,
             status: payload.status,
             authorId: Number(userId),
