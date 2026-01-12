@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 // Remove static imports to avoid SSR issues
 import { useDispatch, useSelector } from 'react-redux';
 import { setContent, setIsDirty } from '~/store/slices/editorSlice';
@@ -8,12 +8,29 @@ interface EditorBlockProps {
     initialData?: any;
 }
 
-const EditorBlock = memo(({ initialData }: EditorBlockProps) => {
+export interface EditorBlockHandle {
+    save: () => Promise<any>;
+}
+
+const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialData }, ref) => {
     const dispatch = useDispatch();
     const ejInstance = useRef<any>(null); // Use any for instance to simplify dynamic types
     const content = useSelector((state: RootState) => state.editor.content);
     // Use a ref to track if instance is ready to avoid double init
     const isReady = useRef(false);
+
+    useImperativeHandle(ref, () => ({
+        save: async () => {
+            if (ejInstance.current && ejInstance.current.save) {
+                const data = await ejInstance.current.save();
+                // Deep clone to prevent Redux from freezing EditorJS internal objects
+                dispatch(setContent(JSON.parse(JSON.stringify(data))));
+                dispatch(setIsDirty(true));
+                return data;
+            }
+            return content;
+        }
+    }));
 
     useEffect(() => {
         if (!isReady.current) {
@@ -27,7 +44,7 @@ const EditorBlock = memo(({ initialData }: EditorBlockProps) => {
                 isReady.current = false;
             }
         }
-    }, []);
+    }, [initialData]); // Added initialData as dependency if needed, though mostly static
 
     const initEditor = async () => {
         if (isReady.current) return;
@@ -43,16 +60,22 @@ const EditorBlock = memo(({ initialData }: EditorBlockProps) => {
             const InlineCode = (await import('@editorjs/inline-code')).default;
             const ImageTool = (await import('@editorjs/image')).default;
 
+
+            // Only use initialData if content is empty (first load)
+            const startData = (content && Object.keys(content).length > 0) ? content : (initialData || {});
+
             const editor = new EditorJS({
                 holder: 'editorjs',
                 logLevel: 'ERROR' as any,
-                data: JSON.parse(JSON.stringify(initialData || content || {})),
+                data: JSON.parse(JSON.stringify(startData)),
                 onReady: () => {
                     ejInstance.current = editor;
                 },
                 onChange: async () => {
+                    // Optional: You can keep autosave or rely on manual save
                     const data = await editor.save();
-                    dispatch(setContent(data));
+                    // Deep clone to prevent Redux from freezing EditorJS internal objects
+                    dispatch(setContent(JSON.parse(JSON.stringify(data))));
                     dispatch(setIsDirty(true));
                 },
                 autofocus: true,

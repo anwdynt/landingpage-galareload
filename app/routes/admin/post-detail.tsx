@@ -4,7 +4,7 @@ import { parseEditorJson } from "~/lib/editor.server";
 import { uploadImage } from "~/server/upload.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { toast } from "sonner";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
 import { setStatus, setPostSettings, setMeta, setFeaturedImage } from '~/store/slices/postSettingsSlice';
@@ -82,6 +82,8 @@ function EditEditorWrapper() {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+    const editorRef = useRef<import("~/components/editor/editor-block").EditorBlockHandle>(null);
+
     // Initialize Redux state with post data
     useEffect(() => {
         if (post) {
@@ -108,13 +110,19 @@ function EditEditorWrapper() {
         }
     }, [post, dispatch]);
 
-    const handleSave = useCallback((status: string) => {
+    const handleSave = useCallback(async (status: string) => {
         dispatch(setSaving(true));
+
+        // Force save to get latest data
+        let currentContent = content;
+        if (editorRef.current) {
+            currentContent = await editorRef.current.save();
+        }
 
         const payload = {
             title,
             slug: slug || slugify(title),
-            content, // EditorJS JSON
+            content: currentContent, // EditorJS JSON
             status: status,
             categoryIds: settings.categoryIds,
             meta: settings.meta,
@@ -167,7 +175,7 @@ function EditEditorWrapper() {
         >
             <div className="min-h-[500px]">
                 <ClientOnly fallback={<div>Loading Editor...</div>}>
-                    {() => <EditorBlock initialData={post?.content_raw} />}
+                    {() => <EditorBlock ref={editorRef} initialData={post?.content_raw} />}
                 </ClientOnly>
             </div>
         </EditorLayout>

@@ -4,7 +4,7 @@ import { parseEditorJson } from "~/lib/editor.server";
 import { uploadImage } from "~/server/upload.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { toast } from "sonner";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
 import { setStatus, resetPostSettings } from '~/store/slices/postSettingsSlice'; // Accessors
@@ -28,6 +28,17 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const formData = await request.formData();
     const payloadString = formData.get("payload") as string;
+
+    // DEBUG LOGGING
+    try {
+        const fs = await import("node:fs");
+        const path = await import("node:path");
+        const logPath = path.resolve(process.cwd(), "public", "debug.log");
+        const logData = `[${new Date().toISOString()}] Payload Length: ${payloadString?.length}\nData: ${payloadString}\n\n`;
+        fs.appendFileSync(logPath, logData);
+    } catch (err) {
+        console.error("Failed to write debug log", err);
+    }
 
     if (!payloadString) return { error: "No data submitted" };
 
@@ -76,6 +87,8 @@ function EditorWrapper() {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+    const editorRef = useRef<import("~/components/editor/editor-block").EditorBlockHandle>(null);
+
     // Reset state on mount for new post
     useEffect(() => {
         dispatch(setTitle(''));
@@ -86,13 +99,19 @@ function EditorWrapper() {
     }, [dispatch]);
 
     // Handle Save
-    const handleSave = useCallback((status: string) => {
+    const handleSave = useCallback(async (status: string) => {
         dispatch(setSaving(true));
+
+        // Force save to get latest data from EditorJS
+        let currentContent = content;
+        if (editorRef.current) {
+            currentContent = await editorRef.current.save();
+        }
 
         const payload = {
             title,
             slug: slug || slugify(title),
-            content,
+            content: currentContent,
             status: status,
             categoryIds: settings.categoryIds,
             meta: settings.meta,
@@ -158,7 +177,7 @@ function EditorWrapper() {
         >
             <div className="min-h-[500px]">
                 <ClientOnly fallback={<div>Loading Editor...</div>}>
-                    {() => <EditorBlock />}
+                    {() => <EditorBlock ref={editorRef} />}
                 </ClientOnly>
             </div>
         </EditorLayout>
