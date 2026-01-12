@@ -9,6 +9,9 @@
         "typecheck": "react-router typegen && tsc",
         "format": "prettier --write ."
     },
+    "prisma": {
+        "seed": "npx tsx prisma/seed.ts"
+    },
     "dependencies": {
         "@editorjs/code": "^2.9.4",
         "@editorjs/editorjs": "^2.31.0",
