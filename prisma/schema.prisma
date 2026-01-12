@@ -24,6 +24,7 @@ model User {
   
   // Blog
   posts           Post[]
+  @@map("user")
 }
 
 model Role {
@@ -37,6 +38,7 @@ model Role {
   // Relationships
   userRoles       UserRole[]
   rolePermissions RolePermission[]
+  @@map("role")
 }
 
 model Permission {
@@ -50,6 +52,7 @@ model Permission {
   // Relationships
   rolePermissions RolePermission[]
   userPermissions UserPermission[]
+  @@map("permission")
 }
 
 model RolePermission {
@@ -59,6 +62,7 @@ model RolePermission {
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   @@id([roleId, permissionId])
+  @@map("role_permission")
 }
 
 model UserRole {
@@ -68,6 +72,7 @@ model UserRole {
   role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([userId, roleId])
+  @@map("user_role")
 }
 
 model UserPermission {
@@ -77,6 +82,7 @@ model UserPermission {
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   @@id([userId, permissionId])
+  @@map("user_permission")
 }
 
 enum PostStatus {
@@ -112,6 +118,8 @@ model Post {
   publishedAt DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("post")
 }
 
 model PostMeta {
@@ -122,6 +130,7 @@ model PostMeta {
   value     String @db.Text
 
   @@unique([postId, key])
+  @@map("post_meta")
 }
 
 model Category {
@@ -130,6 +139,7 @@ model Category {
   slug        String   @unique
   description String?
   posts       PostCategory[]
+  @@map("category")
 }
 
 model Tag {
@@ -137,6 +147,7 @@ model Tag {
   name  String
   slug  String    @unique
   posts PostTag[]
+  @@map("tag")
 }
 
 model PostCategory {
@@ -146,6 +157,7 @@ model PostCategory {
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@id([postId, categoryId])
+  @@map("post_category")
 }
 
 model PostTag {
@@ -155,4 +167,5 @@ model PostTag {
   tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([postId, tagId])
+  @@map("post_tag")
 }
