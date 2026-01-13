@@ -5,6 +5,13 @@ import type { RootState } from '~/store';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
+import { Button } from "~/components/ui/button";
+import { Calendar } from "~/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import { cn } from "~/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import * as React from "react";
 
 interface PostSettingsSidebarProps {
     categories: { id: number; name: string }[];
@@ -24,7 +31,7 @@ export default function PostSettingsSidebar({ categories, onFileSelect }: PostSe
                     <Label>Status</Label>
                     <select
                         value={settings.status}
-                        onChange={(e) => dispatch(setStatus(e.target.value as any))}
+                        onChange={(e) => dispatch(setStatus(e.target.value as "DRAFT" | "PUBLISHED" | "PENDING" | "PRIVATE"))}
                         className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     >
                         <option value="DRAFT">Draft</option>
@@ -32,6 +39,52 @@ export default function PostSettingsSidebar({ categories, onFileSelect }: PostSe
                         <option value="PENDING">Pending Review</option>
                         <option value="PRIVATE">Private</option>
                     </select>
+                </div>
+
+                <div className="space-y-2 flex flex-col">
+                    <Label>Publish Date</Label>
+                    <div className="flex gap-2">
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                        "w-full pl-3 text-left font-normal flex-1",
+                                        !settings.publishedAt && "text-muted-foreground"
+                                    )}
+                                >
+                                    {settings.publishedAt ? (
+                                        format(new Date(settings.publishedAt), "PPP")
+                                    ) : (
+                                        <span>Select date</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                    mode="single"
+                                    selected={settings.publishedAt ? new Date(settings.publishedAt) : undefined}
+                                    captionLayout="dropdown"
+                                    onSelect={(date) => {
+                                        if (date) {
+                                            // Preserve time if exists, or default to current time
+                                            const current = settings.publishedAt ? new Date(settings.publishedAt) : new Date();
+                                            date.setHours(current.getHours());
+                                            date.setMinutes(current.getMinutes());
+                                            dispatch(setPostSettings({ publishedAt: date.toISOString() }));
+                                        } else {
+                                            dispatch(setPostSettings({ publishedAt: null }));
+                                        }
+                                    }}
+                                    disabled={(date) =>
+                                        date < new Date("1900-01-01")
+                                    }
+                                    initialFocus
+                                />
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                 </div>
 
                 <div className="space-y-2">

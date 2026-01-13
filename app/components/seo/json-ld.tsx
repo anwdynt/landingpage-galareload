@@ -1,4 +1,4 @@
-export const JsonLd = ({ data }: { data: Record<string, any> }) => {
+export const JsonLd = ({ data }: { data: Record<string, unknown> }) => {
     return (
         <script
             type="application/ld+json"

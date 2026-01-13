@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, redirect, useActionData, useLoaderData, useSubmit, type LoaderFunctionArgs } from "react-router";
+import { type ActionFunctionArgs, useActionData, useLoaderData, useSubmit, type LoaderFunctionArgs } from "react-router";
 import { createPost, getCategories } from "~/server/post.server";
 import { parseEditorJson } from "~/lib/editor.server";
 import { uploadImage } from "~/server/upload.server";
@@ -7,8 +7,8 @@ import { toast } from "sonner";
 import { useEffect, useCallback, useState, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
-import { setStatus, resetPostSettings } from '~/store/slices/postSettingsSlice'; // Accessors
-import { setLoading, setSaving, setLastAutosave } from '~/store/slices/uiSlice';
+import { resetPostSettings } from '~/store/slices/postSettingsSlice'; // Accessors
+import { setSaving, setLastAutosave } from '~/store/slices/uiSlice';
 import type { RootState } from '~/store';
 import EditorBlock from "~/components/editor/editor-block";
 import EditorLayout from "~/components/editor/editor-layout";
@@ -68,11 +68,13 @@ export async function action({ request }: ActionFunctionArgs) {
             categoryIds: payload.categoryIds,
             meta: payload.meta,
             excerpt: payload.excerpt,
-            image: imageUrl
+            image: imageUrl,
+            publishedAt: payload.publishedAt
         });
         return { success: true, postId: post.id };
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : "Unknown error occurred";
+        return { error: errorMessage };
     }
 }
 
@@ -95,7 +97,8 @@ function EditorWrapper() {
         dispatch(setSlug(''));
         dispatch(setContent({}));
         dispatch(resetPostSettings());
-        setSelectedFile(null);
+        dispatch(resetPostSettings());
+        // setSelectedFile(null); // Redundant on mount
     }, [dispatch]);
 
     // Handle Save
@@ -103,7 +106,8 @@ function EditorWrapper() {
         dispatch(setSaving(true));
 
         // Force save to get latest data from EditorJS
-        let currentContent = content;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let currentContent: any = content;
         if (editorRef.current) {
             currentContent = await editorRef.current.save();
         }
@@ -111,12 +115,14 @@ function EditorWrapper() {
         const payload = {
             title,
             slug: slug || slugify(title),
-            content: currentContent,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            content: currentContent as Record<string, unknown>,
             status: status,
             categoryIds: settings.categoryIds,
             meta: settings.meta,
             excerpt: settings.excerpt,
-            featuredImage: settings.featuredImage // This might be a URL string if not changed
+            featuredImage: settings.featuredImage, // This might be a URL string if not changed
+            publishedAt: settings.publishedAt
         };
 
         const formData = new FormData();

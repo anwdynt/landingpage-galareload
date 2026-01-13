@@ -1,7 +1,15 @@
 import { prisma } from "~/server/db.server";
 import bcrypt from "bcryptjs";
 
-export async function createUser(data: any) {
+export type CreateUserDTO = {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    roles?: string[];
+};
+
+export async function createUser(data: CreateUserDTO) {
     const existingUser = await prisma.user.findFirst({
         where: {
             OR: [

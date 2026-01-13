@@ -1,6 +1,5 @@
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 import FormatImage from '~/components/ui/formatImage';
-import { cn } from '~/lib/utils';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { MacbookScroll } from '~/components/ui/macbook-scroll';
 

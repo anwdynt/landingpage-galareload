@@ -1,4 +1,4 @@
-import { ColourfulText } from '~/components/ui/colorfull-text';
+// import { ColourfulText } from '~/components/ui/colorfull-text';
 import { BackgroundBeams } from '~/components/ui/background-beams';
 import { Link } from 'react-router';
 import { PhoneCall, Download } from 'lucide-react';

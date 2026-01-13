@@ -8,7 +8,7 @@ import { Label } from "~/components/ui/label";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Loader2, ArrowRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export function meta() {
     return [{ title: "Login Admin - Gala Reload" }];
@@ -42,8 +42,9 @@ export async function action({ request }: Route.ActionArgs) {
         }
 
         return createUserSession(user.id.toString(), redirectTo);
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        return { error: message };
     }
 }
 

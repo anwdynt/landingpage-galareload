@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MotionValue, motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "~/lib/utils";
 import {
@@ -52,6 +52,7 @@ export const MacbookScroll = ({
         if (window && window.innerWidth < 768) {
             setIsMobile(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const scaleX = useTransform(

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { ColourfulText } from '~/components/ui/colorfull-text';
-import { Filter, FileSpreadsheet, Loader2 } from 'lucide-react';
+import { FileSpreadsheet, Loader2 } from 'lucide-react';
 import { useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 import { Button } from '~/components/ui/button';
@@ -14,7 +14,7 @@ import { MobileFilter } from './mobile-filter';
 import type { ProductItem, IndexProps } from '~/types/pricing';
 
 export function Index({ pricingData, categories, operators, activeCategory, activeOperator }: IndexProps) {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [, setSearchParams] = useSearchParams();
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -49,7 +49,7 @@ export function Index({ pricingData, categories, operators, activeCategory, acti
         setIsDownloading(true);
         try {
             const response = await exportPriceList();
-            console.log("Excel Export Response:", response);
+            // console.log("Excel Export Response:", response);
 
             const data = response.data || response;
             const base64Content = data.base64 || (typeof data === 'string' ? data : null);

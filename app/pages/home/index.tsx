@@ -1,4 +1,5 @@
 import Hero from './hero';
+import type { Post } from '~/types/blog';
 // import Partners from './partners';
 import Welcome from './welcome';
 import Product from './product';
@@ -9,7 +10,7 @@ import SocialMedia from './social-media';
 import FAQ from './faq';
 import Blog from './blog';
 
-export function Index({ posts }: { posts: any[] }) {
+export function Index({ posts }: { posts: Post[] }) {
     return (
         <>
             <Hero />

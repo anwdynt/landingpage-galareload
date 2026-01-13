@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs, type ActionFunctionArgs } from "react-router";
-import { useLoaderData, useFetcher, Form } from "react-router";
+import { useLoaderData, useFetcher } from "react-router";
 import { getCategories, createCategory, updateCategory, deleteCategory } from "~/server/category.server";
 import { requireUserId } from "~/server/session.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
@@ -16,7 +16,7 @@ import {
     DialogTrigger,
     DialogFooter
 } from "~/components/ui/dialog"; // Assuming you have these or will create generic replacements if missing
-import { Pencil, Trash2, Plus, Search } from "lucide-react";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -57,41 +57,37 @@ export async function action({ request }: ActionFunctionArgs) {
             await deleteCategory(Number(id));
             return { success: true, message: "Category deleted" };
         }
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        return { error: message };
     }
 
     return null;
 }
 
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+    description: string | null;
+    _count: {
+        posts: number;
+    };
+}
+
 export default function CategoriesPage() {
     const { categories } = useLoaderData<typeof loader>();
-    const fetcher = useFetcher();
+    const fetcher = useFetcher<{ success?: boolean; message?: string; error?: string }>();
 
     // Dialog State
     const [isOpen, setIsOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<any>(null); // null = create mode
+    const [editingCategory, setEditingCategory] = useState<Category | null>(null); // null = create mode
     const [deleteId, setDeleteId] = useState<number | null>(null); // State for delete dialog
 
     // Form State
     const [name, setName] = useState("");
     const [slug, setSlug] = useState("");
     const [description, setDescription] = useState("");
-
-    // Reset form when dialog opens/closes
-    useEffect(() => {
-        if (isOpen) {
-            if (editingCategory) {
-                setName(editingCategory.name);
-                setSlug(editingCategory.slug);
-                setDescription(editingCategory.description || "");
-            } else {
-                setName("");
-                setSlug("");
-                setDescription("");
-            }
-        }
-    }, [isOpen, editingCategory]);
 
     useEffect(() => {
         if (fetcher.data?.success) {
@@ -102,10 +98,22 @@ export default function CategoriesPage() {
         } else if (fetcher.data?.error) {
             toast.error(fetcher.data.error);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetcher.data]);
 
-    const handleEdit = (cat: any) => {
+    const handleEdit = (cat: Category) => {
         setEditingCategory(cat);
+        setName(cat.name);
+        setSlug(cat.slug);
+        setDescription(cat.description || "");
+        setIsOpen(true);
+    };
+
+    const handleCreate = () => {
+        setEditingCategory(null);
+        setName("");
+        setSlug("");
+        setDescription("");
         setIsOpen(true);
     };
 
@@ -124,9 +132,9 @@ export default function CategoriesPage() {
                         <p className="text-neutral-500">Kelola kategori untuk pengelompokan artikel.</p>
                     </div>
 
-                    <Dialog open={isOpen} onOpenChange={(open) => { setIsOpen(open); if (!open) setEditingCategory(null); }}>
+                    <Dialog open={isOpen} onOpenChange={setIsOpen}>
                         <DialogTrigger asChild>
-                            <Button className="gap-2">
+                            <Button className="gap-2" onClick={handleCreate}>
                                 <Plus size={16} /> Tambah Kategori
                             </Button>
                         </DialogTrigger>
@@ -194,7 +202,7 @@ export default function CategoriesPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
-                            {categories.map((cat: any) => (
+                            {categories.map((cat: Category) => (
                                 <tr key={cat.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-neutral-900 dark:text-white">
                                         {cat.name}

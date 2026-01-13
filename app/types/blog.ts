@@ -12,6 +12,7 @@ export interface Post {
     excerpt?: string | null;
     content?: string | null;
     /** content_raw is usually either a string or a JSON object depending on how it's typed in Prisma/App */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     content_raw?: any;
     image?: string | null;
     status: string;

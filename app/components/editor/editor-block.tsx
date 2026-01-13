@@ -1,20 +1,21 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 // Remove static imports to avoid SSR issues
+import type { OutputData } from '@editorjs/editorjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setContent, setIsDirty } from '~/store/slices/editorSlice';
 import type { RootState } from '~/store';
 
 interface EditorBlockProps {
-    initialData?: any;
+    initialData?: OutputData;
 }
 
 export interface EditorBlockHandle {
-    save: () => Promise<any>;
+    save: () => Promise<OutputData>;
 }
 
 const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialData }, ref) => {
     const dispatch = useDispatch();
-    const ejInstance = useRef<any>(null); // Use any for instance to simplify dynamic types
+    const ejInstance = useRef<{ save: () => Promise<OutputData>; destroy: () => void } | null>(null);
     const content = useSelector((state: RootState) => state.editor.content);
     // Use a ref to track if instance is ready to avoid double init
     const isReady = useRef(false);
@@ -66,6 +67,7 @@ const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialDa
 
             const editor = new EditorJS({
                 holder: 'editorjs',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 logLevel: 'ERROR' as any,
                 data: JSON.parse(JSON.stringify(startData)),
                 onReady: () => {

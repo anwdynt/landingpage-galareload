@@ -1,20 +1,20 @@
 import { prisma } from "~/server/db.server";
-import type { PostStatus } from "../../generated/prisma/client";
+import { type PostStatus, type Prisma } from "../../generated/prisma/client";
 
 export type CreatePostDTO = {
     title: string;
     slug: string;
     content?: string;
     excerpt?: string;
-    content_raw?: any; // JSON
+    content_raw?: Record<string, unknown> | object; // JSON
     status: PostStatus;
     authorId: number;
     categoryIds?: number[];
     meta?: Record<string, string>;
     image?: string;
+    publishedAt?: string | Date | null;
 };
 
-// ... (getPosts, getPost) -> Replaced with actual code below
 export async function getPosts(status?: string) {
     const where = status ? { status: status as PostStatus } : {};
 
@@ -40,7 +40,7 @@ export async function getPost(id: number) {
 }
 
 
-async function ensureUniqueSlug(slug: string, tx: any) {
+async function ensureUniqueSlug(slug: string, tx: Prisma.TransactionClient) {
     let uniqueSlug = slug;
     let counter = 1;
     while (await tx.post.findUnique({ where: { slug: uniqueSlug } })) {
@@ -64,7 +64,7 @@ export async function createPost(data: CreatePostDTO) {
                 image: data.image ?? undefined,
                 status: data.status,
                 authorId: data.authorId,
-                publishedAt: data.status === 'PUBLISHED' ? new Date() : null,
+                publishedAt: data.publishedAt ? new Date(data.publishedAt) : (data.status === 'PUBLISHED' ? new Date() : null),
             }
         });
 
@@ -105,8 +105,8 @@ export async function updatePost(id: number, data: Partial<CreatePostDTO>) {
                 content_raw: data.content_raw ?? undefined,
                 image: data.image ?? undefined,
                 status: data.status,
-                // Only update publishedAt if switching to PUBLISHED
-                publishedAt: (data.status === 'PUBLISHED') ? new Date() : undefined,
+                // If publishedAt is provided, use it. Otherwise if switching to PUBLISHED, use NOW.
+                publishedAt: data.publishedAt ? new Date(data.publishedAt) : ((data.status === 'PUBLISHED') ? new Date() : undefined),
             }
         });
 
@@ -157,22 +157,19 @@ export async function getPublishedPosts({
 }) {
     const skip = (page - 1) * limit;
 
-    const where: any = {
-        status: 'PUBLISHED',
-        AND: []
-    };
+    const andFilters: Prisma.PostWhereInput[] = [];
 
     if (search) {
-        where.AND.push({
+        andFilters.push({
             OR: [
-                { title: { contains: search } }, // Case insensitive usually depends on DB collation
+                { title: { contains: search } },
                 { excerpt: { contains: search } }
             ]
         });
     }
 
     if (category) {
-        where.AND.push({
+        andFilters.push({
             categories: {
                 some: {
                     category: {
@@ -183,8 +180,13 @@ export async function getPublishedPosts({
         });
     }
 
-    // Clean up empty AND
-    if (where.AND.length === 0) delete where.AND;
+    const where: Prisma.PostWhereInput = {
+        status: 'PUBLISHED',
+    };
+
+    if (andFilters.length > 0) {
+        where.AND = andFilters;
+    }
 
     const [posts, total] = await prisma.$transaction([
         prisma.post.findMany({

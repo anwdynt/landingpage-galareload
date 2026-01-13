@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'dotenv/config'; // Keep for safety if running standalone
 import { prisma } from '../app/server/db.server';
 import bcrypt from 'bcryptjs';
@@ -211,7 +212,7 @@ async function main() {
 }
 
 main()
-    .catch((e) => {
+    .catch((e: unknown) => {
         console.error(e);
         process.exit(1);
     })

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'fs-extra';
 import path from 'path';
 import sharp from 'sharp';
@@ -65,10 +66,11 @@ export default function webpConverterPlugin(
                         }
 
                         console.log(`✅ Converted: ${file} → ${base}.webp`);
-                    } catch (err: any) {
+                    } catch (err: unknown) {
+                        const message = err instanceof Error ? err.message : "Unknown error";
                         console.error(
                             `❌ Failed to convert ${file}:`,
-                            err.message
+                            message
                         );
                     }
                 }

@@ -11,14 +11,14 @@ interface SimpleCarouselProps {
 export const SimpleCarousel = ({ items, autoplay = false, autoplayInterval = 3000 }: SimpleCarouselProps) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
+    // const [canScrollRight, setCanScrollRight] = useState(true);
     const [isHovered, setIsHovered] = useState(false);
 
     const checkScrollability = () => {
         if (carouselRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+            const { scrollLeft } = carouselRef.current;
             setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(Math.ceil(scrollLeft) < scrollWidth - clientWidth);
+            // setCanScrollRight(Math.ceil(scrollLeft) < scrollWidth - clientWidth);
         }
     };
 

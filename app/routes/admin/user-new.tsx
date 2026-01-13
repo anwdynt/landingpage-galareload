@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, redirect, Form, useActionData, useLoaderData } from "react-router";
+import { type ActionFunctionArgs, Form, useActionData, useLoaderData } from "react-router";
 import { createUser } from "~/server/user.server";
 import { getAllRoles } from "~/server/rbac.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
@@ -16,11 +16,11 @@ export async function loader() {
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
-    const name = formData.get("name");
-    const username = formData.get("username");
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const roles = formData.getAll("roles");
+    const name = formData.get("name") as string;
+    const username = formData.get("username") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const roles = formData.getAll("roles") as string[];
 
     try {
         await createUser({
@@ -31,8 +31,9 @@ export async function action({ request }: ActionFunctionArgs) {
             roles
         });
         return { success: true };
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        return { error: message };
     }
 }
 

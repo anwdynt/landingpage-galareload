@@ -1,4 +1,4 @@
-import { createCookieSessionStorage, redirect } from "react-router";
+import { createCookieSessionStorage, redirect, type Session } from "react-router";
 
 // Secret key for cookie implementation
 // In production, this should be in .env: SESSION_SECRET="super-secret-key"
@@ -20,11 +20,11 @@ export async function getSession(request: Request) {
     return sessionStorage.getSession(cookie);
 }
 
-export async function commitSession(session: any) {
+export async function commitSession(session: Session) {
     return sessionStorage.commitSession(session);
 }
 
-export async function destroySession(session: any) {
+export async function destroySession(session: Session) {
     return sessionStorage.destroySession(session);
 }
 

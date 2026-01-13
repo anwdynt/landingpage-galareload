@@ -61,7 +61,7 @@ export default function Advantages() {
                 {' '}
                 <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-2xl">
                     {' '}
-                    Partner teknologi yang tumbuh bersama bisnis anda{' '}
+                    Partner teknologi yang tumbuh bersama bisnis anda{''}
                     <ColourfulText text="." />{' '}
                 </h2>{' '}
                 <p className="text-lg md:text-xl mt-0 font-extralight dark:text-white text-left font-google-sans text-primary leading-normal max-w-5xl">
@@ -87,7 +87,7 @@ export default function Advantages() {
                                         src={item.image}
                                         srcWebp={item.imageWebp}
                                         alt={item.title}
-                                        className="rounded-xl w-full max-w-lg h-auto object-cover shadow-lg"
+                                        className="rounded-xl w-full max-w-lg max-h-80 object-cover shadow-lg"
                                     />
 
                                     {/* TEXT */}

@@ -4,7 +4,6 @@ import { getPosts, deletePost } from "~/server/post.server";
 import { requireUserId } from "~/server/session.server";
 import { PermissionGuard } from "~/components/rbac/permission-guard";
 import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
 import {
     Dialog,
     DialogContent,
@@ -33,7 +32,7 @@ export async function action({ request }: ActionFunctionArgs) {
         try {
             await deletePost(Number(id));
             return { success: true, message: "Post deleted successfully" };
-        } catch (error) {
+        } catch {
             return { error: "Failed to delete post" };
         }
     }
@@ -48,6 +47,7 @@ export default function PostListPage() {
     useEffect(() => {
         if (fetcher.data?.success) {
             toast.success(fetcher.data.message);
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setDeleteId(null);
         } else if (fetcher.data?.error) {
             toast.error(fetcher.data.error);

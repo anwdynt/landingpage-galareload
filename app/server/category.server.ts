@@ -1,5 +1,4 @@
 import { prisma } from "~/server/db.server";
-import { type Category } from "../../generated/prisma/client";
 import { slugify } from "~/lib/utils";
 
 export type CreateCategoryDTO = {
@@ -31,7 +30,11 @@ export async function getCategory(id: number) {
 
 // --- Create ---
 
-async function ensureUniqueSlug(slug: string, tx: any) {
+import { type Prisma } from "../../generated/prisma/client";
+
+// ...
+
+async function ensureUniqueSlug(slug: string, tx: Prisma.TransactionClient) {
     let uniqueSlug = slug;
     let counter = 1;
     while (await tx.category.findUnique({ where: { slug: uniqueSlug } })) {

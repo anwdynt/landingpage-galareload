@@ -30,11 +30,13 @@ export default function FormatImage({
     );
 }
 
+import type { TargetAndTransition, VariantLabels, Transition } from 'framer-motion';
+
 // Helper function to handle motion images (for framer-motion compatibility)
 interface MotionFormatImageProps extends FormatImageProps {
-    initial?: any;
-    animate?: any;
-    transition?: any;
+    initial?: boolean | VariantLabels | TargetAndTransition;
+    animate?: boolean | VariantLabels | TargetAndTransition;
+    transition?: Transition;
     key?: string;
 }
 
@@ -49,7 +51,7 @@ export function MotionFormatImage({
     key,
 }: MotionFormatImageProps) {
     const isDevelopment = import.meta.env.MODE === 'development';
-    console.log(import.meta.env.MODE);
+    // console.log(import.meta.env.MODE);
     if (isDevelopment || !srcWebp) {
         return (
             <motion.img

@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 export interface EditorState {
     title: string;
     slug: string;
-    content: any; // EditorJS JSON
+    content: Record<string, unknown> | null; // EditorJS output data
     isDirty: boolean;
     lastSaved: string | null;
 }
@@ -31,7 +31,7 @@ const editorSlice = createSlice({
             state.slug = action.payload;
             state.isDirty = true;
         },
-        setContent: (state, action: PayloadAction<any>) => {
+        setContent: (state, action: PayloadAction<Record<string, unknown> | null>) => {
             state.content = action.payload;
             state.isDirty = true;
         },

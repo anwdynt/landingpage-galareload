@@ -37,7 +37,7 @@ export const GlareCard = ({
         "--radius": "24px",
         "--easing": "ease",
         "--transition": "var(--duration) var(--easing)",
-    } as any;
+    } as React.CSSProperties;
 
     const backgroundStyle = {
         "--step": "5%",
@@ -54,7 +54,7 @@ export const GlareCard = ({
 
     const updateStyles = () => {
         if (refElement.current) {
-            console.log(state.current);
+            // console.log(state.current);
             const { background, rotate, glare } = state.current;
             refElement.current?.style.setProperty("--m-x", `${glare.x}%`);
             refElement.current?.style.setProperty("--m-y", `${glare.y}%`);

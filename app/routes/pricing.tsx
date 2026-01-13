@@ -74,7 +74,7 @@ export async function clientLoader({ request }: ClientLoaderFunctionArgs) {
 
 import { JsonLd } from "~/components/seo/json-ld";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
     return [
         { title: 'Daftar Harga Pulsa & PPOB Termurah | Gala Reload' },
         { name: 'description', content: 'Cek daftar harga pulsa all operator, token listrik, paket data, dan voucher game termurah di Gala Reload. Update real-time.' },

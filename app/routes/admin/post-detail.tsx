@@ -7,8 +7,8 @@ import { toast } from "sonner";
 import { useEffect, useCallback, useState, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitle, setSlug, setContent } from '~/store/slices/editorSlice';
-import { setStatus, setPostSettings, setMeta, setFeaturedImage } from '~/store/slices/postSettingsSlice';
-import { setSaving, setLastAutosave } from '~/store/slices/uiSlice';
+import { setStatus, setPostSettings, setMeta } from '~/store/slices/postSettingsSlice';
+import { setSaving } from '~/store/slices/uiSlice';
 import type { RootState } from '~/store';
 import EditorBlock from "~/components/editor/editor-block";
 import EditorLayout from "~/components/editor/editor-layout";
@@ -63,11 +63,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
             categoryIds: payload.categoryIds,
             meta: payload.meta,
             excerpt: payload.excerpt,
-            image: imageUrl
+            image: imageUrl,
+            publishedAt: payload.publishedAt
         });
         return { success: true };
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : "Unknown error occurred";
+        return { error: errorMessage };
     }
 }
 
@@ -90,9 +92,9 @@ function EditEditorWrapper() {
             dispatch(setTitle(post.title));
             dispatch(setSlug(post.slug));
             // Ensure content_raw is passed as object/array, not string if using Prisma JSON
-            dispatch(setContent(post.content_raw || {}));
+            dispatch(setContent((post.content_raw as Record<string, unknown>) || {}));
 
-            dispatch(setStatus(post.status as any));
+            dispatch(setStatus(post.status as "DRAFT" | "PUBLISHED" | "PENDING" | "PRIVATE" | "TRASH"));
 
             // Explicitly verify image is not null
             const initialImage = post.image && post.image.trim() !== '' ? post.image : null;
@@ -100,7 +102,8 @@ function EditEditorWrapper() {
             dispatch(setPostSettings({
                 categoryIds: post.categories.map(c => c.categoryId),
                 excerpt: post.excerpt || '',
-                featuredImage: initialImage
+                featuredImage: initialImage,
+                publishedAt: post.publishedAt ? new Date(post.publishedAt).toISOString() : null
             }));
 
             // Meta
@@ -114,7 +117,8 @@ function EditEditorWrapper() {
         dispatch(setSaving(true));
 
         // Force save to get latest data
-        let currentContent = content;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let currentContent: any = content;
         if (editorRef.current) {
             currentContent = await editorRef.current.save();
         }
@@ -122,12 +126,14 @@ function EditEditorWrapper() {
         const payload = {
             title,
             slug: slug || slugify(title),
-            content: currentContent, // EditorJS JSON
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            content: currentContent as any, // EditorJS JSON
             status: status,
             categoryIds: settings.categoryIds,
             meta: settings.meta,
             excerpt: settings.excerpt,
-            featuredImage: settings.featuredImage
+            featuredImage: settings.featuredImage,
+            publishedAt: settings.publishedAt
         };
 
         const formData = new FormData();
@@ -145,6 +151,7 @@ function EditEditorWrapper() {
             toast.success("Post updated successfully!");
             dispatch(setSaving(false));
             // Clear selected file after successful save
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setSelectedFile(null);
         } else if (actionData?.error) {
             toast.error(actionData.error);
@@ -175,7 +182,11 @@ function EditEditorWrapper() {
         >
             <div className="min-h-[500px]">
                 <ClientOnly fallback={<div>Loading Editor...</div>}>
-                    {() => <EditorBlock ref={editorRef} initialData={post?.content_raw} />}
+                    {() => {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        const content = post?.content_raw as any;
+                        return <EditorBlock ref={editorRef} initialData={content} />;
+                    }}
                 </ClientOnly>
             </div>
         </EditorLayout>

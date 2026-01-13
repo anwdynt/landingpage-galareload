@@ -1,4 +1,4 @@
-import { AspectRatio } from '~/components/ui/aspect-ratio';
+// import { AspectRatio } from '~/components/ui/aspect-ratio';
 import { LinkPreview } from '~/components/ui/link-preview';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';

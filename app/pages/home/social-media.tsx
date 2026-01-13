@@ -95,7 +95,7 @@ export default function SocialMedia() {
                 </div>
 
                 {/* Carousel Component */}
-                <SimpleCarousel items={carouselItems} autoplay={true} autoplayInterval={4000} />
+                <SimpleCarousel items={carouselItems} autoplay={true} autoplayInterval={10000} />
             </div>
         </section>
     );

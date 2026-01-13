@@ -1,4 +1,4 @@
-import { Outlet, redirect, Form, NavLink, useLoaderData, useSubmit, useLocation } from "react-router";
+import { Outlet, redirect, Form } from "react-router";
 import type { Route } from "./+types/layout";
 import { requireUserId } from "~/server/session.server";
 import { getUserById } from "~/server/auth.server";
@@ -7,7 +7,6 @@ import {
     LayoutDashboard,
     FileText,
     LogOut,
-    Settings,
     Users,
     Tag
 } from "lucide-react";
@@ -64,10 +63,8 @@ export const LogoIcon = () => {
 };
 
 export default function AdminLayout({ loaderData }: Route.ComponentProps) {
-    const { user, permissions, roles } = loaderData;
+    const { permissions } = loaderData;
     const [open, setOpen] = useState(false);
-    const submit = useSubmit();
-    const location = useLocation();
 
     const links = [
         {

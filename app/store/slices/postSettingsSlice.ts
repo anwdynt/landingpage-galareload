@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export interface PostSettingsState {
     status: 'DRAFT' | 'PUBLISHED' | 'PENDING' | 'PRIVATE' | 'TRASH';
+    publishedAt: string | null; // ISO String
     authorId: number | null;
     categoryIds: number[];
     meta: {
@@ -14,6 +15,7 @@ export interface PostSettingsState {
 
 const initialState: PostSettingsState = {
     status: 'DRAFT',
+    publishedAt: null,
     authorId: null,
     categoryIds: [],
     meta: {
@@ -23,6 +25,8 @@ const initialState: PostSettingsState = {
     featuredImage: null,
     excerpt: '',
 };
+
+// Duplicate slice definition removed
 
 const postSettingsSlice = createSlice({
     name: 'postSettings',

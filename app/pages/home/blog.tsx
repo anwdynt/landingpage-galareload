@@ -5,8 +5,10 @@ import { ColourfulText } from '~/components/ui/colorfull-text';
 import { cn } from '~/lib/utils';
 import { Button } from '~/components/ui/button';
 
+import type { Post } from '~/types/blog';
+
 interface BlogProps {
-    posts: any[];
+    posts: Post[];
 }
 
 export default function Blog({ posts = [] }: BlogProps) {

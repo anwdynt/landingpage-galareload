@@ -5,6 +5,8 @@ import { BlockRenderer } from "~/components/blog/block-renderer";
 import { Clock, User, ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { JsonLd } from "~/components/seo/json-ld";
+import type { Post } from "~/types/blog";
+import type { Block } from "~/components/blog/block-renderer";
 
 export async function loader({ params }: LoaderFunctionArgs) {
     const slug = params.slug;
@@ -18,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     return { post };
 }
 
-export function meta({ data }: { data: { post: any } | undefined }) {
+export function meta({ data }: { data: { post: Post } | undefined }) {
     if (!data?.post) return [{ title: "Artikel Tidak Ditemukan" }];
     const { post } = data;
     const metaDesc = post.excerpt || post.title;
@@ -35,9 +37,11 @@ export function meta({ data }: { data: { post: any } | undefined }) {
 }
 
 export default function BlogDetail() {
-    const { post } = useLoaderData<typeof loader>();
-    console.log(post)
-    const contentBlocks = (post.content_raw as any)?.blocks || [];
+    const { post } = useLoaderData<typeof loader>(); // Type inference from loader might be simpler, but explicit is good too. 
+    // loader returns { post }, where post comes from getPostBySlug. Assuming getPostBySlug returns a compatible type.
+
+    // console.log(post)
+    const contentBlocks = ((post.content_raw as unknown) as { blocks: Block[] })?.blocks || [];
 
     // Date formatting
     const publishDate = new Date(post.publishedAt || post.createdAt).toLocaleDateString("id-ID", {

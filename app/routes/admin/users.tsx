@@ -35,8 +35,9 @@ export async function action({ request }: ActionFunctionArgs) {
             await toggleUserStatus(Number(id), isActive);
             return { success: true, message: isActive ? "User activated" : "User deactivated" };
         }
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        return { error: message };
     }
     return null;
 }
@@ -51,13 +52,15 @@ export default function Users() {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
     useEffect(() => {
-        if (fetcher.state === "idle" && fetcher.data && (fetcher.data as any).success) {
+        const data = fetcher.data as { success?: boolean; message?: string; error?: string } | undefined;
+        if (fetcher.state === "idle" && data && data.success) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setConfirmOpen(false);
-            toast.success((fetcher.data as any).message);
-        } else if (fetcher.state === "idle" && fetcher.data && (fetcher.data as any).error) {
-            toast.error((fetcher.data as any).error);
+            if (data.message) toast.success(data.message);
+        } else if (fetcher.state === "idle" && data && data.error) {
+            toast.error(data.error);
         }
-    }, [fetcher.state, fetcher.data]);
+    }, [fetcher.state, fetcher.data]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const initiateToggle = (user: User) => {
         setSelectedUser(user);

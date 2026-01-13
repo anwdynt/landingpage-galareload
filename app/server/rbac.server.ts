@@ -1,5 +1,5 @@
 import { prisma } from "~/server/db.server";
-import { getUserById } from "./auth.server";
+
 
 export async function getUserPermissions(userId: number) {
     // 1. Get User with Roles

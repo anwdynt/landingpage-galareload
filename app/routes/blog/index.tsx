@@ -151,7 +151,6 @@ function BlogCard({ post }: { post: Post }) {
 
 export default function BlogList() {
     const { posts, pagination, categories, currentCategory, searchQuery } = useLoaderData<typeof loader>();
-    const [searchParams] = useSearchParams();
 
     return (
         <div className="min-h-screen dark:bg-black pb-24">

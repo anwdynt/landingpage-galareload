@@ -4,7 +4,7 @@ import { getPublishedPosts } from '~/server/post.server';
 
 import { JsonLd } from "~/components/seo/json-ld";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
     return [
         { title: 'Gala Reload | Aplikasi Server Pulsa, PPOB & Tiket Termurah' },
         { name: 'description', content: 'Gala Reload adalah aplikasi server pulsa dan PPOB termurah, terlengkap, dan terpercaya. Daftar sekarang gratis dan nikmati transaksi 24 jam nonstop.' },
@@ -17,7 +17,8 @@ export function meta({ }: Route.MetaArgs) {
 export async function loader() {
     // Fetch latest 3 posts
     const { posts } = await getPublishedPosts({ limit: 5 });
-    return { posts };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { posts: posts as any[] };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {

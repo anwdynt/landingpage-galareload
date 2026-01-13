@@ -3,7 +3,6 @@ import { useLoaderData, Link } from "react-router";
 import { getPostBySlug } from "~/server/post.server";
 import { BlockRenderer } from "~/components/blog/block-renderer";
 import { Clock, User, ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
-import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -18,6 +17,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     return { post };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function meta({ data }: { data: { post: any } | undefined }) {
     if (!data?.post) return [{ title: "Artikel Tidak Ditemukan" }];
     const { post } = data;
@@ -36,6 +36,7 @@ export function meta({ data }: { data: { post: any } | undefined }) {
 
 export default function BlogDetail() {
     const { post } = useLoaderData<typeof loader>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const contentBlocks = (post.content_raw as any)?.blocks || [];
 
     // Date formatting

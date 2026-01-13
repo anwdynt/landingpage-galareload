@@ -40,11 +40,14 @@ export const AnimatedTestimonials = ({
             const interval = setInterval(handleNext, 5000);
             return () => clearInterval(interval);
         }
-    }, [autoplay]);
+    }, [autoplay, handleNext]); // Fixed dep
 
-    const randomRotateY = () => {
-        return Math.floor(Math.random() * 21) - 10;
+    const getRotateY = (index: number) => {
+        // Deterministic "random" based on index to avoid hydration mismatch
+        const seed = (index * 7 + 3) % 21;
+        return seed - 10;
     };
+
     return (
         <div className="mx-auto max-w-sm px-4 py-8 md:py-12 lg:py-20 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12">
             <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
@@ -58,7 +61,7 @@ export const AnimatedTestimonials = ({
                                         opacity: 0,
                                         scale: 0.9,
                                         z: -100,
-                                        rotate: randomRotateY(),
+                                        rotate: getRotateY(index),
                                     }}
                                     animate={{
                                         opacity: isActive(index) ? 1 : 0.7,
@@ -66,7 +69,7 @@ export const AnimatedTestimonials = ({
                                         z: isActive(index) ? 0 : -100,
                                         rotate: isActive(index)
                                             ? 0
-                                            : randomRotateY(),
+                                            : getRotateY(index),
                                         zIndex: isActive(index)
                                             ? 40
                                             : testimonials.length + 2 - index,
@@ -76,7 +79,7 @@ export const AnimatedTestimonials = ({
                                         opacity: 0,
                                         scale: 0.9,
                                         z: 100,
-                                        rotate: randomRotateY(),
+                                        rotate: getRotateY(index),
                                     }}
                                     transition={{
                                         duration: 0.4,

@@ -72,8 +72,9 @@ export async function action({ request }: ActionFunctionArgs) {
 
             return { success: true, message: "Draft saved successfully" };
         }
-    } catch (e: any) {
-        return { error: e.message };
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        return { error: message };
     }
     return null;
 }
@@ -211,7 +212,7 @@ export default function DashboardPage() {
                     <CardContent>
                         <div className="space-y-6">
                             {recentPosts.length > 0 ? (
-                                recentPosts.map((post: any) => (
+                                recentPosts.map((post) => (
                                     <div key={post.id} className="flex gap-3 group">
                                         <div className="text-neutral-300 dark:text-neutral-600 pt-1">
                                             <Clock className="h-4 w-4" />
