@@ -46,9 +46,12 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
                         const items = block.data.items || [];
                         return (
                             <ListTag key={key} className={cn("pl-6 space-y-2 mb-6", block.data.style === 'ordered' ? "list-decimal" : "list-disc")}>
-                                {items.map((item: string, i: number) => (
-                                    <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
-                                ))}
+                                {items.map((item: any, i: number) => {
+                                    const content = typeof item === 'string'
+                                        ? item
+                                        : (item?.content || item?.text || JSON.stringify(item));
+                                    return <li key={i} dangerouslySetInnerHTML={{ __html: content }} />;
+                                })}
                             </ListTag>
                         );
                     }

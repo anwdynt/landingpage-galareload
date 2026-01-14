@@ -50,59 +50,63 @@ const content = [
 
 export default function Advantages() {
     return (
-        <div className="w-full space-y-5 pt-20 pb-32 px-2 lg:px-0 overflow-hidden">
-            {' '}
+        <div className="w-full py-20 px-4 md:px-8 overflow-hidden">
             <motion.div
-                className="max-w-7xl container mx-auto"
+                className="max-w-7xl container mx-auto mb-20 text-center"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-                {' '}
-                <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-2xl">
-                    {' '}
-                    Partner teknologi yang tumbuh bersama bisnis anda{''}
-                    <ColourfulText text="." />{' '}
-                </h2>{' '}
-                <p className="text-lg md:text-xl mt-0 font-extralight dark:text-white text-left font-google-sans text-primary leading-normal max-w-5xl">
+                <h2 className="lg:text-4xl text-2xl font-metropolis font-bold leading-tight max-w-4xl mx-auto mb-6">
+                    Partner teknologi yang tumbuh bersama bisnis anda
+                    <ColourfulText text="." />
+                </h2>
+                <p className="text-lg md:text-xl font-light dark:text-gray-300 text-neutral-600 max-w-3xl mx-auto leading-relaxed">
                     Dengan pendekatan layanan yang fleksibel, personal, dan
                     berorientasi jangka panjang, kami mendukung setiap tahap
                     pertumbuhan bisnis Anda.
                 </p>
             </motion.div>
-            <TracingBeam className="mt-16">
-                <div className="antialiased space-y-16">
-                    {content.map((item, index) => {
-                        const isEven = index % 2 === 0;
 
-                        return (
-                            <div
-                                key={index}
-                                className={`max-w-3xl ${isEven ? 'mr-auto' : 'ml-auto'
-                                    }`}
-                            >
-                                <div className="flex flex-col gap-6 items-center ">
-                                    {/* IMAGE */}
-                                    <FormatImage
-                                        src={item.image}
-                                        srcWebp={item.imageWebp}
-                                        alt={item.title}
-                                        className="rounded-xl w-full max-w-lg max-h-80 object-cover shadow-lg"
-                                    />
-
-                                    {/* TEXT */}
-                                    <div className="text-left">
-                                        <h3 className="text-lg lg:text-xl font-metropolis font-medium mb-3">
-                                            {item.title}
-                                        </h3>
-                                        <p className="text-primary font-google-sans font-light text-base lg:text-lg leading-relaxed max-w-4xl">
-                                            {item.description}
-                                        </p>
+            <TracingBeam className="px-6">
+                <div className="max-w-7xl mx-auto flex flex-col space-y-24 relative pb-10">
+                    {content.map((item, index) => (
+                        <div
+                            key={index}
+                            className={`flex flex-col md:flex-row items-center gap-12 lg:gap-24 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''
+                                }`}
+                        >
+                            {/* Image Section */}
+                            <div className="flex-1 w-full relative group perspective-1000">
+                                <div className="absolute -inset-4 bg-gradient-to-r from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 rounded-[2rem]" />
+                                <div className="relative rounded-3xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.02] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                                    <div className="aspect-[4/3] w-full overflow-hidden">
+                                        <FormatImage
+                                            src={item.image}
+                                            srcWebp={item.imageWebp}
+                                            alt={item.title}
+                                            className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                                        />
                                     </div>
                                 </div>
                             </div>
-                        );
-                    })}
+
+                            {/* Text Section */}
+                            <div className="flex-1 space-y-6">
+                                <div className="inline-block px-4 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
+                                    <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400">
+                                        0{index + 1}
+                                    </span>
+                                </div>
+                                <h3 className="text-2xl lg:text-3xl font-bold font-metropolis leading-tight text-neutral-900 dark:text-white">
+                                    {item.title}
+                                </h3>
+                                <p className="text-lg text-neutral-600 dark:text-neutral-400 font-google-sans leading-relaxed">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </TracingBeam>
         </div>

@@ -34,7 +34,20 @@ export function blocksToHtml(blocks: Block[]) {
                 break;
             case "list": {
                 const tag = block.data.style === "ordered" ? "ol" : "ul";
-                const listItems = block.data.items ? block.data.items.map((item: string) => `<li>${item}</li>`).join("") : "";
+                const listItems = block.data.items
+                    ? block.data.items.map((item: any) => {
+                        if (typeof item === 'string') return `<li>${item}</li>`;
+                        // Handle object items (e.g., from nested-list or different versions)
+                        if (typeof item === 'object' && item !== null) {
+                            // Try common properties: content, text
+                            const content = item.content || item.text || '';
+                            // If dealing with nested lists, you might want to handle 'items' property recursively here,
+                            // but for now let's just fix the basic text display.
+                            return `<li>${content}</li>`;
+                        }
+                        return `<li>${String(item)}</li>`;
+                    }).join("")
+                    : "";
                 html += `<${tag} class="mb-4 ml-6 list-disc">${listItems}</${tag}>`;
                 break;
             }

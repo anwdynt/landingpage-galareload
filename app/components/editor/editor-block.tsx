@@ -29,7 +29,7 @@ const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialDa
                 dispatch(setIsDirty(true));
                 return data;
             }
-            return content;
+            return (content as unknown as OutputData) || { time: Date.now(), blocks: [], version: '2.30.0' };
         }
     }));
 
