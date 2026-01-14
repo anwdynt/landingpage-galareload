@@ -1,5 +1,6 @@
 import type { JSX } from "react";
 import { cn } from "~/lib/utils";
+import FormatImage from "~/components/ui/formatImage";
 
 export interface Block {
     id?: string;
@@ -59,8 +60,9 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
                         return (
                             <figure key={key} className="my-8">
                                 <div className="rounded-2xl overflow-hidden shadow-sm border border-neutral-100 dark:border-neutral-800">
-                                    <img
-                                        src={block.data.file?.url}
+                                    <FormatImage
+                                        src={block.data.file?.url || ''}
+                                        srcWebp={block.data.file?.url?.endsWith('.webp') ? block.data.file?.url : undefined}
                                         alt={block.data.caption || "Blog image"}
                                         className="w-full h-auto object-cover"
                                     />

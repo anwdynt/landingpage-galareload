@@ -90,8 +90,37 @@ const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialDa
                     image: {
                         class: ImageTool,
                         config: {
-                            endpoints: {
-                                byFile: '/api/upload', // Backend endpoint for file upload
+                            uploader: {
+                                async uploadByFile(file: File) {
+                                    try {
+                                        // Dynamically import processor to avoid SSR issues
+                                        const { processImage } = await import('~/utils/image-processor');
+
+                                        // Compress and convert to WebP
+                                        const processedFile = await processImage(file);
+
+                                        const formData = new FormData();
+                                        formData.append('image', processedFile);
+
+                                        const response = await fetch('/api/upload', {
+                                            method: 'POST',
+                                            body: formData,
+                                        });
+
+                                        if (!response.ok) {
+                                            throw new Error('Upload failed');
+                                        }
+
+                                        const data = await response.json();
+                                        return data;
+                                    } catch (error) {
+                                        console.error('Image upload failed:', error);
+                                        return {
+                                            success: 0,
+                                            file: { url: '' }
+                                        };
+                                    }
+                                }
                             }
                         }
                     }
