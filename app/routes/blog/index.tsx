@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs } from 'react-router';
 import type { Post } from '~/types/blog';
-import { useLoaderData, Link, useSearchParams, Form } from 'react-router';
+import { useLoaderData, Link, Form } from 'react-router';
 import { Search, ChevronLeft, ChevronRight, Clock, User, ArrowRight } from 'lucide-react';
 import { getPublishedPosts, getCategories } from '~/server/post.server';
 import { cn } from '~/lib/utils';
@@ -8,6 +8,7 @@ import { AuroraBackground } from '~/components/ui/aurora-background';
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';
+import FormatImage from "~/components/ui/formatImage";
 import { JsonLd } from "~/components/seo/json-ld";
 
 // Metadata
@@ -103,8 +104,9 @@ function BlogCard({ post }: { post: Post }) {
         <Link to={`/blog/${post.slug}`} className="group flex flex-col bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-100 dark:border-neutral-800 shadow-sm hover:shadow-xl transition-all duration-300 h-full">
             <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
                 {post.image ? (
-                    <img
+                    <FormatImage
                         src={imageSrc}
+                        srcWebp={imageSrc.endsWith('.webp') ? imageSrc : undefined}
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />

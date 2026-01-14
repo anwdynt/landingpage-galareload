@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button";
 import { JsonLd } from "~/components/seo/json-ld";
 import type { Post } from "~/types/blog";
 import type { Block } from "~/components/blog/block-renderer";
+import FormatImage from "~/components/ui/formatImage";
 
 export async function loader({ params }: LoaderFunctionArgs) {
     const slug = params.slug;
@@ -114,8 +115,9 @@ export default function BlogDetail() {
                     {/* Featured Image */}
                     {post.image && (
                         <div className="rounded-3xl overflow-hidden shadow-xl aspect-video relative">
-                            <img
+                            <FormatImage
                                 src={post.image}
+                                srcWebp={post.image.endsWith('.webp') ? post.image : undefined}
                                 alt={post.title}
                                 className="w-full h-full object-cover"
                             />

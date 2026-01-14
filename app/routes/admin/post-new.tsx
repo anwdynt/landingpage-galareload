@@ -129,7 +129,15 @@ function EditorWrapper() {
         formData.append("payload", JSON.stringify(payload));
 
         if (selectedFile) {
-            formData.append("featuredImageFile", selectedFile);
+            try {
+                // Determine if processImage is available (client-side)
+                const { processImage } = await import('~/utils/image-processor');
+                const processedFile = await processImage(selectedFile);
+                formData.append("featuredImageFile", processedFile);
+            } catch (error) {
+                console.error("Failed to process image, sending original", error);
+                formData.append("featuredImageFile", selectedFile);
+            }
         }
 
         // Submit as FormData (encType multipart/form-data inferred by browser)

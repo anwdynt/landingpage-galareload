@@ -140,7 +140,14 @@ function EditEditorWrapper() {
         formData.append("payload", JSON.stringify(payload));
 
         if (selectedFile) {
-            formData.append("featuredImageFile", selectedFile);
+            try {
+                const { processImage } = await import('~/utils/image-processor');
+                const processedFile = await processImage(selectedFile);
+                formData.append("featuredImageFile", processedFile);
+            } catch (error) {
+                console.error("Failed to process image, sending original", error);
+                formData.append("featuredImageFile", selectedFile);
+            }
         }
 
         submit(formData, { method: "post", encType: "multipart/form-data" });

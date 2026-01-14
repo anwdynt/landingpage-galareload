@@ -62,8 +62,10 @@ const EditorBlock = forwardRef<EditorBlockHandle, EditorBlockProps>(({ initialDa
             const ImageTool = (await import('@editorjs/image')).default;
 
 
-            // Only use initialData if content is empty (first load)
-            const startData = (content && Object.keys(content).length > 0) ? content : (initialData || {});
+            // Prioritize initialData (from DB/Parent) to ensure correct post loads.
+            // Fallback to Redux content only if initialData is empty (restricted to new posts)
+            const hasInitialData = initialData && Object.keys(initialData).length > 0;
+            const startData = hasInitialData ? initialData : (content || {});
 
             const editor = new EditorJS({
                 holder: 'editorjs',
