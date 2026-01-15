@@ -5,63 +5,78 @@ import { motion } from 'framer-motion';
 
 const content = [
     {
-        title: 'Dikembangkan Khusus untuk Menjawab Kebutuhan Konter',
+        title: 'UI Sederhana, Transaksi Cepat Tanpa Ribet',
         description:
-            'Setiap fitur kami rancang berdasarkan kebutuhan operasional konter sehari-hari, mulai dari transaksi, pengelolaan produk, hingga pengembangan bisnis agar berjalan lebih mudah dan efisien.',
-        image: '/images/advantages-needs.png',
-        imageWebp: '/images/advantages-needs.png',
+            'Dengan tampilan antarmuka yang intuitif dan modern, Gala Reload dirancang agar mudah digunakan oleh siapa pun. Proses transaksi jadi lebih cepat, minim kesalahan, dan efisien—membantu pemula langsung jalan dan profesional bekerja lebih produktif setiap hari.',
+        image: '/images/feature-ui.png',
+        imageWebp: '/images/feature-ui.png',
     },
     {
-        title: 'Menjamin kelancaran Transaksi untuk Mendukung Pertumbuhan Konter',
+        title: 'Fitur Transaksi Favorit untuk Transaksi Berulang',
         description:
-            'Transaksi yang cepat dan stabil, ditambah kualitas produk yang terjaga, membuat operasional konter lebih efisien, minim kendala, dan siap mendukung bisnis Anda berkembang lebih besar.',
-        image: '/images/advantages-transaction.png',
-        imageWebp: '/images/advantages-transaction.png',
+            'Fitur Transaksi Favorit di Gala Reload memungkinkan Anda menyimpan produk dan nomor tujuan yang sering digunakan. Dengan sekali klik, transaksi dapat dilakukan lebih cepat, praktis, dan minim kesalahan input, sehingga operasional konter menjadi lebih efisien dan pelayanan ke pelanggan semakin optimal.',
+        image: '/images/feature-favorite.png',
+        imageWebp: '/images/feature-favorite.png',
     },
     {
-        title: 'Struktur Harga yang Transparan',
+        title: 'Fitur Transaksi Terjadwal, Otomatis & Tepat Waktu',
         description:
-            'Kami menerapkan sistem harga yang jelas dan terbuka sejak awal, tanpa biaya tersembunyi. Setiap komponen biaya dijelaskan secara rinci, sehingga konter Anda tahu persis apa yang dibayar, layanan apa yang didapat, dan nilai yang diterima untuk mendukung operasional serta pertumbuhan bisnis.',
-        image: '/images/advantages-pricing.png',
-        imageWebp: '/images/advantages-pricing.png',
+            'Fitur Transaksi Terjadwal di Gala Reload membantu Anda menjadwalkan pengisian pulsa atau PPOB secara otomatis sesuai waktu yang ditentukan. Tanpa perlu input ulang, transaksi tetap berjalan tepat waktu, lebih terkontrol, dan mendukung operasional konter agar tetap lancar dan profesional.',
+        image: '/images/feature-scheduled.png',
+        imageWebp: '/images/feature-scheduled.png',
     },
     {
-        title: 'Support Responsif & Berpengalaman',
+        title: 'Custom Struk Penjualan untuk Maksimalkan Omzet',
         description:
-            'Tim support kami siap membantu konter Anda selama 24 jam. Dengan respons cepat dan pemahaman yang kuat terhadap operasional konter, kami membantu menyelesaikan kendala dengan tepat agar transaksi tetap lancar dan bisnis terus berjalan.',
-        image: '/images/advantages-support.png',
-        imageWebp: '/images/advantages-support.png',
+            'Fitur custom struk penjualan di Gala Reload memungkinkan Anda menampilkan nama konter, promo, hingga kontak usaha langsung di struk transaksi. Setiap struk menjadi media promosi gratis yang meningkatkan kepercayaan pelanggan, memperkuat branding, dan mendorong penjualan ulang secara konsisten.',
+        image: '/images/feature-receipt.png',
+        imageWebp: '/images/feature-receipt.png',
     },
     {
-        title: 'Deposit Aman & Proses Cepat',
+        title: 'Catatan Piutang, Arus Kas Tetap Aman',
         description:
-            'Proses deposit dirancang dengan sistem yang aman dan terkontrol, memastikan saldo masuk tepat waktu dan siap digunakan. Dengan alur yang jelas dan stabil, konter Anda dapat beroperasi tanpa khawatir gangguan deposit.',
-        image: '/images/advantages-deposit.png',
-        imageWebp: '/images/advantages-deposit.png',
+            'Fitur Catatan Piutang di Gala Reload membantu Anda mencatat transaksi hutang pelanggan secara otomatis dan terstruktur. Pantau pelanggan yang belum bayar, jumlah piutang, serta riwayat pembayaran dengan mudah agar keuangan konter lebih terkontrol.',
+        image: '/images/feature-piutang.png',
+        imageWebp: '/images/feature-piutang.png',
     },
     {
-        title: 'Jadilah Pemilik Aplikasi, Bangun Brand Sendiri',
+        title: 'Fitur Keuangan, Omzet & Keuntungan Terukur',
         description:
-            'Dengan solusi Whitelabel, Anda dapat mengelola jaringan Anda menggunakan aplikasi dengan brand sendiri untuk mendukung pertumbuhan bisnis yang lebih besar.',
-        image: '/images/advantages-whitelabel.png',
-        imageWebp: '/images/advantages-whitelabel.png',
+            'Fitur keuangan di Gala Reload membantu Anda menghitung omzet secara otomatis dan real-time dari seluruh transaksi. Tanpa hitung manual dan tanpa risiko salah catat, performa konter bisa dipantau dengan jelas untuk pengambilan keputusan bisnis yang lebih cepat.',
+        image: '/images/feature-finance.png',
+        imageWebp: '/images/feature-finance.png',
+    },
+    {
+        title: 'Web Report Canggih, Kontrol dari Jarak Jauh',
+        description:
+            'Kelola bisnis dengan lebih leluasa melalui PC atau laptop. Pantau jaringan agen, cek mutasi saldo secara detail, dan unduh laporan keuangan lengkap kapan saja melalui dashboard Web Report Gala Reload yang informatif dan mudah digunakan.',
+        image: '/images/feature-webreport.png',
+        imageWebp: '/images/feature-webreport.png',
+    },
+    {
+        title: 'Double Report Transaksi via Email',
+        description:
+            'Fitur double report transaksi di Gala Reload secara otomatis mengirim laporan transaksi ke email pemilik konter. Data tetap aman, mudah dicek kapan saja, dan membantu pemilik memantau penjualan tanpa harus selalu membuka aplikasi.',
+        image: '/images/feature-email-report.png',
+        imageWebp: '/images/feature-email-report.png',
     },
 ];
+
 
 export default function Advantages() {
     return (
         <div className="w-full py-20 px-4 md:px-8 overflow-hidden">
             <motion.div
-                className="max-w-7xl container mx-auto mb-20 text-center"
+                className="max-w-7xl mx-auto container mb-20"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-                <h2 className="lg:text-4xl text-2xl font-metropolis font-bold leading-tight max-w-4xl mx-auto mb-6">
+                <h2 className="lg:text-4xl text-xl font-metropolis font-medium leading-tight max-w-5xl">
                     Partner teknologi yang tumbuh bersama bisnis anda
                     <ColourfulText text="." />
                 </h2>
-                <p className="text-lg md:text-xl font-light dark:text-gray-300 text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-lg md:text-xl font-light dark:text-gray-300 text-neutral-600 max-w-3xl leading-relaxed">
                     Dengan pendekatan layanan yang fleksibel, personal, dan
                     berorientasi jangka panjang, kami mendukung setiap tahap
                     pertumbuhan bisnis Anda.
