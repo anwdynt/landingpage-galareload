@@ -9,6 +9,7 @@ import Testimoni from './testimoni';
 import SocialMedia from './social-media';
 import FAQ from './faq';
 import Blog from './blog';
+import Partners from '~/components/ui/partners';
 
 export function Index({ posts }: { posts: Post[] }) {
     return (
@@ -19,6 +20,7 @@ export function Index({ posts }: { posts: Post[] }) {
             <Advantages />
             <SocialMedia />
             <CTA />
+            <Partners />
             <Blog posts={posts} />
             <Testimoni />
             <FAQ />

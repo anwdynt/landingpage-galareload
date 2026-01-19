@@ -22,11 +22,6 @@ export default function TitleLayout() {
             name: 'Produk',
             children: [
                 {
-                    name: 'Aplikasi Galareload',
-                    link: '/product/aplikasi-galareload',
-                    description: 'Aplikasi server pulsa untuk transaksi cepat, aman, dan mudah digunakan.',
-                },
-                {
                     name: 'Galareload Whitelabel',
                     link: '/product/whitelabel-galareload',
                     description: 'Bangun aplikasi pulsa dengan brand, logo, dan identitas bisnis Anda sendiri.',
