@@ -20,6 +20,8 @@ export default [
         route('/blog', 'routes/blog/index.tsx'),
         route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
+        route('/our-team', 'routes/our-team.tsx'),
+        route('/terms-and-conditions', 'routes/privacy.tsx'),
     ]),
 
     // Auth Routes

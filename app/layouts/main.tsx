@@ -41,6 +41,21 @@ export default function TitleLayout() {
         },
         { name: 'Blog', link: '/blog' },
         { name: 'Harga', link: '/pricing' },
+        {
+            name: 'Info Lain',
+            children: [
+                {
+                    name: 'Tim Kami',
+                    link: '/our-team',
+                    description: 'Kenali tim hebat di balik Galareload.',
+                },
+                {
+                    name: 'Tentang Kami',
+                    link: '/about-us',
+                    description: 'Pelajari lebih lanjut tentang Galareload.',
+                },
+            ],
+        },
         { name: 'Contact', link: 'https://api.whatsapp.com/send/?phone=6281329701020&text=Saya+butuh+informasi+terkait+produk+Gala+Reload&type=phone_number&app_absent=0', target: '_blank' },
     ];
 

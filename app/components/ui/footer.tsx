@@ -44,15 +44,16 @@ export default function Footer() {
                         Navigasi
                     </h3>
                     <ul className="space-y-2 text-sm text-neutral-400 font-google-sans">
-                        <li className="hover:text-white transition">Fitur</li>
-                        <li className="hover:text-white transition">Solusi</li>
-                        <li className="hover:text-white transition">
-                            Hubungi Kami
+                        <li>
+                            <Link to="https://api.whatsapp.com/send/?phone=6281329701020" target="_blank" className="hover:text-white transition">
+                                Hubungi Kami
+                            </Link>
                         </li>
-                        <li className="hover:text-white transition">
-                            Tentang Kami
+                        <li>
+                            <Link to="/our-team" className="hover:text-white transition">
+                                Tentang Kami
+                            </Link>
                         </li>
-                        <li className="hover:text-white transition">FAQ</li>
                     </ul>
                 </div>
 
@@ -62,14 +63,15 @@ export default function Footer() {
                         Produk & Layanan
                     </h3>
                     <ul className="space-y-2 text-sm text-neutral-400 font-google-sans">
-                        <li className="hover:text-white transition">
-                            Harga Produk
+                        <li>
+                            <Link to="/pricing" className="hover:text-white transition">
+                                Harga Produk
+                            </Link>
                         </li>
-                        <li className="hover:text-white transition">
-                            Biaya Layanan
-                        </li>
-                        <li className="hover:text-white transition">
-                            Kebijakan Privasi
+                        <li>
+                            <Link to="/terms-and-conditions" className="hover:text-white transition">
+                                Kebijakan Privasi
+                            </Link>
                         </li>
                     </ul>
                 </div>
