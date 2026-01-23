@@ -9,30 +9,35 @@ export default function Testimonials() {
             name: 'Andi Pratama',
             designation: 'Owner "Andi Cell" - Jakarta',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Tampilannya luas dan enak dilihat di laptop. Pantau stok dan deposit downline jadi jauh lebih gampang dibanding lewat HP.',
             name: 'Dewi Sartika',
             designation: 'Master Dealer - Surabaya',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Sistemnya stabil, jarang maintenance. Buat saya yang punya ratusan agen, fitur monitoring jaringannya top markotop!',
             name: 'Budi Santoso',
             designation: 'Distributor Pulsa - Semarang',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Suka banget sama fitur cetak struk-nya. Bisa custom nama toko sendiri, terlihat lebih profesional di mata pelanggan.',
             name: 'Rina Marlina',
             designation: 'Loket PPOB - Bandung',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Sangat recommended buat yang serius bisnis server pulsa. Semua datanya transparan dan akurat, gak perlu takut ada saldo nyangkut.',
             name: 'Fajar Hidayat',
             designation: 'Agen Prioritas - Medan',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
     ];
 

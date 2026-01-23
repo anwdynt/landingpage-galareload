@@ -5,6 +5,7 @@ import FormatImage from "./formatImage";
 type Card = {
     title: string;
     src?: string;
+    srcWebp?: string;
     description?: string;
     icon?: React.ReactNode;
 };
@@ -32,6 +33,7 @@ export const Card = React.memo(
             {card.src ? (
                 <FormatImage
                     src={card.src}
+                    srcWebp={card.srcWebp}
                     alt={card.title}
                     className="object-cover absolute inset-0 w-full h-full"
                 />

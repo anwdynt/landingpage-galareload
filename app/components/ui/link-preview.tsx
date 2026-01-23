@@ -25,6 +25,8 @@ type LinkPreviewProps = {
         | { isStatic?: false; imageSrc?: never }
     );
 
+import { useIsMobile } from '~/hooks/use-mobile';
+
 export const LinkPreview = ({
     children,
     url,
@@ -36,6 +38,7 @@ export const LinkPreview = ({
     isStatic = false,
     imageSrc = '',
 }: LinkPreviewProps) => {
+    const isMobile = useIsMobile();
     let src;
     if (!isStatic) {
         const params = encode({
@@ -91,6 +94,7 @@ export const LinkPreview = ({
                 openDelay={50}
                 closeDelay={100}
                 onOpenChange={(open) => {
+                    if (isMobile) return;
                     setOpen(open);
                 }}
             >

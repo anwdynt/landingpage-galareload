@@ -28,6 +28,48 @@ export default function webpConverterPlugin(
         async buildStart() {
             console.log('🔍 Starting WebP conversion...');
 
+            const processDir = async (dir: string, baseOutDir: string) => {
+                if (!(await fs.pathExists(dir))) return;
+
+                const entries = await fs.readdir(dir, { withFileTypes: true });
+
+                for (const entry of entries) {
+                    const fullPath = path.join(dir, entry.name);
+
+                    if (entry.isDirectory()) {
+                        await processDir(fullPath, path.join(baseOutDir, entry.name));
+                    } else if (entry.isFile()) {
+                        const ext = path.extname(entry.name).toLowerCase();
+                        if (!['.png', '.jpg', '.jpeg'].includes(ext)) continue;
+
+                        const baseName = path.basename(entry.name, ext);
+                        const outputFile = path.join(baseOutDir, `${baseName}.webp`);
+
+                        await fs.ensureDir(baseOutDir);
+
+                        if (await fs.pathExists(outputFile)) continue;
+
+                        try {
+                            await sharp(fullPath)
+                                .webp({ quality })
+                                .toFile(outputFile);
+
+                            if (deleteOriginal) {
+                                await fs.remove(fullPath);
+                            }
+
+                            console.log(`✅ Converted: ${entry.name} → ${baseName}.webp`);
+                        } catch (err: unknown) {
+                            const message = err instanceof Error ? err.message : "Unknown error";
+                            console.error(
+                                `❌ Failed to convert ${entry.name}:`,
+                                message
+                            );
+                        }
+                    }
+                }
+            };
+
             for (const inputDir of inputDirs) {
                 const absInput = path.resolve(inputDir);
                 const outDir = path.resolve(
@@ -35,45 +77,12 @@ export default function webpConverterPlugin(
                     inputDir.replace(/^public\//, '')
                 );
 
-                // Skip jika folder sumber tidak ada
                 if (!(await fs.pathExists(absInput))) {
                     console.warn(`⚠️  Folder tidak ditemukan: ${absInput}`);
                     continue;
                 }
 
-                // Pastikan folder output ada
-                await fs.ensureDir(outDir);
-
-                const files = await fs.readdir(absInput);
-
-                for (const file of files) {
-                    const ext = path.extname(file).toLowerCase();
-                    const base = path.basename(file, ext);
-                    const inputFile = path.join(absInput, file);
-                    const outputFile = path.join(outDir, `${base}.webp`);
-
-                    // Skip jika bukan gambar atau sudah webp
-                    if (!['.png', '.jpg', '.jpeg'].includes(ext)) continue;
-                    if (await fs.pathExists(outputFile)) continue;
-
-                    try {
-                        await sharp(inputFile)
-                            .webp({ quality })
-                            .toFile(outputFile);
-
-                        if (deleteOriginal) {
-                            await fs.remove(inputFile);
-                        }
-
-                        console.log(`✅ Converted: ${file} → ${base}.webp`);
-                    } catch (err: unknown) {
-                        const message = err instanceof Error ? err.message : "Unknown error";
-                        console.error(
-                            `❌ Failed to convert ${file}:`,
-                            message
-                        );
-                    }
-                }
+                await processDir(absInput, outDir);
             }
 
             console.log('✨ WebP conversion done.');

@@ -10,12 +10,16 @@ const features = [
             'Dirancang dengan antarmuka yang intuitif dan modern, Galareload memudahkan siapa pun baik pemula maupun profesional untuk mengelola transaksi dengan cepat, efisien, dan tanpa proses yang rumit.',
         image:
             'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Fitur Lengkap dalam Satu Aplikasi',
         description:
             'Mulai dari isi ulang pulsa & paket data, top up e-money, pembayaran PPOB, hingga pengelolaan jaringan agen—semua tersedia dalam satu platform terintegrasi tanpa perlu aplikasi tambahan.',
         image:
+            'https://images.unsplash.com/photo-1661956602116-aa6865609028?q=80&w=2664&auto=format&fit=crop',
+        imageWebp:
             'https://images.unsplash.com/photo-1661956602116-aa6865609028?q=80&w=2664&auto=format&fit=crop',
     },
     {
@@ -24,12 +28,16 @@ const features = [
             'Didukung sistem server yang andal dan koneksi real-time, setiap transaksi diproses dengan cepat dan akurat, memastikan pengalaman pengguna yang lancar kapan pun dibutuhkan.',
         image:
             'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Manajemen Bisnis yang Fleksibel',
         description:
             'Pantau saldo, riwayat transaksi, laporan penjualan, dan performa agen secara real-time langsung dari aplikasi, membantu Anda mengambil keputusan bisnis dengan lebih tepat.',
         image:
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+        imageWebp:
             'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
     },
     {
@@ -38,6 +46,8 @@ const features = [
             'Setiap transaksi dilindungi dengan sistem keamanan berlapis untuk menjaga data dan saldo Anda tetap aman, sehingga Anda dapat fokus mengembangkan bisnis tanpa rasa khawatir.',
         image:
             'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop',
     },
     {
         title: 'Siap Tumbuh Bersama Bisnis Anda',
@@ -45,12 +55,16 @@ const features = [
             'Baik untuk penggunaan personal, agen, hingga skala enterprise, Galareload dirancang scalable dan siap mendukung pertumbuhan bisnis Anda dari waktu ke waktu.',
         image:
             'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Dukungan Web Report Canggih',
         description:
             'Kelola bisnis lebih leluasa melalui PC/Laptop. Pantau jaringan agen, cek mutasi saldo, dan unduh laporan keuangan komprehensif via dashboard Web Report yang informatif.',
         image:
+            'https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
             'https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=2670&auto=format&fit=crop',
     },
 ];
@@ -103,8 +117,9 @@ export default function Features() {
                                 <div className="absolute -inset-4 bg-gradient-to-r from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 rounded-[2rem]" />
                                 <div className="relative rounded-3xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.02] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
                                     <div className="aspect-[4/3] w-full overflow-hidden">
-                                        <img
+                                        <FormatImage
                                             src={feature.image}
+                                            srcWebp={feature.imageWebp}
                                             alt={feature.title}
                                             className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                                         />

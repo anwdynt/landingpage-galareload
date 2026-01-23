@@ -9,30 +9,35 @@ export default function Testimonials() {
             name: 'Andi Pratama',
             designation: 'Owner Server "Maju Jaya Cell" - Jakarta',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Support regex-nya sangat membantu. Tinggal copy-paste format, langsung connect di Otomax. Hemat waktu setting parsing, jadi bisa fokus marketing.',
             name: 'Dedi Kurniawan',
             designation: 'Pemilik "Berkah Reload" - Semarang',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Stok nasionalnya aman terkendali. Jarang banget ada gangguan atau stok kosong. Harga juga sangat bersaing untuk level H2H.',
             name: 'Cindy Larasati',
             designation: 'Agen H2H & PPOB - Bandung',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Tim support teknisnya fast respon. Pas awal integrasi ada kendala IP, langsung dibantu solve dalam hitungan menit. Layanan prima!',
             name: 'Rudi Hartono',
             designation: 'Developer Software Pulsa - Surabaya',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Sudah coba banyak supplier H2H, tapi Galareload yang paling konsisten performanya. Member saya puas karena transaksi jarang pending.',
             name: 'Budi Santoso',
             designation: 'Owner "Giga Cell" - Medan',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
     ];
 

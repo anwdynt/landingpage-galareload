@@ -9,30 +9,35 @@ export default function Testimonials() {
             name: 'Rudi Hermawan',
             designation: 'CEO "Raja Pulsa" - Semarang',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Server stabil, transaksi hitungan detik. Gak pusing mikirin maintenance server atau coding, tinggal fokus marketing cari agen. Solusi terbaik buat yang mau upgrade bisnis.',
             name: 'Dedi Kurniawan',
             designation: 'Owner "Dedi Cell Group" - Jakarta',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Modal terjangkau buat punya startup digital sekelas unicorn. Setup branding cuma butuh beberapa hari, aplikasi langsung bisa listing di Play Store. Keren banget!',
             name: 'Putri Andriani',
             designation: 'Founder "PastiPay" - Malang',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Bisa ditinggal jalan-jalan, sistem jalan terus 24 jam. Laporan keuangan transparan, profit real-time. Beneran definisi passive income yang sesungguhnya.',
             name: 'Bayu Saputra',
             designation: 'Digital Entrepreneur - Bali',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
         {
             quote: 'Supportnya sigap banget. Request fitur dilayani, komplain teknis cepat beres. Udah 2 tahun pake Whitelabel Gala, gak pernah kepikiran buat pindah vendor lain.',
             name: 'Irfan Hakim',
             designation: 'Owner "FastTronik" - Bandung',
             src: '/images/people.png',
+            srcWebp: '/images/people.webp',
         },
     ];
 

@@ -9,36 +9,42 @@ const content = [
         description:
             'Identitas bisnis Anda sepenuhnya milik Anda. Gunakan Nama Aplikasi, Logo, Warna Tema, hingga Contact Support atas nama brand Anda sendiri. Kami bekerja di balik layar, pelanggan Anda hanya mengenal Anda.',
         image: '/images/whitelabel/branding.png',
+        imageWebp: '/images/whitelabel/branding.webp',
     },
     {
         title: 'Sistem Serba Otomatis',
         description:
             'Lupakan ribetnya mengurus stok dan server. Sistem kami bekerja 24/7 jam auto-pilot menangani ribuan transaksi, update produk, hingga laporan keuangan secara real-time tanpa perlu intervensi manual.',
         image: '/images/whitelabel/system.png',
+        imageWebp: '/images/whitelabel/system.webp',
     },
     {
         title: 'Potensi Cashback 100%',
         description:
             'Investasi Anda aman. Kami memberikan garansi pengembalian biaya setup 100% jika bisnis Anda mencapai target transaksi tertentu dalam 6 bulan pertama. Bisnis tanpa resiko!',
         image: '/images/whitelabel/cashback.png',
+        imageWebp: '/images/whitelabel/cashback.webp',
     },
     {
         title: 'Keamanan Level Bank',
         description:
             'Ketenangan pikiran adalah prioritas. Data dan saldo Anda dilindungi enkripsi tingkat tinggi, sistem proteksi ganda, dan backup data harian otomatis di server cloud terpercaya.',
         image: '/images/whitelabel/security.png',
+        imageWebp: '/images/whitelabel/security.webp',
     },
     {
         title: 'Produk Digital Lengkap',
         description:
             'Tersedia ribuan SKU produk siap jual: Pulsa All Operator, Paket Data, Token PLN, E-Wallet, Voucher Game, hingga PPOB. Semua stok dikelola oleh kami, Anda tinggal jualan.',
         image: '/images/whitelabel/products.png',
+        imageWebp: '/images/whitelabel/products.webp',
     },
     {
         title: 'Support Prioritas',
         description:
             'Anda tidak berjalan sendiri. Tim teknis dan Customer Service kami siap membantu kendala operasional Anda. Dukungan penuh untuk memastikan bisnis Anda berjalan lancar.',
         image: '/images/whitelabel/support.png',
+        imageWebp: '/images/whitelabel/support.webp',
     },
 ];
 
@@ -77,6 +83,7 @@ export default function Features() {
                                         <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-10 group-hover:opacity-20 blur-xl transition duration-500"></div>
                                         <FormatImage
                                             src={item.image}
+                                            srcWebp={item.imageWebp}
                                             alt={item.title}
                                             className="rounded-2xl w-full h-64 md:h-80 object-cover shadow-2xl overflow-hidden relative border border-white/20"
                                         />
