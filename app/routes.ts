@@ -21,6 +21,7 @@ export default [
         route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
         route('/our-team', 'routes/our-team.tsx'),
+        route('/about-us', 'routes/about-us.tsx'),
         route('/terms-and-conditions', 'routes/privacy.tsx'),
     ]),
 
