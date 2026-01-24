@@ -9,8 +9,9 @@ import {
 } from '~/components/ui/resizeable-navbar';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, Link } from 'react-router';
 import Footer from '~/components/ui/footer';
+import { cn } from '~/lib/utils';
 
 export default function TitleLayout() {
     const [open, setOpen] = useState(false);
@@ -66,34 +67,51 @@ export default function TitleLayout() {
                     <MobileNavMenu isOpen={open}>
                         {navItems.map((item, idx) => (
                             <div key={idx}>
-                                <button
-                                    className="flex w-full justify-between text-left font-medium"
-                                    onClick={() =>
-                                        setMobileSub(
-                                            mobileSub === idx ? null : idx
-                                        )
-                                    }
-                                >
-                                    {item.name}
-                                    {item.children && (
-                                        <ChevronDown className="w-4" />
-                                    )}
-                                </button>
+                                {item.children ? (
+                                    <>
+                                        <button
+                                            className="flex w-full justify-between text-left font-medium"
+                                            onClick={() =>
+                                                setMobileSub(
+                                                    mobileSub === idx ? null : idx
+                                                )
+                                            }
+                                        >
+                                            {item.name}
+                                            <ChevronDown
+                                                className={cn(
+                                                    'w-4 transition-transform',
+                                                    mobileSub === idx && 'rotate-180'
+                                                )}
+                                            />
+                                        </button>
 
-                                {mobileSub === idx && item.children && (
-                                    <div className="ml-4 mt-2 flex flex-col gap-2">
-                                        {item.children.map((child) => (
-                                            <a
-                                                key={child.name}
-                                                href={child.link}
-                                                className="flex items-center gap-2 text-sm text-neutral-900"
-                                                onClick={() => setOpen(false)}
-                                            >
-                                                <ArrowRight className="w-4" />
-                                                {child.name}
-                                            </a>
-                                        ))}
-                                    </div>
+                                        {mobileSub === idx && (
+                                            <div className="ml-4 mt-2 flex flex-col gap-2">
+                                                {item.children.map((child) => (
+                                                    <Link
+                                                        key={child.name}
+                                                        to={child.link}
+                                                        className="flex items-center gap-2 text-sm text-neutral-900 dark:text-neutral-300"
+                                                        onClick={() => setOpen(false)}
+                                                    >
+                                                        <ArrowRight className="w-4" />
+                                                        {child.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <Link
+                                        to={item.link || '#'}
+                                        target={item.target}
+                                        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                                        className="flex w-full justify-between text-left font-medium"
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        {item.name}
+                                    </Link>
                                 )}
                             </div>
                         ))}
