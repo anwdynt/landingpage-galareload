@@ -11,6 +11,7 @@ export default function SocialMedia() {
             title: "Instagram",
             icon: <Instagram className="h-5 w-5 text-white" />,
             image: "/images/social/instagram.png", // Placeholder: Image generation skipped due to quota
+            imageWebp: "/images/social/instagram.webp", // Placeholder: Image generation skipped due to quota
             description: "Dapatkan inspirasi harian dan update promo menarik.",
             link: "https://www.instagram.com/galareload_official"
         },
@@ -18,6 +19,7 @@ export default function SocialMedia() {
             title: "TikTok",
             icon: <Music2 className="h-5 w-5 text-white" />,
             image: "/images/social/tiktok.png", // Placeholder
+            imageWebp: "/images/social/tiktok.webp", // Placeholder
             description: "Ikuti tren terbaru dan konten seru di TikTok kami.",
             link: "https://www.tiktok.com/@galareload.official"
         },
@@ -25,6 +27,7 @@ export default function SocialMedia() {
             title: "Facebook",
             icon: <Facebook className="h-5 w-5 text-white" />,
             image: "/images/social/facebook.png", // Placeholder
+            imageWebp: "/images/social/facebook.webp", // Placeholder
             description: "Bergabung dengan komunitas kami di Facebook.",
             link: "https://www.facebook.com/profile.php?id=61585199416921"
         },
@@ -32,6 +35,7 @@ export default function SocialMedia() {
             title: "YouTube",
             icon: <Youtube className="h-5 w-5 text-white" />,
             image: "/images/social/youtube.png", // Placeholder
+            imageWebp: "/images/social/youtube.webp", // Placeholder
             description: "Tonton tutorial dan video edukasi seputar bisnis pulsa.",
             link: "https://youtube.com/@galareloadofficial"
         },
@@ -39,6 +43,7 @@ export default function SocialMedia() {
             title: "WhatsApp",
             icon: <MessageCircle className="h-5 w-5 text-white" />,
             image: "/images/social/whatsapp.png", // Placeholder: Need to check if exists or use fallback
+            imageWebp: "/images/social/whatsapp.webp", // Placeholder: Need to check if exists or use fallback
             description: "Dapatkan info terbaru langsung dari WhatsApp Channel kami.",
             link: "https://whatsapp.com/channel/0029Vb687cCI1rccWEIv1V3o"
         },
@@ -46,6 +51,7 @@ export default function SocialMedia() {
             title: "Telegram",
             icon: <Send className="h-5 w-5 text-white" />,
             image: "/images/social/telegram.png", // Placeholder: Need to check if exists or use fallback
+            imageWebp: "/images/social/telegram.webp", // Placeholder: Need to check if exists or use fallback
             description: "Gabung channel Telegram untuk update info real-time.",
             link: "https://t.me/galareloadofficial"
         },
@@ -63,6 +69,7 @@ export default function SocialMedia() {
                 <div className="h-full w-full absolute inset-0">
                     <FormatImage
                         src={item.image}
+                        srcWebp={item.imageWebp}
                         alt={item.title}
                         className="h-full w-full object-cover opacity-90"
                     />

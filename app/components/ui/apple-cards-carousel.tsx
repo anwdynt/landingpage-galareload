@@ -6,9 +6,11 @@ import { ColourfulText } from './colorfull-text';
 import { Link } from 'react-router';
 import { ChevronRight } from 'lucide-react';
 import FormatImage from './formatImage';
+import { useIsMobile } from '~/hooks/use-mobile';
 
 interface CardData {
     src: string;
+    srcWebp?: string;
     title: string;
     description: string;
     content: string; // youtube embed url (NO autoplay)
@@ -24,6 +26,7 @@ interface CarouselProps {
 ========================= */
 export const Carousel = ({ items, cardsData }: CarouselProps) => {
     const carouselRef = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
 
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -145,9 +148,9 @@ export const Carousel = ({ items, cardsData }: CarouselProps) => {
                         <motion.div
                             key={index}
                             data-card
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{
+                            transition={isMobile ? { duration: 0 } : {
                                 duration: 0.5,
                                 delay: index * 0.15,
                             }}
@@ -265,7 +268,7 @@ export const Card = ({ card }: { card: CardData }) => {
                 <FormatImage
                     src={card.src}
                     alt={card.title}
-                    srcWebp={card.src.replace('.png', '.webp')}
+                    srcWebp={card.srcWebp || card.src.replace('.png', '.webp')}
                     className="absolute inset-0 h-full w-full object-cover"
                 />
 

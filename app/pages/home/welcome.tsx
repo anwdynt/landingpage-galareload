@@ -2,7 +2,12 @@
 import { LinkPreview } from '~/components/ui/link-preview';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '~/hooks/use-mobile';
+
+
 export default function Welcome() {
+    const isMobile = useIsMobile();
+
     return (
         <div className="space-y-20 py-8 md:py-12 lg:py-20 max-w-7xl container mx-auto px-4 lg:px-0">
             {/* <AspectRatio ratio={9 / 4}>
@@ -17,9 +22,9 @@ export default function Welcome() {
                 />
             </AspectRatio> */}
             <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{
+                transition={isMobile ? { duration: 0 } : {
                     duration: 0.8,
                     ease: 'easeOut',
                 }}

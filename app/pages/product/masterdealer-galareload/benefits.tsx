@@ -7,31 +7,37 @@ export default function Benefits() {
             title: 'Passive Income Tanpa Batas',
             description: 'Dapatkan komisi dari setiap transaksi yang dilakukan oleh agen dalam jaringan Anda.',
             src: '/images/benefits/passive-income.png',
+            srcWebp: '/images/benefits/passive-income.webp',
         },
         {
             title: 'Full Kontrol Manajemen',
             description: 'Fitur lengkap untuk mendaftarkan agen, transfer saldo, dan setting markup.',
             src: '/images/benefits/full-control.png',
+            srcWebp: '/images/benefits/full-control.webp',
         },
         {
             title: 'Proses Transaksi Kilat',
             description: 'Server berkapasitas tinggi menjamin kecepatan transaksi hitungan detik.',
             src: '/images/benefits/fast-transaction.png',
+            srcWebp: '/images/benefits/fast-transaction.webp',
         },
         {
             title: 'Reward Bulanan',
             description: 'Kumpulkan poin transaksi dan tukarkan dengan hadiah menarik.',
             src: '/images/benefits/monthly-reward.png',
+            srcWebp: '/images/benefits/monthly-reward.webp',
         },
         {
             title: 'Sistem Aman',
             description: 'Keamanan data dan saldo terjamin dengan enkripsi mutakhir.',
             src: '/images/benefits/secure-system.png',
+            srcWebp: '/images/benefits/secure-system.webp',
         },
         {
             title: 'Support 24/7',
             description: 'CS standby membantu Anda via WhatsApp dan Telegram.',
             src: '/images/benefits/support-247.png',
+            srcWebp: '/images/benefits/support-247.webp',
         },
     ];
 

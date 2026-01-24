@@ -10,6 +10,8 @@ const features = [
             'Pantau saldo, transaksi, dan performa penjualan secara langsung tanpa delay. Semua data tersaji dalam tampilan visual yang ringkas dan mudah dipahami.',
         image:
             'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Laporan Transaksi Lengkap',
@@ -17,12 +19,16 @@ const features = [
             'Akses riwayat transaksi pulsa, PPOB, e-money, dan layanan lainnya dengan detail yang lengkap, tersusun rapi, dan siap untuk kebutuhan audit maupun evaluasi.',
         image:
             'https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=2670&auto=format&fit=crop', // Reusing the good chart one or similar
+        imageWebp:
+            'https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Rekap & Analisis Keuangan',
         description:
             'Lihat rekap harian, mingguan, hingga bulanan untuk membantu analisis arus kas, margin keuntungan, dan pertumbuhan bisnis secara menyeluruh.',
         image:
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+        imageWebp:
             'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
     },
     {
@@ -31,6 +37,8 @@ const features = [
             'Kelola data agen, master dealer, dan sub-agen dalam satu sistem terpusat. Pantau aktivitas, saldo, dan performa masing-masing jaringan dengan mudah.',
         image:
             'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2670&auto=format&fit=crop',
     },
     {
         title: 'Export Laporan Fleksibel',
@@ -38,12 +46,16 @@ const features = [
             'Unduh laporan dalam berbagai format (Excel / CSV) untuk keperluan administrasi, pembukuan, atau integrasi dengan sistem internal perusahaan Anda.',
         image:
             'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+        imageWebp:
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
     },
     {
         title: 'Performa Cepat & Stabil',
         description:
             'Web report dibangun dengan infrastruktur yang andal, memastikan akses data tetap cepat dan stabil meski digunakan oleh banyak pengguna secara bersamaan.',
         image:
+            'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
+        imageWebp:
             'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
     },
 ];
@@ -83,7 +95,7 @@ export default function Features() {
                                 <div className="aspect-[4/3] w-full overflow-hidden">
                                     <FormatImage
                                         src={feature.image}
-                                        // srcWebp={feature.image} // Removed to force simple img rendering
+                                        srcWebp={feature.imageWebp}
                                         alt={feature.title}
                                         className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                                     />

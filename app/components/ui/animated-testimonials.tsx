@@ -11,6 +11,7 @@ type Testimonial = {
     name: string;
     designation: string;
     src: string;
+    srcWebp?: string;
 };
 export const AnimatedTestimonials = ({
     testimonials,
@@ -90,7 +91,7 @@ export const AnimatedTestimonials = ({
                                     <FormatImage
                                         src={testimonial.src}
                                         alt={`${testimonial.name}${index}`}
-                                        srcWebp={testimonial.src.replace(
+                                        srcWebp={testimonial.srcWebp || testimonial.src.replace(
                                             '.png',
                                             '.webp'
                                         )}

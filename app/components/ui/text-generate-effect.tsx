@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { motion, stagger, useAnimate } from 'framer-motion';
 import { cn } from '~/lib/utils';
+import { useIsMobile } from '~/hooks/use-mobile';
 
 export const TextGenerateEffect = ({
     words,
@@ -14,9 +15,12 @@ export const TextGenerateEffect = ({
     filter?: boolean;
     duration?: number;
 }) => {
+    const isMobile = useIsMobile();
     const [scope, animate] = useAnimate();
     const wordsArray = words.split(' ');
     useEffect(() => {
+        if (isMobile) return; // Skip animation on mobile
+
         animate(
             'span',
             {
@@ -28,7 +32,7 @@ export const TextGenerateEffect = ({
                 delay: stagger(0.2),
             }
         );
-    }, [animate, filter, duration]);
+    }, [animate, filter, duration, isMobile]);
 
     const renderWords = () => {
         return (
@@ -41,6 +45,8 @@ export const TextGenerateEffect = ({
                             style={{
                                 filter: filter ? 'blur(10px)' : 'none',
                             }}
+                            initial={isMobile ? { opacity: 1, filter: 'blur(0px)' } : undefined}
+                            animate={isMobile ? { opacity: 1, filter: 'blur(0px)' } : undefined}
                         >
                             {word}{' '}
                         </motion.span>

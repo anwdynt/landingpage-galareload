@@ -9,7 +9,7 @@ import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 export default function Hero() {
     return (
         <div className="relative flex flex-col items-center justify-center min-h-[90vh] w-full px-4 overflow-hidden bg-white dark:bg-black">
-            <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+            <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center py-12 lg:py-0">
                 <motion.div
                     initial={{ opacity: 0.0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}

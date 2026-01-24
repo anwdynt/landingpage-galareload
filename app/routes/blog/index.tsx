@@ -4,12 +4,13 @@ import { useLoaderData, Link, Form } from 'react-router';
 import { Search, ChevronLeft, ChevronRight, Clock, User, ArrowRight } from 'lucide-react';
 import { getPublishedPosts, getCategories } from '~/server/post.server';
 import { cn } from '~/lib/utils';
-import { AuroraBackground } from '~/components/ui/aurora-background';
+// import { AuroraBackground } from '~/components/ui/aurora-background';
 import { TextGenerateEffect } from '~/components/ui/text-generate-effect';
 import { ColourfulText } from '~/components/ui/colorfull-text';
 import { motion } from 'framer-motion';
 import FormatImage from "~/components/ui/formatImage";
 import { JsonLd } from "~/components/seo/json-ld";
+import { BackgroundBeams } from '~/components/ui/background-beams';
 
 // Metadata
 export function meta({ data }: { data: { url: string } | undefined }) {
@@ -175,26 +176,29 @@ export default function BlogList() {
             }} />
 
             {/* Hero Section */}
-            <AuroraBackground className="-mt-14 space-y-1 h-[60vh] min-h-[400px] mb-20 items-center justify-center py-24">
-                <motion.div
-                    initial={{ opacity: 0.0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                        delay: 0.3,
-                        duration: 0.8,
-                        ease: 'easeInOut',
-                    }}
-                    className="relative flex mt-14 flex-col gap-6 items-start justify-center px-4 md:px-8 max-w-7xl mx-auto w-full text-left"
-                >
-                    <h1 className="text-3xl md:text-7xl font-semibold dark:text-white text-left font-metropolis leading-tight">
-                        Wawasan Bisnis & Teknologi untuk Era Digital<ColourfulText text="." />
-                    </h1>
-                    <TextGenerateEffect
-                        className="text-lg md:text-xl mt-2 font-extralight dark:text-white font-google-sans max-w-2xl"
-                        words="Temukan strategi bisnis pulsa, update teknologi, dan panduan sukses untuk agen modern masa kini."
-                    />
-                </motion.div>
-            </AuroraBackground>
+            <div className="relative flex flex-col items-center justify-center min-h-[60vh] w-full px-4 overflow-hidden bg-white dark:bg-black">
+                <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full text-left flex flex-col gap-6 mt-14">
+                    <motion.div
+                        initial={{ opacity: 0.0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{
+                            delay: 0.3,
+                            duration: 0.8,
+                            ease: 'easeInOut',
+                        }}
+                        className="flex flex-col gap-6"
+                    >
+                        <h1 className="text-3xl md:text-7xl font-semibold dark:text-white text-left font-metropolis leading-tight">
+                            Wawasan Bisnis & Teknologi untuk Era Digital<ColourfulText text="." />
+                        </h1>
+                        <TextGenerateEffect
+                            className="text-lg md:text-xl mt-2 font-extralight dark:text-white font-google-sans max-w-2xl"
+                            words="Temukan strategi bisnis pulsa, update teknologi, dan panduan sukses untuk agen modern masa kini."
+                        />
+                    </motion.div>
+                </div>
+                <BackgroundBeams />
+            </div>
 
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
