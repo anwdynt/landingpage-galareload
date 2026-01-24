@@ -15,8 +15,8 @@ export function Index({ posts }: { posts: Post[] }) {
     return (
         <>
             <Hero />
-            <Welcome />
-            <Product />
+            {/* <Welcome />
+            <Product /> */}
             <Advantages />
             <SocialMedia />
             <CTA />
