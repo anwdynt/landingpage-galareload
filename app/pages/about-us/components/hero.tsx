@@ -1,40 +1,74 @@
+'use client';
+import { motion } from 'framer-motion';
+import { BackgroundBeams } from '~/components/ui/background-beams';
+
 export default function AboutHero() {
     return (
-        <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 overflow-hidden">
-            {/* Animated background grid */}
-            <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0"
-                    style={{
-                        backgroundImage: 'linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)',
-                        backgroundSize: '50px 50px'
-                    }}
-                />
-            </div>
-
+        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-white dark:bg-black">
             {/* Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
-                <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8">
-                    <span className="text-primary text-sm font-semibold tracking-wide">TENTANG KAMI</span>
-                </div>
-
-                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                    Partner Terpercaya untuk<br />
-                    <span className="bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent">
-                        Transformasi Digital
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-24 text-center">
+                {/* Badge */}
+                <motion.div
+                    className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-neutral-900/10 dark:bg-white/10 backdrop-blur-md border border-neutral-900/20 dark:border-white/20"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                    <span className="text-sm font-semibold text-neutral-900 dark:text-white uppercase tracking-wider">
+                        Tentang Kami
                     </span>
-                </h1>
+                </motion.div>
 
-                <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
-                    Sejak 2015, kami membantu ribuan bisnis Indonesia berkembang melalui solusi server pulsa, PPOB, dan teknologi digital yang inovatif.
-                </p>
+                {/* Main Heading */}
+                <motion.h1
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-neutral-900 dark:text-white"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                    Membangun Masa Depan{' '}
+                    <span className="block mt-2 bg-gradient-to-r from-primary via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                        Digital Bersama Anda
+                    </span>
+                </motion.h1>
 
-                {/* Scroll indicator */}
-                <div className="mt-16 animate-bounce">
-                    <svg className="w-6 h-6 mx-auto text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                </div>
+                {/* Description */}
+                <motion.p
+                    className="text-lg sm:text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto leading-relaxed mb-8"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                    Kami hadir sebagai partner terpercaya dalam transformasi digital bisnis Anda. Dengan pengalaman bertahun-tahun, kami memahami kebutuhan unik setiap klien.
+                </motion.p>
+
+                {/* Stats Quick View */}
+                <motion.div
+                    className="flex flex-wrap items-center justify-center gap-8 mt-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                    {[
+                        { value: '9+', label: 'Tahun Pengalaman' },
+                        { value: '30K+', label: 'Member Aktif' },
+                        { value: '500K+', label: 'Transaksi Harian' }
+                    ].map((stat, index) => (
+                        <div key={index} className="text-center">
+                            <div className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white mb-1">
+                                {stat.value}
+                            </div>
+                            <div className="text-sm text-neutral-600 dark:text-neutral-400">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
             </div>
+
+            {/* Background Beams */}
+            <BackgroundBeams />
         </section>
     );
 }

@@ -1,57 +1,83 @@
+'use client';
+import { BackgroundBeams } from '~/components/ui/background-beams';
+import { ColourfulText } from '~/components/ui/colorfull-text';
+import { Link } from 'react-router';
+import { PhoneCall, Calendar } from 'lucide-react';
+
 export default function AboutCTA() {
     return (
-        <section className="py-20 md:py-32 bg-gradient-to-br from-primary to-pink-600 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-            </div>
+        <div className="h-auto py-30 w-full bg-primary relative flex flex-col items-center justify-center antialiased overflow-hidden">
+            <div className="p-4 relative z-10">
+                {/* Badge */}
+                <div className="flex justify-center mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                        <span className="text-sm font-semibold text-white uppercase tracking-wider">
+                            Konsultasi Gratis
+                        </span>
+                    </div>
+                </div>
 
-            <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                    Siap Memulai Transformasi Digital?
+                {/* Heading */}
+                <h2 className="relative z-10 text-3xl md:text-6xl max-w-4xl bg-clip-text text-transparent bg-linear-to-b from-white to-neutral-400 text-center font-metropolis font-semibold mb-4">
+                    Konsultasi Gratis untuk Bisnis Anda
+                    <ColourfulText text="!" />
                 </h2>
-                <p className="text-xl text-white/90 mb-10 leading-relaxed">
-                    Bergabunglah dengan ribuan mitra sukses kami dan rasakan kemudahan berbisnis dengan teknologi terdepan.
+
+                {/* Description */}
+                <p className="text-neutral-200 mx-auto my-6 text-lg text-center relative z-10 font-google-sans max-w-2xl">
+                    Tidak yakin mulai dari mana? Tim expert kami siap membantu Anda menemukan solusi digital yang tepat untuk bisnis Anda, tanpa biaya apapun!
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a
-                        href="/product/whitelabel-galareload"
-                        className="px-8 py-4 bg-white text-primary rounded-full font-bold text-lg hover:bg-neutral-100 transition-all transform hover:scale-105 shadow-xl"
-                    >
-                        Konsultasi Gratis
-                    </a>
-                    <a
-                        href="/pricing"
-                        className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all"
-                    >
-                        Lihat Harga
-                    </a>
+                {/* Benefits */}
+                <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-neutral-300 text-sm relative z-10">
+                    <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-medium">100% Gratis</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-medium">Tanpa Komitmen</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="font-medium">Tanpa Tekanan</span>
+                    </div>
                 </div>
 
-                {/* Trust badges */}
-                <div className="mt-16 flex flex-wrap justify-center gap-8 text-white/80">
-                    <div className="flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="font-semibold">30K+ Mitra Aktif</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="font-semibold">99.9% Uptime</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="font-semibold">Support 24/7</span>
-                    </div>
+                {/* CTA Buttons */}
+                <div className="flex flex-col md:flex-row justify-center gap-4 pt-4">
+                    <Link to="/hubungi-kami" className="w-full md:w-auto">
+                        <button className="p-0.75 relative cursor-pointer z-20 w-full">
+                            <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 rounded-lg pointer-events-none" />
+                            <div className="px-8 py-3 font-metropolis font-medium bg-black rounded-[6px] relative group transition duration-200 text-neutral-200 hover:bg-transparent flex items-center justify-center gap-2">
+                                <Calendar className="w-5 h-5" />
+                                <span>Jadwalkan Meeting</span>
+                            </div>
+                        </button>
+                    </Link>
+
+                    <Link to="tel:62243517625" className="w-full md:w-auto">
+                        <button className="px-8 py-3 font-metropolis font-medium bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-lg border border-white/20 transition-all duration-300 flex items-center justify-center gap-2 relative z-20">
+                            <PhoneCall className="w-5 h-5" />
+                            <span>Hubungi Sekarang</span>
+                        </button>
+                    </Link>
                 </div>
+
+                {/* Additional Info */}
+                <p className="text-neutral-300 text-sm text-center mt-8 relative z-10">
+                    Respon dalam <strong className="text-white">1 jam kerja</strong> | Available <strong className="text-white">7 hari seminggu</strong>
+                </p>
             </div>
-        </section>
+
+            <BackgroundBeams />
+        </div>
     );
 }
