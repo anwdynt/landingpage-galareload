@@ -18,8 +18,14 @@ import { useEffect, useState } from "react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     await requireUserId(request, "/admin-panel");
-    const posts = await getPosts();
-    return { posts };
+
+    const url = new URL(request.url);
+    const page = Number(url.searchParams.get("page")) || 1;
+    const limit = Number(url.searchParams.get("limit")) || 5;
+    const search = url.searchParams.get("search") || '';
+
+    const result = await getPosts(undefined, page, limit, search);
+    return { ...result, search };
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -40,7 +46,8 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function PostListPage() {
-    const { posts } = useLoaderData<typeof loader>();
+    const loaderData = useLoaderData<typeof loader>();
+    const { posts = [], totalCount = 0, page = 1, limit = 5, totalPages = 1, search = '' } = loaderData || {};
     const fetcher = useFetcher();
     const [deleteId, setDeleteId] = useState<number | null>(null);
 
@@ -73,6 +80,26 @@ export default function PostListPage() {
                             <Plus size={16} /> Tambah Artikel
                         </Link>
                     </Button>
+                </div>
+
+                {/* Search Bar */}
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        placeholder="Cari artikel berdasarkan judul atau konten... (tekan Enter)"
+                        defaultValue={search}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                const value = e.currentTarget.value;
+                                const params = new URLSearchParams();
+                                if (value) params.set('search', value);
+                                params.set('page', '1');
+                                params.set('limit', limit.toString());
+                                window.location.href = `/admin/posts?${params.toString()}`;
+                            }
+                        }}
+                        className="w-full px-4 py-2.5 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    />
                 </div>
 
                 <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
@@ -126,6 +153,89 @@ export default function PostListPage() {
                             ))}
                         </tbody>
                     </table>
+
+                    {/* Pagination Controls */}
+                    <div className="border-t border-neutral-200 dark:border-neutral-800 px-6 py-4">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            {/* Page Info */}
+                            <div className="text-sm text-neutral-600 dark:text-neutral-400">
+                                Menampilkan <span className="font-medium">{((page - 1) * limit) + 1}</span> - <span className="font-medium">{Math.min(page * limit, totalCount)}</span> dari <span className="font-medium">{totalCount}</span> artikel
+                            </div>
+
+                            {/* Center: Page Navigation - Only show if more than 1 page */}
+                            {totalPages > 1 && (
+                                <div className="flex items-center gap-2">
+                                    {/* Previous Button */}
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        asChild
+                                        disabled={page === 1}
+                                        className="disabled:opacity-50"
+                                    >
+                                        <Link to={`?page=${page - 1}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ''}`}>
+                                            Previous
+                                        </Link>
+                                    </Button>
+
+                                    {/* Page Numbers */}
+                                    <div className="flex items-center gap-1">
+                                        {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                                            let pageNum;
+                                            if (totalPages <= 5) {
+                                                pageNum = i + 1;
+                                            } else if (page <= 3) {
+                                                pageNum = i + 1;
+                                            } else if (page >= totalPages - 2) {
+                                                pageNum = totalPages - 4 + i;
+                                            } else {
+                                                pageNum = page - 2 + i;
+                                            }
+
+                                            return (
+                                                <Button
+                                                    key={pageNum}
+                                                    variant={page === pageNum ? "default" : "outline"}
+                                                    size="sm"
+                                                    asChild
+                                                    className="min-w-[2.5rem]"
+                                                >
+                                                    <Link to={`?page=${pageNum}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ''}`}>
+                                                        {pageNum}
+                                                    </Link>
+                                                </Button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    {/* Next Button */}
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        asChild
+                                        disabled={page === totalPages}
+                                        className="disabled:opacity-50"
+                                    >
+                                        <Link to={`?page=${page + 1}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ''}`}>
+                                            Next
+                                        </Link>
+                                    </Button>
+                                </div>
+                            )}
+
+                            {/* Right: Rows per page */}
+                            <select
+                                value={limit}
+                                onChange={(e) => window.location.href = `?page=1&limit=${e.target.value}${search ? `&search=${encodeURIComponent(search)}` : ''}`}
+                                className="text-sm border border-neutral-200 dark:border-neutral-700 rounded-md px-3 py-1.5 bg-white dark:bg-neutral-900"
+                            >
+                                <option value="5">5 / halaman</option>
+                                <option value="10">10 / halaman</option>
+                                <option value="25">25 / halaman</option>
+                                <option value="50">50 / halaman</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <Dialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
@@ -145,6 +255,6 @@ export default function PostListPage() {
                     </DialogContent>
                 </Dialog>
             </div>
-        </PermissionGuard>
+        </PermissionGuard >
     );
 }

@@ -30,24 +30,27 @@ export function meta({ data }: { data: { url: string } | undefined }) {
     ];
 }
 
-// Loader for Pagination & Filtering
-export async function loader({ request }: LoaderFunctionArgs) {
+// Client Loader for Pagination & Filtering
+export async function clientLoader({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get('page')) || 1;
     const search = url.searchParams.get('q') || '';
     const category = url.searchParams.get('category') || '';
-    const limit = 6;
+    const limit = 3; // Reduced from 6 to 3 for easier pagination testing
 
-    // Fetch from DB
+    // Fetch from DB on client-side
     const { posts, total, totalPages } = await getPublishedPosts({ page, limit, search, category });
     const allCategories = await getCategories();
+
+    console.log('Pagination Debug:', { page, total, totalPages, postsCount: posts.length, limit });
 
     return {
         posts,
         pagination: { page, totalPages, totalPosts: total },
         categories: allCategories.map(c => c.name),
         currentCategory: category,
-        searchQuery: search
+        searchQuery: search,
+        url: url.href
     };
 }
 
@@ -153,7 +156,7 @@ function BlogCard({ post }: { post: Post }) {
 }
 
 export default function BlogList() {
-    const { posts, pagination, categories, currentCategory, searchQuery } = useLoaderData<typeof loader>();
+    const { posts, pagination, categories, currentCategory, searchQuery } = useLoaderData<typeof clientLoader>();
 
     return (
         <div className="min-h-screen dark:bg-black pb-24">
@@ -239,49 +242,54 @@ export default function BlogList() {
                             </div>
                         )}
 
-                        {/* Pagination */}
-                        {pagination.totalPages > 1 && (
-                            <div className="flex justify-center items-center gap-2">
+                        {/* Debug Info - TEMPORARY */}
+                        <div className="my-4 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg text-sm">
+                            <strong>Debug Info:</strong>
+                            <pre>{JSON.stringify(pagination, null, 2)}</pre>
+                            <p>Posts shown: {posts.length}</p>
+                        </div>
+
+                        {/* Pagination - Temporarily showing always */}
+                        <div className="flex justify-center items-center gap-2">
+                            <Link
+                                to={`/blog?page=${Math.max(1, pagination.page - 1)}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
+                                className={cn(
+                                    "w-10 h-10 rounded-full flex items-center justify-center border border-neutral-200 dark:border-neutral-800 transition-colors",
+                                    pagination.page === 1
+                                        ? "text-neutral-300 pointer-events-none"
+                                        : "hover:bg-white hover:border-primary hover:text-primary bg-neutral-50 dark:bg-neutral-900"
+                                )}
+                            >
+                                <ChevronLeft size={18} />
+                            </Link>
+
+                            {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(page => (
                                 <Link
-                                    to={`/blog?page=${Math.max(1, pagination.page - 1)}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
+                                    key={page}
+                                    to={`/blog?page=${page}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
                                     className={cn(
-                                        "w-10 h-10 rounded-full flex items-center justify-center border border-neutral-200 dark:border-neutral-800 transition-colors",
-                                        pagination.page === 1
-                                            ? "text-neutral-300 pointer-events-none"
-                                            : "hover:bg-white hover:border-primary hover:text-primary bg-neutral-50 dark:bg-neutral-900"
+                                        "w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all shadow-sm",
+                                        pagination.page === page
+                                            ? "bg-primary text-white scale-110"
+                                            : "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 hover:border-primary hover:text-primary"
                                     )}
                                 >
-                                    <ChevronLeft size={18} />
+                                    {page}
                                 </Link>
+                            ))}
 
-                                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(page => (
-                                    <Link
-                                        key={page}
-                                        to={`/blog?page=${page}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
-                                        className={cn(
-                                            "w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all shadow-sm",
-                                            pagination.page === page
-                                                ? "bg-primary text-white scale-110"
-                                                : "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 hover:border-primary hover:text-primary"
-                                        )}
-                                    >
-                                        {page}
-                                    </Link>
-                                ))}
-
-                                <Link
-                                    to={`/blog?page=${Math.min(pagination.totalPages, pagination.page + 1)}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
-                                    className={cn(
-                                        "w-10 h-10 rounded-full flex items-center justify-center border border-neutral-200 dark:border-neutral-800 transition-colors",
-                                        pagination.page === pagination.totalPages
-                                            ? "text-neutral-300 pointer-events-none"
-                                            : "hover:bg-white hover:border-primary hover:text-primary bg-neutral-50 dark:bg-neutral-900"
-                                    )}
-                                >
-                                    <ChevronRight size={18} />
-                                </Link>
-                            </div>
-                        )}
+                            <Link
+                                to={`/blog?page=${Math.min(pagination.totalPages, pagination.page + 1)}${currentCategory ? `&category=${currentCategory}` : ''}${searchQuery ? `&q=${searchQuery}` : ''}`}
+                                className={cn(
+                                    "w-10 h-10 rounded-full flex items-center justify-center border border-neutral-200 dark:border-neutral-800 transition-colors",
+                                    pagination.page === pagination.totalPages
+                                        ? "text-neutral-300 pointer-events-none"
+                                        : "hover:bg-white hover:border-primary hover:text-primary bg-neutral-50 dark:bg-neutral-900"
+                                )}
+                            >
+                                <ChevronRight size={18} />
+                            </Link>
+                        </div>
 
                     </main>
                 </div>

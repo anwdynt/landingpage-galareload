@@ -15,10 +15,51 @@ export type CreatePostDTO = {
     publishedAt?: string | Date | null;
 };
 
-export async function getPosts(status?: string) {
-    const where = status ? { status: status as PostStatus } : {};
+export async function getPosts(status?: string, page?: number, limit?: number, search?: string) {
+    const where: any = {};
 
-    return prisma.post.findMany({
+    if (status) {
+        where.status = status as PostStatus;
+    }
+
+    if (search) {
+        where.OR = [
+            { title: { contains: search } },
+            { excerpt: { contains: search } },
+            { content: { contains: search } }
+        ];
+    }
+
+    // If pagination params provided, use them
+    if (page && limit) {
+        const skip = (page - 1) * limit;
+
+        const [posts, totalCount] = await Promise.all([
+            prisma.post.findMany({
+                where,
+                include: {
+                    author: true,
+                    categories: { include: { category: true } },
+                    tags: { include: { tag: true } }
+                },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take: limit
+            }),
+            prisma.post.count({ where })
+        ]);
+
+        return {
+            posts,
+            totalCount,
+            page,
+            limit,
+            totalPages: Math.ceil(totalCount / limit)
+        };
+    }
+
+    // Without pagination - return array directly
+    const posts = await prisma.post.findMany({
         where,
         include: {
             author: true,
@@ -27,6 +68,8 @@ export async function getPosts(status?: string) {
         },
         orderBy: { createdAt: 'desc' }
     });
+
+    return { posts };
 }
 
 export async function getPost(id: number) {
