@@ -132,36 +132,33 @@ export default function AboutMissionVision() {
                                 ].map((mission, index) => (
                                     <motion.div
                                         key={index}
-                                        className="relative overflow-hidden group"
+                                        className="relative overflow-visible group "
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.5, delay: index * 0.1 }}
                                     >
-                                        {/* Large Number Background */}
-                                        <div className="absolute -right-4 -top-2 text-[120px] font-bold text-neutral-100 group-hover:text-neutral-200 transition-colors duration-300 select-none">
-                                            {mission.number}
-                                        </div>
+                                        {/* Button-style wrapper with border glow */}
+                                        <div className="p-0.75 relative cursor-pointer rounded-xl shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] transition-all duration-300">
+                                            {/* Animated border glow on hover */}
 
-                                        {/* Content */}
-                                        <div className="relative bg-white rounded-2xl border-2 border-neutral-200 p-6 hover:border-neutral-900 hover:shadow-xl transition-all duration-300">
-                                            {/* Number Badge */}
-                                            <div className="inline-flex items-center justify-center w-12 h-12 bg-neutral-900 text-white rounded-xl font-bold text-lg mb-4">
-                                                {mission.number}
+                                            {/* Content card */}
+                                            <div className="relative bg-white rounded-[14px] p-6">
+                                                {/* Number Badge */}
+                                                <div className="inline-flex items-center justify-center w-12 h-12 bg-neutral-900 text-white rounded-xl font-bold text-lg mb-4">
+                                                    {mission.number}
+                                                </div>
+
+                                                {/* Title */}
+                                                <h4 className="text-xl font-bold text-neutral-900 mb-2">
+                                                    {mission.title}
+                                                </h4>
+
+                                                {/* Description */}
+                                                <p className="text-neutral-600 leading-relaxed">
+                                                    {mission.desc}
+                                                </p>
                                             </div>
-
-                                            {/* Title */}
-                                            <h4 className="text-xl font-bold text-neutral-900 mb-2">
-                                                {mission.title}
-                                            </h4>
-
-                                            {/* Description */}
-                                            <p className="text-neutral-600 leading-relaxed">
-                                                {mission.desc}
-                                            </p>
-
-                                            {/* Hover indicator */}
-                                            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-neutral-900 to-neutral-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-b-xl" />
                                         </div>
                                     </motion.div>
                                 ))}

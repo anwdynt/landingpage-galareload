@@ -13,9 +13,9 @@ export default function AboutStory() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-primary/10 border border-primary/20">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                        <span className="text-xs font-semibold text-primary uppercase tracking-wider">Our Story</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-neutral-900/10 border border-neutral-900/20">
+                        <div className="w-1.5 h-1.5 bg-neutral-900 rounded-full animate-pulse" />
+                        <span className="text-xs font-semibold text-neutral-900 uppercase tracking-wider">Our Story</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-900 mb-4">
                         Perjalanan Kami
@@ -40,8 +40,8 @@ export default function AboutStory() {
                             />
                         </div>
                         {/* Decorative element */}
-                        <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-full blur-3xl -z-10" />
-                        <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-pink-500/20 to-primary/20 rounded-full blur-3xl -z-10" />
+                        <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-neutral-300/30 to-neutral-400/30 rounded-full blur-3xl -z-10" />
+                        <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-neutral-400/30 to-neutral-300/30 rounded-full blur-3xl -z-10" />
                     </motion.div>
 
                     {/* Content */}
@@ -63,7 +63,7 @@ export default function AboutStory() {
                                 <p>
                                     Perjalanan kami dipenuhi dengan inovasi, dedikasi, dan komitmen untuk memberikan yang terbaik bagi setiap klien. Setiap proyek adalah kesempatan baru untuk menciptakan solusi yang meaningful dan impactful.
                                 </p>
-                                <p className="text-primary font-medium italic">
+                                <p className="text-neutral-900 font-medium italic">
                                     "Fondasi yang kuat membangun kepercayaan dan kesuksesan bersama."
                                 </p>
                             </div>

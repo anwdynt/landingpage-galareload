@@ -52,9 +52,9 @@ export default function AboutFAQ() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-primary/10 border border-primary/20">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                        <span className="text-xs font-semibold text-primary uppercase tracking-wider">FAQ</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-neutral-900/10 border border-neutral-900/20">
+                        <div className="w-1.5 h-1.5 bg-neutral-900 rounded-full animate-pulse" />
+                        <span className="text-xs font-semibold text-neutral-900 uppercase tracking-wider">FAQ</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
                         Pertanyaan yang Sering Diajukan
@@ -83,7 +83,7 @@ export default function AboutFAQ() {
                                     {faq.question}
                                 </span>
                                 <ChevronDown
-                                    className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''
+                                    className={`w-5 h-5 text-neutral-900 flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''
                                         }`}
                                 />
                             </button>
@@ -99,28 +99,6 @@ export default function AboutFAQ() {
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Contact CTA */}
-                <motion.div
-                    className="mt-12 text-center"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                    <p className="text-neutral-600 mb-4">
-                        Masih ada pertanyaan lain?
-                    </p>
-                    <a
-                        href="/hubungi-kami"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-primary/25"
-                    >
-                        Hubungi Tim Kami
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </motion.div>
             </div>
         </section>
     );

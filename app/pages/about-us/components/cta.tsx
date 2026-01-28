@@ -6,7 +6,7 @@ import { PhoneCall, Calendar } from 'lucide-react';
 
 export default function AboutCTA() {
     return (
-        <div className="h-auto py-30 w-full bg-primary relative flex flex-col items-center justify-center antialiased overflow-hidden">
+        <div className="h-auto py-30 w-full bg-neutral-900 relative flex flex-col items-center justify-center antialiased overflow-hidden">
             <div className="p-4 relative z-10">
                 {/* Badge */}
                 <div className="flex justify-center mb-6">
@@ -53,17 +53,7 @@ export default function AboutCTA() {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col md:flex-row justify-center gap-4 pt-4">
-                    <Link to="/hubungi-kami" className="w-full md:w-auto">
-                        <button className="p-0.75 relative cursor-pointer z-20 w-full">
-                            <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 rounded-lg pointer-events-none" />
-                            <div className="px-8 py-3 font-metropolis font-medium bg-black rounded-[6px] relative group transition duration-200 text-neutral-200 hover:bg-transparent flex items-center justify-center gap-2">
-                                <Calendar className="w-5 h-5" />
-                                <span>Jadwalkan Meeting</span>
-                            </div>
-                        </button>
-                    </Link>
-
-                    <Link to="tel:62243517625" className="w-full md:w-auto">
+                    <Link target="_blank" to="https://api.whatsapp.com/send/?phone=6281329701020&text=Saya+butuh+informasi+terkait+produk+Gala+Reload&type=phone_number&app_absent=0" className="w-full md:w-auto">
                         <button className="px-8 py-3 font-metropolis font-medium bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-lg border border-white/20 transition-all duration-300 flex items-center justify-center gap-2 relative z-20">
                             <PhoneCall className="w-5 h-5" />
                             <span>Hubungi Sekarang</span>

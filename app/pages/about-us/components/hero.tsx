@@ -14,7 +14,7 @@ export default function AboutHero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                    <div className="w-2 h-2 bg-neutral-900 dark:bg-white rounded-full animate-pulse" />
                     <span className="text-sm font-semibold text-neutral-900 dark:text-white uppercase tracking-wider">
                         Tentang Kami
                     </span>
@@ -28,7 +28,7 @@ export default function AboutHero() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
                     Membangun Masa Depan{' '}
-                    <span className="block mt-2 bg-gradient-to-r from-primary via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    <span className="block mt-2 bg-gradient-to-r from-neutral-700 via-neutral-600 to-neutral-500 dark:from-neutral-300 dark:via-neutral-200 dark:to-neutral-100 bg-clip-text text-transparent">
                         Digital Bersama Anda
                     </span>
                 </motion.h1>

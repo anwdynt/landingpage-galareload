@@ -12,10 +12,10 @@ export default function AboutUs() {
             <AboutHero />
             <AboutStory />
             <AboutMissionVision />
-            <AboutStats />
+            {/* <AboutStats /> */}
             <AboutValues />
-            <AboutFAQ />
             <AboutCTA />
+            <AboutFAQ />
         </main>
     );
 }
