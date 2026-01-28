@@ -27,7 +27,9 @@ export const links: Route.LinksFunction = () => [
 import { JsonLd } from "~/components/seo/json-ld";
 
 export const meta: Route.MetaFunction = () => {
-    return [
+    const isProduction = import.meta.env.VITE_MODE === 'production';
+
+    const metaTags = [
         { title: "Gala Reload | Aplikasi Server Pulsa & PPOB Termurah" },
         { name: "description", content: "Platform agen pulsa dan PPOB termurah dan terpercaya. Layanan 24 jam untuk pulsa, paket data, token listrik, dan pembayaran tagihan." },
         { name: "keywords", content: "agen pulsa, server pulsa, ppob termurah, gala reload, pulsa murah, token listrik" },
@@ -39,6 +41,13 @@ export const meta: Route.MetaFunction = () => {
         { property: "twitter:title", content: "Gala Reload | Aplikasi Server Pulsa & PPOB Termurah" },
         { property: "twitter:description", content: "Platform agen pulsa dan PPOB termurah dan terpercaya." },
     ];
+
+    // Block search engines on staging/development
+    if (!isProduction) {
+        metaTags.push({ name: "robots", content: "noindex, nofollow" });
+    }
+
+    return metaTags;
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -72,10 +81,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <Meta />
                 <Links />
-                <JsonLd data={organizationSchema} />
 
-                {/* Google Analytics */}
-                {import.meta.env.VITE_GA_MEASUREMENT_ID && (
+                {/* SEO - Only in Production */}
+                {import.meta.env.VITE_MODE === 'production' && (
+                    <JsonLd data={organizationSchema} />
+                )}
+
+                {/* Google Analytics - Only in Production */}
+                {import.meta.env.VITE_MODE === 'production' && import.meta.env.VITE_GA_MEASUREMENT_ID && (
                     <>
                         <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`}></script>
                         <script

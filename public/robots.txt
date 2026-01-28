@@ -1,0 +1,9 @@
+# robots.txt for Gala Reload
+# This file will be replaced by environment-specific version during deployment
+
+# Production: Allow all crawling
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://galareload.com/sitemap.xml
