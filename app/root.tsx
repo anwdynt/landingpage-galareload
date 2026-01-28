@@ -75,17 +75,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <JsonLd data={organizationSchema} />
 
                 {/* Google Analytics */}
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGHKF2BDF4"></script>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
-                            gtag('config', 'G-FGHKF2BDF4');
-                        `,
-                    }}
-                />
+                {import.meta.env.VITE_GA_MEASUREMENT_ID && (
+                    <>
+                        <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`}></script>
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `
+                                    window.dataLayer = window.dataLayer || [];
+                                    function gtag(){dataLayer.push(arguments);}
+                                    gtag('js', new Date());
+                                    gtag('config', '${import.meta.env.VITE_GA_MEASUREMENT_ID}');
+                                `,
+                            }}
+                        />
+                    </>
+                )}
             </head>
             <body className="overflow-x-hidden">
                 {children}

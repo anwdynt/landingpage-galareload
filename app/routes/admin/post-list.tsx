@@ -229,7 +229,6 @@ export default function PostListPage() {
                                 onChange={(e) => window.location.href = `?page=1&limit=${e.target.value}${search ? `&search=${encodeURIComponent(search)}` : ''}`}
                                 className="text-sm border border-neutral-200 dark:border-neutral-700 rounded-md px-3 py-1.5 bg-white dark:bg-neutral-900"
                             >
-                                <option value="5">5 / halaman</option>
                                 <option value="10">10 / halaman</option>
                                 <option value="25">25 / halaman</option>
                                 <option value="50">50 / halaman</option>

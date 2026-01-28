@@ -30,15 +30,15 @@ export function meta({ data }: { data: { url: string } | undefined }) {
     ];
 }
 
-// Client Loader for Pagination & Filtering
-export async function clientLoader({ request }: LoaderFunctionArgs) {
+// Server Loader for Pagination & Filtering
+export async function loader({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get('page')) || 1;
     const search = url.searchParams.get('q') || '';
     const category = url.searchParams.get('category') || '';
     const limit = 3; // Reduced from 6 to 3 for easier pagination testing
 
-    // Fetch from DB on client-side
+    // Fetch from DB on server-side
     const { posts, total, totalPages } = await getPublishedPosts({ page, limit, search, category });
     const allCategories = await getCategories();
 
@@ -156,7 +156,7 @@ function BlogCard({ post }: { post: Post }) {
 }
 
 export default function BlogList() {
-    const { posts, pagination, categories, currentCategory, searchQuery } = useLoaderData<typeof clientLoader>();
+    const { posts, pagination, categories, currentCategory, searchQuery } = useLoaderData<typeof loader>();
 
     return (
         <div className="min-h-screen dark:bg-black pb-24">
@@ -169,7 +169,7 @@ export default function BlogList() {
                 "url": "https://galareload.id/blog",
                 "mainEntity": {
                     "@type": "ItemList",
-                    "itemListElement": posts.map((post, index) => ({
+                    "itemListElement": posts.map((post: Post, index: number) => ({
                         "@type": "ListItem",
                         "position": index + 1,
                         "url": `https://galareload.id/blog/${post.slug}`,
