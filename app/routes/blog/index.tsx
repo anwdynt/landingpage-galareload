@@ -241,14 +241,6 @@ export default function BlogList() {
                                 <p className="text-neutral-500 font-medium">Tidak ada artikel yang ditemukan.</p>
                             </div>
                         )}
-
-                        {/* Debug Info - TEMPORARY */}
-                        <div className="my-4 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg text-sm">
-                            <strong>Debug Info:</strong>
-                            <pre>{JSON.stringify(pagination, null, 2)}</pre>
-                            <p>Posts shown: {posts.length}</p>
-                        </div>
-
                         {/* Pagination - Temporarily showing always */}
                         <div className="flex justify-center items-center gap-2">
                             <Link
