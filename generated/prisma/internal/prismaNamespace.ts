@@ -395,7 +395,8 @@ export const ModelName = {
   Category: 'Category',
   Tag: 'Tag',
   PostCategory: 'PostCategory',
-  PostTag: 'PostTag'
+  PostTag: 'PostTag',
+  Changelog: 'Changelog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRole" | "userPermission" | "post" | "postMeta" | "category" | "tag" | "postCategory" | "postTag"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRole" | "userPermission" | "post" | "postMeta" | "category" | "tag" | "postCategory" | "postTag" | "changelog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1207,6 +1208,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Changelog: {
+      payload: Prisma.$ChangelogPayload<ExtArgs>
+      fields: Prisma.ChangelogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChangelogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChangelogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        findFirst: {
+          args: Prisma.ChangelogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChangelogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        findMany: {
+          args: Prisma.ChangelogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>[]
+        }
+        create: {
+          args: Prisma.ChangelogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        createMany: {
+          args: Prisma.ChangelogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ChangelogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        update: {
+          args: Prisma.ChangelogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChangelogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChangelogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ChangelogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangelogPayload>
+        }
+        aggregate: {
+          args: Prisma.ChangelogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChangelog>
+        }
+        groupBy: {
+          args: Prisma.ChangelogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChangelogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChangelogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChangelogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1373,6 +1440,24 @@ export const PostTagScalarFieldEnum = {
 export type PostTagScalarFieldEnum = (typeof PostTagScalarFieldEnum)[keyof typeof PostTagScalarFieldEnum]
 
 
+export const ChangelogScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  releaseDate: 'releaseDate',
+  isUpcoming: 'isUpcoming',
+  expectedDate: 'expectedDate',
+  tag: 'tag',
+  features: 'features',
+  fixes: 'fixes',
+  improvements: 'improvements',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChangelogScalarFieldEnum = (typeof ChangelogScalarFieldEnum)[keyof typeof ChangelogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1387,6 +1472,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -1479,6 +1571,15 @@ export const TagOrderByRelevanceFieldEnum = {
 } as const
 
 export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum]
+
+
+export const ChangelogOrderByRelevanceFieldEnum = {
+  version: 'version',
+  expectedDate: 'expectedDate',
+  tag: 'tag'
+} as const
+
+export type ChangelogOrderByRelevanceFieldEnum = (typeof ChangelogOrderByRelevanceFieldEnum)[keyof typeof ChangelogOrderByRelevanceFieldEnum]
 
 
 
@@ -1649,6 +1750,7 @@ export type GlobalOmitConfig = {
   tag?: Prisma.TagOmit
   postCategory?: Prisma.PostCategoryOmit
   postTag?: Prisma.PostTagOmit
+  changelog?: Prisma.ChangelogOmit
 }
 
 /* Types for Logging */

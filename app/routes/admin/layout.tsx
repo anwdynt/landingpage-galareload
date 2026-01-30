@@ -8,7 +8,8 @@ import {
     FileText,
     LogOut,
     Users,
-    Tag
+    Tag,
+    GitBranch
 } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { Sidebar, SidebarBody, SidebarLink } from "~/components/ui/sidebar";
@@ -87,6 +88,14 @@ export default function AdminLayout({ loaderData }: Route.ComponentProps) {
             label: "Kategori",
             href: "/admin/categories",
             icon: <Tag className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+        });
+    }
+
+    if (permissions.includes("view_changelogs")) {
+        links.push({
+            label: "Developer Notes",
+            href: "/admin/changelog",
+            icon: <GitBranch className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
         });
     }
 

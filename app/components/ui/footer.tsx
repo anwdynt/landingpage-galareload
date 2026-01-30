@@ -52,6 +52,9 @@ export default function Footer() {
                         <li className="hover:text-white transition">
                             Tentang Kami
                         </li>
+                        <li className="hover:text-white transition">
+                            <Link to="/changelog">Changelog</Link>
+                        </li>
                         <li className="hover:text-white transition">FAQ</li>
                     </ul>
                 </div>

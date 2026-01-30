@@ -77,3 +77,8 @@ export type PostCategory = Prisma.PostCategoryModel
  * 
  */
 export type PostTag = Prisma.PostTagModel
+/**
+ * Model Changelog
+ * 
+ */
+export type Changelog = Prisma.ChangelogModel

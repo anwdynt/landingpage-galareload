@@ -62,7 +62,8 @@ export const ModelName = {
   Category: 'Category',
   Tag: 'Tag',
   PostCategory: 'PostCategory',
-  PostTag: 'PostTag'
+  PostTag: 'PostTag',
+  Changelog: 'Changelog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -208,6 +209,24 @@ export const PostTagScalarFieldEnum = {
 export type PostTagScalarFieldEnum = (typeof PostTagScalarFieldEnum)[keyof typeof PostTagScalarFieldEnum]
 
 
+export const ChangelogScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  releaseDate: 'releaseDate',
+  isUpcoming: 'isUpcoming',
+  expectedDate: 'expectedDate',
+  tag: 'tag',
+  features: 'features',
+  fixes: 'fixes',
+  improvements: 'improvements',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChangelogScalarFieldEnum = (typeof ChangelogScalarFieldEnum)[keyof typeof ChangelogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -222,6 +241,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -314,4 +340,13 @@ export const TagOrderByRelevanceFieldEnum = {
 } as const
 
 export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum]
+
+
+export const ChangelogOrderByRelevanceFieldEnum = {
+  version: 'version',
+  expectedDate: 'expectedDate',
+  tag: 'tag'
+} as const
+
+export type ChangelogOrderByRelevanceFieldEnum = (typeof ChangelogOrderByRelevanceFieldEnum)[keyof typeof ChangelogOrderByRelevanceFieldEnum]
 

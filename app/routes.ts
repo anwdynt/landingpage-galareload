@@ -20,6 +20,7 @@ export default [
         route('/blog', 'routes/blog/index.tsx'),
         route('/blog/:slug', 'routes/blog/detail.tsx'),
         route('/pricing', 'routes/pricing.tsx'),
+        route('/changelog', 'routes/changelog.tsx'),
     ]),
 
     // Auth Routes
@@ -37,6 +38,8 @@ export default [
         route('/admin/users/new', 'routes/admin/user-new.tsx'),
         route('/admin/users/:id', 'routes/admin/user-detail.tsx'),
         route('/admin/categories', 'routes/admin/categories.tsx'),
+        route('/admin/changelog', 'routes/admin/changelog-list.tsx'),
+        route('/admin/changelog/:id', 'routes/admin/changelog-form.tsx'),
         // Add more admin routes here later
     ]),
 

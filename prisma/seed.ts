@@ -31,6 +31,13 @@ const PERMISSIONS = [
     { name: 'Read Private Posts', slug: 'read_private_posts' },
     { name: 'Manage Categories', slug: 'manage_categories' }, // NEW
 
+    // Changelog Management
+    { name: 'View Changelogs', slug: 'view_changelogs' },
+    { name: 'Create Changelogs', slug: 'create_changelogs' },
+    { name: 'Edit Changelogs', slug: 'edit_changelogs' },
+    { name: 'Delete Changelogs', slug: 'delete_changelogs' },
+    { name: 'Publish Changelogs', slug: 'publish_changelogs' },
+
     // Settings
     { name: 'Manage Settings', slug: 'manage_settings' },
 ];
@@ -40,10 +47,12 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
     administrator: [
         'manage_users', 'create_users', 'edit_users', 'delete_users',
         'view_posts', 'create_posts', 'edit_posts', 'edit_others_posts', 'publish_posts', 'delete_posts', 'read_private_posts', 'manage_categories',
+        'view_changelogs', 'create_changelogs', 'edit_changelogs', 'delete_changelogs', 'publish_changelogs',
         'manage_settings'
     ],
     editor: [
-        'view_posts', 'create_posts', 'edit_posts', 'edit_others_posts', 'publish_posts', 'delete_posts', 'read_private_posts', 'manage_categories'
+        'view_posts', 'create_posts', 'edit_posts', 'edit_others_posts', 'publish_posts', 'delete_posts', 'read_private_posts', 'manage_categories',
+        'view_changelogs', 'create_changelogs', 'edit_changelogs', 'publish_changelogs'
     ],
     author: [
         'view_posts', 'create_posts', 'edit_posts', 'publish_posts', 'delete_posts'
@@ -209,6 +218,106 @@ async function main() {
             });
         }
     }
+
+    // 8. Seed Changelogs
+    const changelogSamples = [
+        {
+            version: '2.1.0',
+            releaseDate: new Date('2026-01-29'),
+            isUpcoming: false,
+            tag: 'Latest',
+            features: [
+                'Added dark mode support across all pages',
+                'Implemented real-time notifications system',
+                'New analytics dashboard with custom metrics',
+            ],
+            fixes: [
+                'Fixed login session timeout issue',
+                'Resolved mobile navigation menu bug',
+                'Corrected API response caching error',
+            ],
+            improvements: [
+                'Enhanced page load performance by 40%',
+                'Optimized database queries for faster response',
+                'Improved error messages for better debugging',
+            ],
+            isPublished: true,
+        },
+        {
+            version: '2.0.5',
+            releaseDate: new Date('2026-01-15'),
+            isUpcoming: false,
+            tag: null,
+            features: [
+                'Search functionality with autocomplete',
+                'Export data to CSV feature',
+            ],
+            fixes: [
+                'Fixed pagination on user list',
+                'Resolved timezone conversion bug',
+                'Fixed email notification delivery',
+            ],
+            improvements: [
+                'Updated UI components library',
+                'Improved mobile responsiveness',
+            ],
+            isPublished: true,
+        },
+        {
+            version: '2.0.0',
+            releaseDate: new Date('2026-01-01'),
+            isUpcoming: false,
+            tag: null,
+            features: [
+                'Complete UI redesign with minimalist aesthetic',
+                'Multi-language support (EN, ID)',
+                'Advanced filtering and sorting options',
+            ],
+            fixes: [
+                'Fixed security vulnerability in authentication',
+                'Resolved data export corruption issue',
+            ],
+            improvements: [
+                'Migrated to new architecture for better scalability',
+                'Enhanced security with 2FA support',
+                'Improved API documentation',
+            ],
+            isPublished: true,
+        },
+        // 2025
+        { version: '1.9.0', releaseDate: new Date('2025-12-20'), isUpcoming: false, tag: null, features: ['Payment gateway', 'Invoicing'], fixes: ['Checkout bugs'], improvements: ['Faster payments'], isPublished: true },
+        { version: '1.8.5', releaseDate: new Date('2025-09-15'), isUpcoming: false, tag: null, features: ['Team collaboration'], fixes: ['Notification bugs'], improvements: ['Real-time sync'], isPublished: true },
+        { version: '1.8.0', releaseDate: new Date('2025-07-22'), isUpcoming: false, tag: null, features: ['File upload'], fixes: ['Upload errors'], improvements: ['Faster uploads'], isPublished: true },
+        { version: '1.7.0', releaseDate: new Date('2025-03-18'), isUpcoming: false, tag: null, features: ['Dashboards'], fixes: ['Chart bugs'], improvements: ['Better performance'], isPublished: true },
+        // 2024  
+        { version: '1.5.0', releaseDate: new Date('2024-09-12'), isUpcoming: false, tag: null, features: ['RBAC', 'Permissions'], fixes: ['Security issues'], improvements: ['Enhanced security'], isPublished: true },
+        { version: '1.0.0', releaseDate: new Date('2024-05-01'), isUpcoming: false, tag: null, features: ['Initial release'], fixes: [], improvements: [], isPublished: true },
+        {
+            version: '2.2.0',
+            releaseDate: null,
+            isUpcoming: true,
+            expectedDate: 'Q1 2026',
+            tag: null,
+            features: [
+                'Advanced reporting dashboard with charts',
+                'Multi-factor authentication (MFA)',
+                'Webhook integrations for third-party apps',
+                'API rate limiting and monitoring',
+            ],
+            fixes: [],
+            improvements: [],
+            isPublished: true,
+        },
+    ];
+
+    for (const changelogData of changelogSamples) {
+        await prisma.changelog.upsert({
+            where: { version: changelogData.version },
+            update: {},
+            create: changelogData,
+        });
+    }
+    console.log('Changelogs seeded.');
 }
 
 main()

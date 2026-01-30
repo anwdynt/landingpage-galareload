@@ -169,3 +169,22 @@ model PostTag {
   @@id([postId, tagId])
   @@map("post_tag")
 }
+
+model Changelog {
+  id              Int       @id @default(autoincrement())
+  version         String    @unique @db.VarChar(50)
+  releaseDate     DateTime?
+  isUpcoming      Boolean   @default(false)
+  expectedDate    String?   @db.VarChar(50)
+  tag             String?   @db.VarChar(50)
+  features        Json      // Array of strings
+  fixes           Json      // Array of strings
+  improvements    Json      // Array of strings
+  isPublished     Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([isUpcoming])
+  @@index([isPublished])
+  @@map("changelogs")
+}
